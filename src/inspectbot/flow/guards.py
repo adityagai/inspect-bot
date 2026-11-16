@@ -66,7 +66,8 @@ def check_plan(plan: PlanOutput, record: dict, pose: str, light: str, task: dict
     return GuardResult(True)
 
 
-def check_conclusion(v: VerificationOutput, record: dict, inspections: dict[str, InspectionOutput]) -> GuardResult:
+def check_conclusion(v: VerificationOutput, record: dict, inspections: dict[str, InspectionOutput],
+                     procedures: list[dict] | None = None, category: str | None = None) -> GuardResult:
     """May this verification be reported as a definitive outcome?"""
     if v.proposed_outcome == Outcome.INSUFFICIENT_EVIDENCE:
         return GuardResult(False, "verification proposes insufficient evidence")
@@ -82,4 +83,11 @@ def check_conclusion(v: VerificationOutput, record: dict, inspections: dict[str,
         return GuardResult(False, f"unresolved contradictions: {v.contradictions}")
     if not any(inspections.get(o) and inspections[o].target_visible for o in cited):
         return GuardResult(False, "target region is not visible in any cited observation")
+    if procedures is not None:  # Day 4: conclusions must rest on a retrieved, category-specific procedure
+        retrieved = {p["source_id"] for p in procedures}
+        if bad_src := [x for x in v.source_ids_applied if x not in retrieved]:
+            return GuardResult(False, f"applies procedures that were not retrieved: {bad_src}")
+        specific = {p["source_id"] for p in procedures if p["category"] == category and p["doc_type"] == "procedure"}
+        if not specific.intersection(v.source_ids_applied):
+            return GuardResult(False, f"no applicable {category} procedure cited (general guidance alone is not enough)")
     return GuardResult(True)

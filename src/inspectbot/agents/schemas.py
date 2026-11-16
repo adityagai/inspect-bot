@@ -62,6 +62,10 @@ class VerificationOutput(BaseModel):
                                      description="Observations that support the outcome; never failed attempts")
     criteria_checked: list[str] = Field(default_factory=list)
     missing_evidence: list[str] = Field(default_factory=list)
+    source_ids_applied: list[str] = Field(default_factory=list, description=(
+        "source_ids of the retrieved procedures whose criteria decided the outcome"))
+    inapplicable_source_ids: list[str] = Field(default_factory=list, description=(
+        "Retrieved passages you judged NOT applicable (wrong object, conditions not met)"))
     contradictions: list[str] = Field(default_factory=list, description=(
         "Only direct conflicts between observations that would change the outcome (e.g. the line fixed in one "
         "same-pose pair but moving in another). Leave EMPTY when a criterion is met; residual alternative "
@@ -72,3 +76,28 @@ class VerificationOutput(BaseModel):
 class BaselineOutput(BaseModel):
     outcome: Outcome
     rationale: str
+
+
+class ToTDraft(BaseModel):
+    """One candidate inspection plan step proposed during Tree-of-Thought search."""
+    hypothesis: str = Field(description="The explanation this step is designed to test")
+    step: PlanOutput
+    expected_evidence: str = Field(description="What each competing hypothesis predicts this step will show (a prediction)")
+    source_ids: list[str] = Field(default_factory=list, description="Retrieved procedures that motivate this step")
+
+
+class ToTProposal(BaseModel):
+    candidates: list[ToTDraft] = Field(default_factory=list, max_length=3)
+
+
+class ToTScore(BaseModel):
+    branch_id: str
+    evidence_support: int = Field(ge=0, le=3, description="0-3: grounded in observed evidence")
+    distinguishing: int = Field(ge=0, le=3, description="0-3: expected ability to separate the competing explanations")
+    procedure_compliance: int = Field(ge=0, le=2, description="0-2: follows the applicable retrieved procedure")
+    feasibility_cost: int = Field(ge=0, le=2, description="0-2: feasible and cheap (2 = one cheap action)")
+    note: str = ""
+
+
+class ToTScores(BaseModel):
+    scores: list[ToTScore]

@@ -27,6 +27,7 @@ ROBOT_TOOLS = ["move_camera", "set_lighting"]
 IMAGE_TOOLS = ["zoom_region", "get_reference", "get_observation_image"]
 RECORD_TOOLS = ["get_task_record", "append_finding", "post_message", "submit_report"]
 LIFECYCLE_TOOLS = ["start_inspection"]
+KNOWLEDGE_TOOLS = ["retrieve_procedures", "record_tot"]
 
 Pose = Literal["front", "left_45", "right_45", "top", "oblique_low"]
 Light = Literal["left", "right", "top", "diffuse"]
@@ -126,6 +127,21 @@ def build_server(manager: SessionManager | None = None, host: str = "127.0.0.1",
         """Post a structured message between agents onto the shared task record."""
         return _call(sessions.post_message, task_id, sender, recipient, type, content,
                      obs_refs, source_ids, next_step)
+
+    # ---------------------------------------------------------------- knowledge + reasoning (Day 4)
+
+    @mcp.tool()
+    def retrieve_procedures(task_id: str, query: str) -> dict[str, Any]:
+        """Retrieve up to 3 approved procedures for the task's confirmed object category (plus general
+        guidance). Also reports higher-scoring passages rejected for being written for another category,
+        and missing guidance when no category-specific procedure exists."""
+        return _call(sessions.retrieve, task_id, query)
+
+    @mcp.tool()
+    def record_tot(task_id: str, candidates: list[dict[str, Any]], selected_branch: str | None = None) -> dict[str, Any]:
+        """Store a bounded Tree-of-Thought search (candidates with scores and pruning). Allowed once per
+        inspection with at most 15 candidate evaluations."""
+        return _call(sessions.record_tot, task_id, candidates, selected_branch)
 
     @mcp.tool()
     def submit_report(task_id: str, report: dict[str, Any]) -> dict[str, Any]:
