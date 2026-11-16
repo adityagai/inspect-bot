@@ -14,7 +14,7 @@ dependencies = [
   "pillow>=10.3",
   "pyyaml>=6.0",
   "python-dotenv>=1.0",
-  "openai>=1.40",
+  "anthropic>=0.40",
 ]
 
 [project.optional-dependencies]
@@ -24,7 +24,7 @@ agents = [
   "crewai-tools[mcp]>=0.45",
   "mcp>=1.9",
   "langchain>=0.3",
-  "langchain-openai>=0.2",
+  "langchain-anthropic>=0.3",
   "langchain-chroma>=0.2",
   "langchain-text-splitters>=0.3",
 ]

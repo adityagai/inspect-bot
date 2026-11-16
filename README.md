@@ -6,7 +6,7 @@ InspectBot is a multi-agent research assistant for **simulated robotic visual in
 - **No defect detected**: covers only the inspected region; it is not a certification.
 - **Insufficient evidence**: always escalated for human review.
 
-Stack: OpenAI GPT-4o / gpt-4o-mini, CrewAI (Flow + agents), LangChain (RAG, Tree-of-Thought search), MCP (robot and task-store tools) and Streamlit. Everything runs on CPU.
+Stack: Anthropic Claude (Sonnet for vision, Haiku for text agents), CrewAI (Flow + agents), LangChain (RAG, Tree-of-Thought search), MCP (robot and task-store tools) and Streamlit. Everything runs on CPU.
 
 ## Status
 
@@ -23,11 +23,11 @@ Stack: OpenAI GPT-4o / gpt-4o-mini, CrewAI (Flow + agents), LangChain (RAG, Tree
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-cp .env.example .env               # add OPENAI_API_KEY (needed from Day 2; optional today)
+cp .env.example .env               # add ANTHROPIC_API_KEY (needed from Day 2; optional today)
 
 pytest -q                          # 21 tests, under 2 s
 python -m inspectbot.sim.preview --all   # writes runs/preview/<id>/contact_sheet.png
-python scripts/vision_check.py S1 S2     # optional: what GPT-4o sees in the first image
+python scripts/vision_check.py S1 S2     # optional: what Claude sees in the first image
 ```
 
 ## The virtual inspection cell
