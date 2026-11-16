@@ -11,7 +11,7 @@ from inspectbot.mcp_server.session import SessionManager
 
 EXPECTED_TOOLS = {
     "start_inspection", "move_camera", "set_lighting", "zoom_region", "get_reference",
-    "get_observation_image", "get_task_record", "append_finding", "post_message",
+    "get_observation_image", "get_task_record", "append_finding", "post_message", "submit_report",
 }
 
 
@@ -130,3 +130,21 @@ def test_events_and_record_persisted(tmp_path):
 def test_every_scenario_starts(tmp_path, sid):
     out = SessionManager(tmp_path).start(sid)
     assert out["task"]["scenario_id"] == sid and out["budget"]["actions_remaining"] == 5
+
+
+def test_submit_report_rules(tmp_path):
+    mgr = SessionManager(tmp_path)
+    tid = mgr.start("S4")["task_id"]
+    mgr.run_tool(tid, "move_camera", pose="left_45")  # unreachable
+    from inspectbot.mcp_server.session import SessionError
+    from pydantic import ValidationError
+    with pytest.raises(SessionError):  # cites an observation that never existed
+        mgr.submit_report(tid, {"outcome": "suspected_defect", "summary": "s",
+                                "evidence": [{"claim": "crack", "obs_ids": ["obs_02"]}]})
+    with pytest.raises(ValidationError):  # insufficient evidence must request review
+        mgr.submit_report(tid, {"outcome": "insufficient_evidence", "summary": "s"})
+    out = mgr.submit_report(tid, {"outcome": "insufficient_evidence", "summary": "target hidden",
+                                  "needs_human_review": True})
+    assert out["outcome"] == "insufficient_evidence"
+    saved = json.loads((tmp_path / tid / "report.json").read_text())
+    assert saved["failed_attempt_ids"] == ["act_02"]

@@ -13,8 +13,8 @@ Stack: Anthropic Claude (Sonnet for vision, Haiku for text agents), CrewAI (Flow
 | Day | Scope | State |
 | --- | --- | --- |
 | 1 | Repo scaffold, data models, virtual inspection cell, S1–S5 scenarios, schematic, preview tool | merged (#1) |
-| 2 | MCP server for robot tools + task store; CrewAI agent → MCP smoke test | this branch |
-| 3 | CrewAI Flow Coordinator + Planning / Inspection / Verification agents, ReAct loop, baseline | planned |
+| 2 | MCP server for robot tools + task store; CrewAI agent → MCP smoke test | merged (#2) |
+| 3 | CrewAI Flow Coordinator + Planning / Inspection / Verification agents, ReAct loop, baseline | this branch |
 | 4 | LangChain RAG, bounded ToT, guardrails, escalation | planned |
 | 5 | Streamlit app (live + replay), evaluation | planned |
 
@@ -25,10 +25,44 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 cp .env.example .env               # add ANTHROPIC_API_KEY (needed from Day 2; optional today)
 
-pytest -q                          # 34 tests, about 3 s
+pytest -q                          # 45 tests, about 10 s (no API calls)
 python -m inspectbot.sim.preview --all   # writes runs/preview/<id>/contact_sheet.png
 python scripts/vision_check.py S1 S2     # optional: what Claude sees in the first image
 ```
+
+## Running an inspection (Day 3)
+
+```bash
+python -m inspectbot.flow.run S1                    # in-process tools
+python -m inspectbot.flow.run S1 S4 --baseline      # plus the prompt-only baseline
+python -m inspectbot.mcp_server.server &            # or through the MCP server ...
+python -m inspectbot.flow.run S1 --mcp              # ... over HTTP
+```
+
+The Coordinator is a CrewAI Flow (`flow/inspection_flow.py`) that runs a ReAct loop:
+
+```
+begin -> inspect -> verify -> decide --criteria_met---> conclude   (definitive report)
+           ^                     |----need_evidence---> plan_and_act --acted--+
+           |                     |                                 --needs_human--> escalate
+           +---------------------+-------------------------------------------+
+                                 +----needs_human-----> escalate   (Insufficient evidence + human review)
+```
+
+| Agent | Model | Output |
+| --- | --- | --- |
+| Inspection | `claude-sonnet-5-5` (vision, via CrewAI `input_files`) | target visible? anomaly? surface discontinuity? matches reference? |
+| Verification | `claude-sonnet-5-5` | proposed outcome, sufficient?, cited `obs_id`s, missing evidence |
+| Planning | `claude-haiku-5-5` | one next action from a code-generated candidate list, or stop |
+| Baseline | `claude-sonnet-5-5` | one-shot outcome from the first image |
+
+Rules enforced in code (`flow/guards.py`), not prompts:
+- a plan must be a new view and must not repeat a failed action
+- 3 rejected plans in a row means escalate
+- a conclusion needs real cited observations, a visible target and no contradictions
+- the budget is enforced server-side
+
+Live pilot results are in [`docs/day3_live_results.md`](docs/day3_live_results.md): InspectBot was 5/5, the baseline 2/5.
 
 ## MCP server (Day 2)
 
@@ -89,10 +123,13 @@ Ground truth lives in `scenarios/*.yaml` and is used only for scoring. Agents re
 src/inspectbot/
   core/        models.py (TaskRecord, ActionAttempt, Observation, Finding, Candidate, Message, Report), task_store.py, events.py
   sim/         scenario.py, renderer.py, cell.py, schematic.py, preview.py
-  mcp_server/  session.py (sessions, budget, logging), server.py (FastMCP tools)
-  flow/  agents/  reasoning/  rag/  baseline/   # later days
+  mcp_server/  session.py (sessions, budget, logging, reports), server.py (FastMCP tools)
+  agents/      llm.py (Claude for CrewAI), schemas.py, prompts.py, runner.py (CrewAI / scripted)
+  flow/        inspection_flow.py (Coordinator), guards.py, gateway.py (MCP / local), run.py
+  baseline/    prompt_only.py
+  reasoning/  rag/   # Day 4
 scenarios/     S1–S5 YAML
 scripts/       vision_check.py, smoke_crewai_mcp.py
-docs/          day1_vision_check.md
+docs/          day1_vision_check.md, day3_live_results.md
 tests/
 ```
