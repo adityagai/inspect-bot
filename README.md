@@ -12,8 +12,8 @@ Stack: Anthropic Claude (Sonnet for vision, Haiku for text agents), CrewAI (Flow
 
 | Day | Scope | State |
 | --- | --- | --- |
-| 1 | Repo scaffold, data models, virtual inspection cell, S1–S5 scenarios, schematic, preview tool | this branch |
-| 2 | MCP server for robot tools + task store | planned |
+| 1 | Repo scaffold, data models, virtual inspection cell, S1–S5 scenarios, schematic, preview tool | merged (#1) |
+| 2 | MCP server for robot tools + task store; CrewAI agent → MCP smoke test | this branch |
 | 3 | CrewAI Flow Coordinator + Planning / Inspection / Verification agents, ReAct loop, baseline | planned |
 | 4 | LangChain RAG, bounded ToT, guardrails, escalation | planned |
 | 5 | Streamlit app (live + replay), evaluation | planned |
@@ -25,10 +25,29 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 cp .env.example .env               # add ANTHROPIC_API_KEY (needed from Day 2; optional today)
 
-pytest -q                          # 21 tests, under 2 s
+pytest -q                          # 34 tests, about 3 s
 python -m inspectbot.sim.preview --all   # writes runs/preview/<id>/contact_sheet.png
 python scripts/vision_check.py S1 S2     # optional: what Claude sees in the first image
 ```
+
+## MCP server (Day 2)
+
+One long-lived server process holds every inspection session, so all agents share the same task record:
+
+```bash
+pip install -e ".[dev,agents]"
+python -m inspectbot.mcp_server.server          # streamable HTTP at http://127.0.0.1:8765/mcp
+python scripts/smoke_crewai_mcp.py              # CrewAI agent (Claude) drives S1 through MCP
+```
+
+| Tool | Group | Notes |
+| --- | --- | --- |
+| `start_inspection(scenario_id)` | lifecycle | returns `task_id`, the public task definition, the initial observation and the budget; never ground truth |
+| `move_camera(task_id, pose)`, `set_lighting(task_id, setting)` | robot (budgeted) | 5 per inspection, failures included; a 6th call returns `budget_exhausted` and does not run |
+| `zoom_region`, `get_reference`, `get_observation_image` | image (capped at 6) | `get_observation_image` returns the PNG as MCP image content for vision models |
+| `get_task_record`, `append_finding`, `post_message` | shared record | findings and messages that cite unknown `obs_id`s are rejected |
+
+Each run writes `runs/<task_id>/task_record.json`, `events.jsonl` (for the Streamlit app) and `images/`. Agents get a per-role tool allow-list through CrewAI's `create_static_tool_filter`.
 
 ## The virtual inspection cell
 
@@ -68,10 +87,12 @@ Ground truth lives in `scenarios/*.yaml` and is used only for scoring. Agents re
 
 ```
 src/inspectbot/
-  core/        models.py (TaskRecord, ActionAttempt, Observation, Finding, Candidate, Message, Report), task_store.py
+  core/        models.py (TaskRecord, ActionAttempt, Observation, Finding, Candidate, Message, Report), task_store.py, events.py
   sim/         scenario.py, renderer.py, cell.py, schematic.py, preview.py
-  mcp_server/  flow/  agents/  reasoning/  rag/  baseline/   # later days
+  mcp_server/  session.py (sessions, budget, logging), server.py (FastMCP tools)
+  flow/  agents/  reasoning/  rag/  baseline/   # later days
 scenarios/     S1–S5 YAML
-scripts/       vision_check.py
+scripts/       vision_check.py, smoke_crewai_mcp.py
+docs/          day1_vision_check.md
 tests/
 ```
