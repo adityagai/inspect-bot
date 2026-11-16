@@ -1,0 +1,22 @@
+id: S1
+name: Shadow on bracket
+category: metal_bracket
+goal: Inspect the bracket face for cracks or surface damage.
+seed: 11
+initial_pose: front
+initial_light: left
+target_region: [0.30, 0.10, 0.70, 0.90]
+features:
+  # Fixture arm shadow: a dark line across the face under side lights only.
+  - type: cast_shadow
+    orientation: vertical
+    positions: {left: 0.47, right: 0.55}
+    width_px: 4
+    extent: [0.08, 0.92]
+ground_truth:
+  outcome: no_defect_detected
+  resolvable: true
+  notes: The line is a cast shadow; it disappears under top or diffuse light.
+demo_notes: >
+  Baseline sees one image and calls the line a crack. InspectBot runs ToT
+  (crack / shadow / seam), picks set_lighting(top), and the line disappears.

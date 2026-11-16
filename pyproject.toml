@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "inspectbot"
+version = "0.1.0"
+description = "InspectBot: multi-agent research assistant for simulated robotic visual inspection (Agentic AI capstone)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7",
+  "numpy>=1.26",
+  "pillow>=10.3",
+  "pyyaml>=6.0",
+  "python-dotenv>=1.0",
+  "openai>=1.40",
+]
+
+[project.optional-dependencies]
+# Day 2+: agents, RAG, MCP, UI. Kept optional so the simulator installs in seconds.
+agents = [
+  "crewai>=0.120",
+  "crewai-tools[mcp]>=0.45",
+  "mcp>=1.9",
+  "langchain>=0.3",
+  "langchain-openai>=0.2",
+  "langchain-chroma>=0.2",
+  "langchain-text-splitters>=0.3",
+]
+ui = ["streamlit>=1.38"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+inspectbot-preview = "inspectbot.sim.preview:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/inspectbot"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"

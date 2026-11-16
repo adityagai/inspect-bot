@@ -1,0 +1,19 @@
+id: S2
+name: Real crack on tile
+category: ceramic_tile
+goal: Inspect the tile face for cracks.
+seed: 22
+initial_pose: front
+initial_light: left
+target_region: [0.30, 0.10, 0.70, 0.90]
+features:
+  - type: crack
+    points: [[0.42, 0.18], [0.48, 0.45], [0.46, 0.62], [0.53, 0.82]]
+    width_px: 3
+ground_truth:
+  outcome: suspected_defect
+  resolvable: true
+  notes: The line persists under every light and shows a raised lip from oblique_low.
+demo_notes: >
+  The procedure requires a visible surface discontinuity, not just a line.
+  The line stays under top light; oblique_low shows the lip, so a defect is supported.
