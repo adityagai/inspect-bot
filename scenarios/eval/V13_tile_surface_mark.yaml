@@ -1,0 +1,12 @@
+id: V13
+name: Surface mark on tile (no relief)
+category: ceramic_tile
+goal: Inspect the tile face for cracks.
+seed: 113
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.10, 0.75, 0.90]
+features:
+  - type: mark
+    points: [[0.44, 0.22], [0.49, 0.48], [0.46, 0.76]]
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: CT-2 - persistent line without discontinuity needs a human check.}

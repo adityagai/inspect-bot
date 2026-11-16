@@ -1,0 +1,7 @@
+{
+  "scenario_id": "S1",
+  "mode": "baseline",
+  "outcome": "suspected_defect",
+  "rationale": "The brushed metal face shows a long, dark, thin vertical line from about y=80 to y=400 near x=305. It cuts across the horizontal brushing grain and looks like a crack or deep scratch. It has a sharp, jagged edge and is much darker than the surrounding texture, so it is unlikely to be a normal surface feature. This is consistent with surface damage.",
+  "image": "demo_runs/baseline/S1_initial.png"
+}

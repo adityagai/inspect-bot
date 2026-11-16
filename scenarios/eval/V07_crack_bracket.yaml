@@ -1,0 +1,12 @@
+id: V07
+name: Real crack on bracket
+category: metal_bracket
+goal: Inspect the bracket face for cracks or surface damage.
+seed: 107
+initial_pose: front
+initial_light: left
+target_region: [0.30, 0.10, 0.70, 0.90]
+features:
+  - type: crack
+    points: [[0.55, 0.20], [0.52, 0.45], [0.56, 0.70]]
+ground_truth: {outcome: suspected_defect, resolvable: true, notes: Crack (MB-2).}

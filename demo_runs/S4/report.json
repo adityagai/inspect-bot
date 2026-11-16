@@ -1,0 +1,36 @@
+{
+  "task_id": "task_6dbb2bc1",
+  "scenario_id": "S4",
+  "outcome": "insufficient_evidence",
+  "summary": "Stopped: planner found no action that could change the conclusion: The only evidence action that could separate the hypotheses for the covered region is a left_45 camera view, which is blocked (unreachable). The candidate lighting actions are predicted to return the same occluded result as obs_01 through obs_03 and do not separate anything. get_reference cannot show the covered surface of this part. Since none of the single remaining actions can change the outcome, stop and escalate: report Insufficient evidence, name the uninspected region (roughly x 0.38-0.66, y 0.25-0.70 under the clamp plate), cite failed actions act_02 (left_45 unreachable) and act_04 (right_45 timeout), and ask the reviewer to re-fixture the part or authorize a different cell.. The clamp plate covers the target region in all three captured views (front, oblique_low, top), and each observation has target_visible=False. PROC-MB-002 says only left_45 sees past the clamp, and lighting changes do not help. left_45 was unreachable (act_02) and right_45 timed out (act_04). Failed attempts are not evidence. The clean surface around the plate says nothing about the region under it, so no_defect_detected is not supported. No line or discontinuity was seen, so no crack or shadow criterion (MB-1/MB-2) can be met. Uninspected region: the bracket face under the clamp plate (roughly x 0.38-0.66, y 0.25-0.70). Failed actions: act_02 (left_45 unreachable) and act_04 (right_45 timeout). The reviewer should re-fixture the part or authorize a different cell. PROC-GEN-003 is general and only restates the occlusion point, so it is not the deciding source.",
+  "evidence": [
+    {
+      "claim": "Observations reviewed before escalation",
+      "obs_ids": [
+        "obs_01",
+        "obs_02",
+        "obs_03"
+      ],
+      "source_ids": [
+        "PROC-MB-002@1.0",
+        "PROC-MB-001@2.1",
+        "PROC-GEN-003@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "A left_45 view past the clamp edge (act_02 unreachable; right_45 attempt act_04 timed out) covering the region under the clamp plate",
+    "Reviewer action: re-fixture the part or authorize a different cell"
+  ],
+  "failed_attempt_ids": [
+    "act_02",
+    "act_04"
+  ],
+  "sources": [
+    "PROC-MB-002@1.0",
+    "PROC-MB-001@2.1",
+    "PROC-GEN-003@1.0"
+  ],
+  "needs_human_review": true,
+  "scope_note": null
+}

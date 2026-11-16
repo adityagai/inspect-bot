@@ -1,0 +1,30 @@
+{
+  "task_id": "task_6668c3b0",
+  "scenario_id": "S5",
+  "outcome": "insufficient_evidence",
+  "summary": "Stopped: no approved procedure for category 'pump_housing'. no approved procedure for category 'pump_housing'. Similar procedures for other categories were rejected; without an applicable criterion the line cannot be classified.",
+  "evidence": [
+    {
+      "claim": "Observations reviewed before escalation",
+      "obs_ids": [
+        "obs_01"
+      ],
+      "source_ids": [
+        "PROC-GEN-003@1.0",
+        "PROC-GEN-001@1.0",
+        "PUB-003@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "no approved procedure for category 'pump_housing'"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-GEN-003@1.0",
+    "PROC-GEN-001@1.0",
+    "PUB-003@1.0"
+  ],
+  "needs_human_review": true,
+  "scope_note": null
+}

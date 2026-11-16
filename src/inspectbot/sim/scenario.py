@@ -28,6 +28,15 @@ class Crack(BaseModel):
     jitter: float = 0.0045  # jaggedness, normalized
 
 
+class Mark(BaseModel):
+    """Surface mark or stain: persists under every light like a crack, but has NO relief (no lip)."""
+
+    type: Literal["mark"] = "mark"
+    points: list[tuple[float, float]] = Field(min_length=2)
+    width_px: int = 3
+    jitter: float = 0.0045
+
+
 class Seam(BaseModel):
     """Expected feature: straight, even width, present on the reference sample."""
 
@@ -54,7 +63,7 @@ class Glare(BaseModel):
     lights: list[Lighting]
 
 
-Feature = Annotated[Union[Crack, Seam, CastShadow, Glare], Field(discriminator="type")]
+Feature = Annotated[Union[Crack, Mark, Seam, CastShadow, Glare], Field(discriminator="type")]
 
 
 class Occlusion(BaseModel):
@@ -120,14 +129,17 @@ def scenario_dir() -> Path:
 def load_scenario(id_or_path: str | Path) -> Scenario:
     p = Path(id_or_path)
     if not p.suffix:
-        matches = sorted(scenario_dir().glob(f"{id_or_path}_*.yaml")) + sorted(
-            scenario_dir().glob(f"{id_or_path}.yaml")
-        )
+        matches = []
+        for d in (scenario_dir(), scenario_dir() / "eval"):
+            matches += sorted(d.glob(f"{id_or_path}_*.yaml")) + sorted(d.glob(f"{id_or_path}.yaml"))
         if not matches:
             raise FileNotFoundError(f"no scenario '{id_or_path}' in {scenario_dir()}")
         p = matches[0]
     return Scenario.model_validate(yaml.safe_load(p.read_text()))
 
 
-def list_scenarios() -> list[Scenario]:
-    return [Scenario.model_validate(yaml.safe_load(p.read_text())) for p in sorted(scenario_dir().glob("*.yaml"))]
+def list_scenarios(include_eval: bool = False) -> list[Scenario]:
+    paths = sorted(scenario_dir().glob("*.yaml"))
+    if include_eval:
+        paths += sorted((scenario_dir() / "eval").glob("*.yaml"))
+    return [Scenario.model_validate(yaml.safe_load(p.read_text())) for p in paths]

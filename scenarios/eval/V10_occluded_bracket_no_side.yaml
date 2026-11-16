@@ -1,0 +1,14 @@
+id: V10
+name: Clamp hides target; side poses unavailable
+category: metal_bracket
+goal: Inspect the bracket face behind the clamp for cracks.
+seed: 110
+initial_pose: front
+initial_light: diffuse
+target_region: [0.38, 0.30, 0.66, 0.72]
+features:
+  - type: crack
+    points: [[0.46, 0.40], [0.50, 0.66]]
+occlusion: {region: [0.36, 0.26, 0.68, 0.76], visible_from: [left_45], label: clamp}
+unreachable_poses: [left_45, right_45]
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: Required view unreachable.}

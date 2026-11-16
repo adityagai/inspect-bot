@@ -1,0 +1,11 @@
+id: V09
+name: Clamp hides target; required view unreachable (no defect underneath)
+category: metal_bracket
+goal: Inspect the bracket face behind the clamp for cracks.
+seed: 109
+initial_pose: front
+initial_light: left
+target_region: [0.38, 0.30, 0.66, 0.72]
+occlusion: {region: [0.36, 0.26, 0.68, 0.76], visible_from: [left_45], label: clamp}
+unreachable_poses: [left_45]
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: Clean surface around the clamp says nothing about the region under it (MB-2).}

@@ -1,0 +1,25 @@
+{
+  "task_id": "task_a9caad32",
+  "scenario_id": "S1",
+  "outcome": "no_defect_detected",
+  "summary": "From the same front pose, obs_01 (left light) shows a thin vertical dark line at about x=0.47 and obs_02 (diffuse light) shows no such line, with the area continuous and evenly lit. Under MB-1 a vertical dark line that disappears when the light changes from the same pose is the fixture shadow, so no defect is recorded. MB-2 is not met because the line does not persist under a second light and neither observation shows a surface discontinuity. PROC-GEN-003 gives the same shadow-versus-surface reasoning. PROC-MB-002 concerns a hold-down clamp covering the bracket centre; no observation indicates a clamp occlusion here, since the target region was visible in both views, so it does not apply.",
+  "evidence": [
+    {
+      "claim": "From the same front pose, obs_01 (left light) shows a thin vertical dark line at about x=0.47 and obs_02 (diffuse light) shows no such line, with the area continuous and evenly lit. Under MB-1 a vertical dark line that disappears when the light changes from the same pose is the fixture shadow, so no defect is recorded. MB-2 is not met because the line does not persist under a second light and neither observation shows a surface discontinuity. PROC-GEN-003 gives the same shadow-versus-surface rea",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-MB-001@2.1"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-MB-001@2.1"
+  ],
+  "needs_human_review": false,
+  "scope_note": "Covers only target region [0.3, 0.1, 0.7, 0.9] of this part, viewed as [('front', 'diffuse'), ('front', 'left')]. Not a safety certification."
+}

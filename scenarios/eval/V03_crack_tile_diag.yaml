@@ -1,0 +1,12 @@
+id: V03
+name: Diagonal crack on tile
+category: ceramic_tile
+goal: Inspect the tile face for cracks.
+seed: 103
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.10, 0.75, 0.90]
+features:
+  - type: crack
+    points: [[0.35, 0.25], [0.45, 0.42], [0.52, 0.58], [0.63, 0.78]]
+ground_truth: {outcome: suspected_defect, resolvable: true, notes: Crack (CT-1).}

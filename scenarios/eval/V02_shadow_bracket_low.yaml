@@ -1,0 +1,15 @@
+id: V02
+name: Faint shadow on bracket, off-centre
+category: metal_bracket
+goal: Inspect the bracket face for cracks or surface damage.
+seed: 102
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.10, 0.75, 0.90]
+features:
+  - type: cast_shadow
+    orientation: vertical
+    positions: {left: 0.36, right: 0.44}
+    width_px: 3
+    extent: [0.15, 0.85]
+ground_truth: {outcome: no_defect_detected, resolvable: true, notes: Fixture shadow (MB-1).}

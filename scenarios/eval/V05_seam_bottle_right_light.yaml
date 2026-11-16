@@ -1,0 +1,13 @@
+id: V05
+name: Mold seam on bottle, light from right
+category: glass_bottle
+goal: Inspect the bottle body for cracks.
+seed: 105
+initial_pose: front
+initial_light: right
+target_region: [0.30, 0.10, 0.70, 0.90]
+features:
+  - type: seam
+    orientation: vertical
+    position: 0.49
+ground_truth: {outcome: no_defect_detected, resolvable: true, notes: Mold seam (GB-1).}

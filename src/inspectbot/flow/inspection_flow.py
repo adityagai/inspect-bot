@@ -171,7 +171,7 @@ class InspectionFlow(Flow[InspectionState]):
         self._say("verification", "coordinator", "verification",
                   f"proposed={v.proposed_outcome.value}, sufficient={v.evidence_sufficient}. {v.rationale}",
                   obs_refs=[o for o in v.cited_obs_ids if o in s.obs_paths],
-                  source_ids=[GENERAL_CRITERIA_ID])
+                  source_ids=v.source_ids_applied or ([GENERAL_CRITERIA_ID] if s.procedures is None else []))
 
     @router(verify)
     def decide(self) -> str:

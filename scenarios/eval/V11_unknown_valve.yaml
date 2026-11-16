@@ -1,0 +1,13 @@
+id: V11
+name: Valve body with no procedure
+category: valve_body
+goal: Inspect the valve body face for cracks.
+seed: 111
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.20, 0.75, 0.80]
+reference_available: false
+features:
+  - type: crack
+    points: [[0.45, 0.30], [0.50, 0.50], [0.47, 0.70]]
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: No approved procedure for valve_body.}

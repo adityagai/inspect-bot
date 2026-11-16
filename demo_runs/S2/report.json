@@ -1,0 +1,29 @@
+{
+  "task_id": "task_8b0cdb07",
+  "scenario_id": "S2",
+  "outcome": "suspected_defect",
+  "summary": "All three CT-1 conditions hold. (1) obs_01 (front, left) and obs_02 (front, right) show the same jagged vertical line at the same position and shape, which rules out a shadow. (2) obs_03 (oblique_low) has surface_discontinuity=true, with a bright edge along the line. (3) obs_04 is the approved reference with no line at that location. PROC-CT-002 does not apply: this is a single dominant jagged line, not a cobweb crazing network, and it points to CT-1 anyway. PROC-CT-003 would classify a line as a crack after one lighting change, which is less demanding than CT-1. Where they conflict I prefer the more demanding CT-1, whose conditions are met, so PROC-CT-003 is not what decides the outcome. Its 'straight horizontal line' scenario also does not match this jagged vertical line. Outcome: suspected defect.",
+  "evidence": [
+    {
+      "claim": "All three CT-1 conditions hold. (1) obs_01 (front, left) and obs_02 (front, right) show the same jagged vertical line at the same position and shape, which rules out a shadow. (2) obs_03 (oblique_low) has surface_discontinuity=true, with a bright edge along the line. (3) obs_04 is the approved reference with no line at that location. PROC-CT-002 does not apply: this is a single dominant jagged line, not a cobweb crazing network, and it points to CT-1 anyway. PROC-CT-003 would classify a line as ",
+      "obs_ids": [
+        "obs_01",
+        "obs_02",
+        "obs_03",
+        "obs_04"
+      ],
+      "source_ids": [
+        "PROC-CT-001@1.3"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "A second light setting from the oblique_low pose would further corroborate the discontinuity, but is not required by CT-1"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-CT-001@1.3"
+  ],
+  "needs_human_review": false,
+  "scope_note": null
+}
