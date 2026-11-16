@@ -57,7 +57,6 @@ def main(ids: list[str]) -> None:
         resp = client.messages.create(
             model=model,
             max_tokens=800,
-            temperature=0,
             messages=[{"role": "user", "content": [
                 {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": _b64(img)}},
                 {"type": "text", "text": PROMPT},
