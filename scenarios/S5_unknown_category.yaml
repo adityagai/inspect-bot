@@ -1,0 +1,24 @@
+id: S5
+name: Part with no applicable guidance
+category: pump_housing
+goal: Inspect the pump housing cover for cracks.
+seed: 55
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.20, 0.75, 0.80]
+reference_available: false
+features:
+  - type: seam
+    orientation: horizontal
+    position: 0.52
+    width_px: 3
+ground_truth:
+  outcome: insufficient_evidence
+  resolvable: false
+  notes: >
+    No procedure exists for pump_housing. A similar-sounding tile crack procedure
+    must be rejected; without criteria the line cannot be classified.
+demo_notes: >
+  Retrieval ranks a ceramic_tile procedure highly; the category filter and
+  Verification reject it, log missing guidance and escalate. The reviewer can add
+  guidance and authorize one more bounded run.

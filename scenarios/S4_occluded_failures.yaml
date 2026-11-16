@@ -1,0 +1,30 @@
+id: S4
+name: Occluded region with failed moves
+category: metal_bracket
+goal: Inspect the bracket face behind the clamp for cracks.
+seed: 44
+initial_pose: front
+initial_light: diffuse
+target_region: [0.38, 0.30, 0.66, 0.72]
+features:
+  - type: crack
+    points: [[0.48, 0.36], [0.52, 0.52], [0.50, 0.66]]
+    width_px: 3
+occlusion:
+  region: [0.36, 0.26, 0.68, 0.76]
+  visible_from: [left_45]   # only left_45 sees past the clamp ...
+  label: clamp
+unreachable_poses: [left_45]  # ... and left_45 collides with the fixture
+scripted_failures:
+  - tool: move_camera
+    args: {pose: right_45}
+    status: timeout
+    message: Arm controller did not acknowledge within 5 s.
+    times: -1
+ground_truth:
+  outcome: insufficient_evidence
+  resolvable: false
+  notes: The target is never visible within the cell's reachable, working poses.
+demo_notes: >
+  Two failed moves are logged (never cited as evidence). top still shows the
+  clamp. InspectBot stops with Insufficient evidence and asks for human review.
