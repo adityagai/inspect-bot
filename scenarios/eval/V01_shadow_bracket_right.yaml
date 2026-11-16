@@ -1,0 +1,14 @@
+id: V01
+name: Shadow on bracket, light from right
+category: metal_bracket
+goal: Inspect the bracket face for cracks or surface damage.
+seed: 101
+initial_pose: front
+initial_light: right
+target_region: [0.30, 0.10, 0.70, 0.90]
+features:
+  - type: cast_shadow
+    orientation: vertical
+    positions: {left: 0.42, right: 0.58}
+    width_px: 4
+ground_truth: {outcome: no_defect_detected, resolvable: true, notes: Fixture shadow (MB-1).}

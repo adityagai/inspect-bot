@@ -1,0 +1,380 @@
+{
+  "task_id": "task_a9caad32",
+  "scenario_id": "S1",
+  "object_category": "metal_bracket",
+  "goal": "Inspect the bracket face for cracks or surface damage.",
+  "criteria": [],
+  "budget": {
+    "max_actions": 5,
+    "actions_used": 1,
+    "max_aux_calls": 6,
+    "aux_calls_used": 0,
+    "max_tot_invocations": 1,
+    "tot_invocations": 1,
+    "max_tot_evaluations": 15,
+    "tot_evaluations_used": 3
+  },
+  "attempts": [
+    {
+      "attempt_id": "act_01",
+      "tool": "initial_capture",
+      "args": {
+        "pose": "front",
+        "light": "left"
+      },
+      "status": "success",
+      "error": null,
+      "counts_against_budget": false,
+      "obs_id": "obs_01",
+      "created_at": "2026-11-16T23:46:09.754597Z"
+    },
+    {
+      "attempt_id": "act_02",
+      "tool": "set_lighting",
+      "args": {
+        "setting": "diffuse"
+      },
+      "status": "success",
+      "error": null,
+      "counts_against_budget": true,
+      "obs_id": "obs_02",
+      "created_at": "2026-11-16T23:46:33.012257Z"
+    }
+  ],
+  "observations": [
+    {
+      "obs_id": "obs_01",
+      "attempt_id": "act_01",
+      "kind": "camera",
+      "pose": "front",
+      "light": "left",
+      "image_path": "demo_runs/S1/images/obs_01.png",
+      "parent_obs_id": null,
+      "bbox": null,
+      "source_id": null,
+      "created_at": "2026-11-16T23:46:09.754636Z"
+    },
+    {
+      "obs_id": "obs_02",
+      "attempt_id": "act_02",
+      "kind": "camera",
+      "pose": "front",
+      "light": "diffuse",
+      "image_path": "demo_runs/S1/images/obs_02.png",
+      "parent_obs_id": null,
+      "bbox": null,
+      "source_id": null,
+      "created_at": "2026-11-16T23:46:33.012296Z"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "fnd_f82ec0f7",
+      "obs_ids": [
+        "obs_01"
+      ],
+      "description": "A thin, dark, near-vertical line runs from roughly the upper part to the lower part of the part face, at about x=0.47 of the face width. It spans most of the target region's height, is slightly irregular in width and wavers slightly. No bright edge, lip or gap is visible alongside it in this view.",
+      "region": null,
+      "hypotheses": [
+        "crack in the surface",
+        "scratch or scribe mark",
+        "ink or marker line",
+        "seam or joint between panels",
+        "cast shadow from a thin edge or object"
+      ],
+      "uncertainty": "high",
+      "source_ids": []
+    },
+    {
+      "finding_id": "fnd_171c5a5c",
+      "obs_ids": [
+        "obs_02"
+      ],
+      "description": "The target region (roughly x 0.3-0.7, y 0.1-0.9 of the part face) shows a uniform grey surface with fine horizontal brushed-texture striations. No vertical dark line, gap, or edge is visible. A faint, thin, bright horizontal streak near the upper third spans the full width of the part.",
+      "region": null,
+      "hypotheses": [
+        "Normal brushed or machined grain of the metal",
+        "Minor rolling or polishing line in the material",
+        "Slight lighting reflection along one grain line"
+      ],
+      "uncertainty": "medium",
+      "source_ids": []
+    }
+  ],
+  "candidates": [
+    {
+      "branch_id": "b1.1",
+      "parent_id": null,
+      "depth": 1,
+      "hypothesis": "Fixture shadow (MB-1) vs. surface crack: the dark vertical line may be the fixture arm shadow cast by the left light. Changing the light from the same pose tests whether it moves or disappears.",
+      "proposed_action": {
+        "action": "set_lighting",
+        "pose": "front",
+        "setting": "diffuse",
+        "obs_id": null,
+        "bbox": null,
+        "category": null,
+        "hypotheses_addressed": [
+          "fixture shadow",
+          "crack in the surface",
+          "scratch or scribe mark",
+          "ink or marker line"
+        ],
+        "expected_evidence": "Fixture shadow: the vertical line moves position or disappears under top/diffuse light. Crack or surface mark: the line stays at the same place on the part (x about 0.47) under the new light.",
+        "rationale": "Cheapest single action that separates a light-dependent shadow from a fixed surface feature. Diffuse or top light is recommended by MB-1 and removes cast shadows. Right light would also work, but diffuse is more decisive because it removes the shadow entirely."
+      },
+      "expected_evidence": "Shadow predicts the line disappears or moves under diffuse light. A surface feature predicts it stays at the same location on the part.",
+      "source_ids": [
+        "PROC-MB-001",
+        "PROC-GEN-003"
+      ],
+      "unresolved_constraints": [],
+      "score": 10.0,
+      "score_breakdown": {
+        "evidence_support": 3.0,
+        "distinguishing": 3.0,
+        "procedure_compliance": 2.0,
+        "feasibility_cost": 2.0
+      },
+      "pruned": false,
+      "prune_reason": null
+    },
+    {
+      "branch_id": "b1.2",
+      "parent_id": null,
+      "depth": 1,
+      "hypothesis": "Crack (MB-2) vs. surface mark: the line must show a surface discontinuity in a low oblique view. A crack is confirmed only if it persists across lights and shows a raised edge, lip or gap.",
+      "proposed_action": {
+        "action": "move_camera",
+        "pose": "oblique_low",
+        "setting": null,
+        "obs_id": null,
+        "bbox": null,
+        "category": null,
+        "hypotheses_addressed": [
+          "crack in the surface",
+          "scratch or scribe mark",
+          "ink or marker line"
+        ],
+        "expected_evidence": "Crack with broken or raised edge: bright lip or gap visible along the line at x about 0.47. Printed mark or stain: no relief, line looks flat. Shadow: line may be absent.",
+        "rationale": "Oblique low view exaggerates relief, which is the only way to test for a surface discontinuity. MB-2 requires this check before any crack outcome. It is a separate pose from the already-captured front view, so it is not a repeat."
+      },
+      "expected_evidence": "Crack predicts a visible bright lip or gap along the line. Mark or seam predicts a flat line with no relief. Shadow predicts no consistent line.",
+      "source_ids": [
+        "PROC-MB-001",
+        "PROC-GEN-003"
+      ],
+      "unresolved_constraints": [],
+      "score": 7.0,
+      "score_breakdown": {
+        "evidence_support": 2.0,
+        "distinguishing": 2.0,
+        "procedure_compliance": 1.0,
+        "feasibility_cost": 2.0
+      },
+      "pruned": false,
+      "prune_reason": null
+    },
+    {
+      "branch_id": "b1.3",
+      "parent_id": null,
+      "depth": 1,
+      "hypothesis": "Covered-region / incomplete coverage: the centre of the face may be hidden under a hold-down clamp, so the line's extent or the absence of a feature there cannot be judged from the front pose alone.",
+      "proposed_action": {
+        "action": "move_camera",
+        "pose": "left_45",
+        "setting": null,
+        "obs_id": null,
+        "bbox": null,
+        "category": null,
+        "hypotheses_addressed": [
+          "region under hold-down clamp is uninspected"
+        ],
+        "expected_evidence": "If a clamp covers the centre, left_45 reveals a region the front view did not show. If no clamp is present, left_45 shows the same face with the same line position, and the line's relief can be compared.",
+        "rationale": "Tests whether the bracket has a clamp that blocks inspection of the centre. left_45 is the only pose that sees past the clamp edge, so it is the required view if a clamp exists. It also gives a second angle on the line."
+      },
+      "expected_evidence": "Clamp present: new occluded area becomes visible or a clamp edge appears in the image. Clamp absent: no occlusion, line remains visible.",
+      "source_ids": [
+        "PROC-MB-002"
+      ],
+      "unresolved_constraints": [],
+      "score": 2.0,
+      "score_breakdown": {
+        "evidence_support": 0.0,
+        "distinguishing": 1.0,
+        "procedure_compliance": 0.0,
+        "feasibility_cost": 1.0
+      },
+      "pruned": true,
+      "prune_reason": "score 2 < 5"
+    }
+  ],
+  "messages": [
+    {
+      "message_id": "msg_cba25ea6",
+      "task_id": "task_a9caad32",
+      "sender": "coordinator",
+      "recipient": "inspection",
+      "type": "assignment",
+      "content": "Inspect obs_01 for: Inspect the bracket face for cracks or surface damage.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:09.756371Z"
+    },
+    {
+      "message_id": "msg_ca923540",
+      "task_id": "task_a9caad32",
+      "sender": "inspection",
+      "recipient": "verification",
+      "type": "finding",
+      "content": "obs_01: target_visible=True, anomaly=True; A thin, dark, near-vertical line runs from roughly the upper part to the lower part of the part face, at about x=0.47 of the face width. It spans most of the target region's height, is slightly irregular in width and wavers slightly. No bright edge, lip or gap is visible alongside it in this view.; Fine horizontal banding or brushed texture covers the whole face, with one faint bright horizontal streak near the upper part. It is unrelated to the vertical line and is treated as background texture. | This is the first observation (front camera, left light), so there is no earlier image to compare against. A second viewing angle or lighting direction is needed to tell whether the line is a surface feature or a shadow.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:15.971385Z"
+    },
+    {
+      "message_id": "msg_0613b9ae",
+      "task_id": "task_a9caad32",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "result",
+      "content": "Retrieved ['PROC-MB-001@2.1', 'PROC-GEN-003@1.0', 'PROC-MB-002@1.0']. Rejected: PROC-GB-001 (category mismatch: written for glass_bottle, task is metal_bracket); PROC-CT-001 (category mismatch: written for ceramic_tile, task is metal_bracket).",
+      "obs_refs": [],
+      "source_ids": [
+        "PROC-MB-001",
+        "PROC-GEN-003",
+        "PROC-MB-002"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:17.151012Z"
+    },
+    {
+      "message_id": "msg_5500b651",
+      "task_id": "task_a9caad32",
+      "sender": "verification",
+      "recipient": "coordinator",
+      "type": "verification",
+      "content": "proposed=insufficient_evidence, sufficient=False. Only obs_01 (front, left light) exists. It shows a thin vertical dark line with no discontinuity, which matches the fixture-shadow description but cannot be called a shadow without a light change from the same pose. MB-2 is not met either: there is no second light and no discontinuity. PROC-MB-002 (clamp region) does not apply because nothing indicates a clamp covers the face, and the target region was visible. PROC-GEN-003 only gives general technique. The most useful next step is one lighting change from the front pose, preferably to top or diffuse light.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [
+        "PROC-MB-001"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:21.746435Z"
+    },
+    {
+      "message_id": "msg_61e51e6f",
+      "task_id": "task_a9caad32",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "proposal",
+      "content": "ToT selected b1.1 (score 10/10, 3 candidates evaluated, selection criteria met at depth 1 (score 10)). Tests: Fixture shadow (MB-1) vs. surface crack: the dark vertical line may be the fixture arm shadow cast by the left light. Changing the light from the same pose tests whether it moves or disappears.. Expects: Shadow predicts the line disappears or moves under diffuse light. A surface feature predicts it stays at the same location on the part.",
+      "obs_refs": [],
+      "source_ids": [
+        "PROC-MB-001",
+        "PROC-GEN-003"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:32.916167Z"
+    },
+    {
+      "message_id": "msg_54a426b8",
+      "task_id": "task_a9caad32",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "proposal",
+      "content": "set_lighting {'setting': 'diffuse'}: Cheapest single action that separates a light-dependent shadow from a fixed surface feature. Diffuse or top light is recommended by MB-1 and removes cast shadows. Right light would also work, but diffuse is more decisive because it removes the shadow entirely. | expects: Fixture shadow: the vertical line moves position or disappears under top/diffuse light. Crack or surface mark: the line stays at the same place on the part (x about 0.47) under the new light.",
+      "obs_refs": [],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": "set_lighting",
+      "created_at": "2026-11-16T23:46:32.917584Z"
+    },
+    {
+      "message_id": "msg_83d4df93",
+      "task_id": "task_a9caad32",
+      "sender": "coordinator",
+      "recipient": "planning",
+      "type": "result",
+      "content": "set_lighting {'setting': 'diffuse'} -> success",
+      "obs_refs": [],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:33.014687Z"
+    },
+    {
+      "message_id": "msg_2e1031d4",
+      "task_id": "task_a9caad32",
+      "sender": "inspection",
+      "recipient": "verification",
+      "type": "finding",
+      "content": "obs_02: target_visible=True, anomaly=False; The target region (roughly x 0.3-0.7, y 0.1-0.9 of the part face) shows a uniform grey surface with fine horizontal brushed-texture striations. No vertical dark line, gap, or edge is visible. A faint, thin, bright horizontal streak near the upper third spans the full width of the part.; The dark vertical line at about x=0.5 of the part face in the earlier image is not seen in this view. The area where it appeared looks continuous and evenly lit. | In obs_01 (initial light) a dark, slightly wavy vertical line ran through the target region from about y=0.1 to y=0.9 near the horizontal center. In obs_02 (diffuse light) that line is absent and the surface looks uniform with only horizontal grain. The horizontal bright streak is present in both views. The change in appearance with lighting suggests the earlier line may depend on illumination, but this view alone does not establish its cause.",
+      "obs_refs": [
+        "obs_02"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:38.507158Z"
+    },
+    {
+      "message_id": "msg_afdc8741",
+      "task_id": "task_a9caad32",
+      "sender": "verification",
+      "recipient": "coordinator",
+      "type": "verification",
+      "content": "proposed=no_defect_detected, sufficient=True. From the same front pose, obs_01 (left light) shows a thin vertical dark line at about x=0.47 and obs_02 (diffuse light) shows no such line, with the area continuous and evenly lit. Under MB-1 a vertical dark line that disappears when the light changes from the same pose is the fixture shadow, so no defect is recorded. MB-2 is not met because the line does not persist under a second light and neither observation shows a surface discontinuity. PROC-GEN-003 gives the same shadow-versus-surface reasoning. PROC-MB-002 concerns a hold-down clamp covering the bracket centre; no observation indicates a clamp occlusion here, since the target region was visible in both views, so it does not apply.",
+      "obs_refs": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-MB-001"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:42.134461Z"
+    },
+    {
+      "message_id": "msg_240c1116",
+      "task_id": "task_a9caad32",
+      "sender": "coordinator",
+      "recipient": "human",
+      "type": "report",
+      "content": "no_defect_detected: From the same front pose, obs_01 (left light) shows a thin vertical dark line at about x=0.47 and obs_02 (diffuse light) shows no such line, with the area continuous and evenly lit. Under MB-1 a vertical dark line that disappears when the light changes from the same pose is the fixture shadow, so no defect is recorded. MB-2 is not met because the line does not persist under a second light and neither observation shows a surface discontinuity. PROC-GEN-003 gives the same shadow-versus-surface reasoning. PROC-MB-002 concerns a hold-down clamp covering the bracket centre; no observation indicates a clamp occlusion here, since the target region was visible in both views, so it does not apply.",
+      "obs_refs": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-MB-001@2.1"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:46:42.146661Z"
+    }
+  ],
+  "hypotheses": [],
+  "open_questions": [],
+  "sources_used": [
+    "PROC-MB-001@2.1",
+    "PROC-GEN-003@1.0",
+    "PROC-MB-002@1.0"
+  ],
+  "missing_guidance": [],
+  "created_at": "2026-11-16T23:46:09.654126Z"
+}

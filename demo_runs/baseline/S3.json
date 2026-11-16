@@ -1,0 +1,7 @@
+{
+  "scenario_id": "S3",
+  "mode": "baseline",
+  "outcome": "suspected_defect",
+  "rationale": "A thin, dark, perfectly straight vertical line runs the full height of the green glass surface at about x=320. It could be a crack, but it is unusually straight and sits exactly at the image midline, so it may be an imaging seam or mold line. Because it is a distinct linear discontinuity on a bottle body inspected for cracks, I flag it as a suspected defect for follow-up.",
+  "image": "demo_runs/baseline/S3_initial.png"
+}

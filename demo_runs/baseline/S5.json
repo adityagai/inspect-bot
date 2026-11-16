@@ -1,0 +1,7 @@
+{
+  "scenario_id": "S5",
+  "mode": "baseline",
+  "outcome": "suspected_defect",
+  "rationale": "A thin, dark, straight line runs horizontally across the full width of the housing cover surface at about y=247. It looks like a crack or a seam. Its perfectly straight, uniform appearance could also be a panel joint or an imaging artifact. But on a surface that should be continuous, it is a plausible crack, so I flag it for follow-up inspection.",
+  "image": "demo_runs/baseline/S5_initial.png"
+}

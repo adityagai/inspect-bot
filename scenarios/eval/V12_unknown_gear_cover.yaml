@@ -1,0 +1,14 @@
+id: V12
+name: Gear cover with no procedure
+category: gear_cover
+goal: Inspect the gear cover for cracks.
+seed: 112
+initial_pose: front
+initial_light: left
+target_region: [0.25, 0.20, 0.75, 0.80]
+reference_available: false
+features:
+  - type: cast_shadow
+    orientation: vertical
+    positions: {left: 0.45, right: 0.55}
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: No approved procedure for gear_cover.}

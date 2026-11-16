@@ -1,0 +1,7 @@
+{
+  "scenario_id": "S4",
+  "mode": "baseline",
+  "outcome": "insufficient_evidence",
+  "rationale": "The inspection goal is the bracket face behind the clamp, but the dark clamp plate covers that area in the image, so it cannot be seen. The visible brushed metal surface around the clamp shows no cracks, but the hidden region is the one that matters. A defect-free call is not supported without a view behind or with the clamp removed.",
+  "image": "demo_runs/baseline/S4_initial.png"
+}

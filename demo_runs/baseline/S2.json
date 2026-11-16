@@ -1,0 +1,7 @@
+{
+  "scenario_id": "S2",
+  "mode": "baseline",
+  "outcome": "suspected_defect",
+  "rationale": "A dark, jagged, elongated line runs roughly vertically across the center of the tile face, from about (278,120) to (335,362). Its irregular, branching-free path and sharp contrast with the otherwise uniform speckled surface are consistent with a crack, so the tile is flagged as a suspected defect.",
+  "image": "demo_runs/baseline/S2_initial.png"
+}

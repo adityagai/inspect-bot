@@ -1,0 +1,18 @@
+id: V14
+name: Off-centre mark on bottle under glare
+category: glass_bottle
+goal: Inspect the bottle body for cracks.
+seed: 114
+initial_pose: front
+initial_light: top
+target_region: [0.20, 0.10, 0.60, 0.90]
+supported_lights: [top]
+unreachable_poses: [oblique_low, left_45, right_45]
+features:  # order matters: the glare is drawn over the mark
+  - type: mark
+    points: [[0.38, 0.30], [0.42, 0.70]]
+  - type: glare
+    center: [0.40, 0.50]
+    radius: 0.30
+    lights: [top]
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: Glare hides the line under the only light, and no oblique view is reachable.}

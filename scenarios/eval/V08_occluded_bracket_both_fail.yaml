@@ -1,0 +1,15 @@
+id: V08
+name: Clamp hides target; required view times out
+category: metal_bracket
+goal: Inspect the bracket face behind the clamp for cracks.
+seed: 108
+initial_pose: front
+initial_light: diffuse
+target_region: [0.38, 0.30, 0.66, 0.72]
+features:
+  - type: crack
+    points: [[0.50, 0.38], [0.52, 0.62]]
+occlusion: {region: [0.36, 0.26, 0.68, 0.76], visible_from: [left_45], label: clamp}
+scripted_failures:
+  - {tool: move_camera, args: {pose: left_45}, status: timeout, message: Arm controller timeout., times: -1}
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: Required view always fails.}

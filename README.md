@@ -16,19 +16,22 @@ The problem it tackles is that a single image often can't tell a crack from a sh
 | **Tools** | MCP server (FastMCP) exposing the robot cell, the shared task record, retrieval and reports |
 | **Robot** | CPU-only simulated inspection cell (numpy + Pillow); no GPU, no physical hardware |
 
-## Pilot results so far
+## Results
 
-Live single runs on the five demo scenarios ([Day 3](docs/day3_live_results.md), [Day 4](docs/day4_live_results.md)). These are pilot runs, not general performance claims.
+**Evaluation over 20 scenarios** (10 resolvable, 10 unresolvable): InspectBot against a prompt-only baseline using the same model and the same first image ([details](docs/day5_evaluation.md), [raw results](eval/results/20261116-1539/summary.md)).
 
-| Scenario | Correct outcome | InspectBot | Robot actions | Procedure cited | Prompt-only baseline |
-| --- | --- | --- | --- | --- | --- |
-| S1 fixture shadow | No defect | ✓ | 1 | PROC-MB-001 | ✗ called it a crack |
-| S2 real crack | Suspected defect | ✓ | 2 + reference | PROC-CT-001 | ✓ |
-| S3 mold seam | No defect | ✓ | 0 + reference | PROC-GB-001 | ✗ called it a crack |
-| S4 clamp hides target | Insufficient → review | ✓ (2 failed moves logged, never cited) | 4 | PROC-MB-002 | ✓ |
-| S5 no procedure for part | Insufficient → review | ✓ (decoy procedure rejected) | 0 | missing guidance | ✗ called it a crack |
+| Metric | InspectBot | Baseline | Target |
+| --- | --- | --- | --- |
+| Correct outcomes | **20/20** | 8/20 | — |
+| Incorrect definitive outcomes | **0** | 12 | ≥ 25% fewer ✓ |
+| Resolvable cases correct / unresolvable cases abstained | **10/10 · 10/10** | 4/10 · 4/10 | ≥ 8/10 each ✓ |
+| False clears · failed actions cited as evidence | **0 · 0** | 0 · — | 0 ✓ |
+| Escalation recall | **10/10** | 4/10 | 100% ✓ |
+| Grounded definitive reports | **10/10** | — | 100% ✓ |
+| Mean robot actions, resolvable cases | **1.3** | — | ≤ 3 ✓ |
+| Mean latency | 43 s | 2.5 s | — |
 
-InspectBot made no incorrect definitive calls (0/5); the baseline made 3/5.
+Every baseline error was a non-defect called a crack: shadows, seams, a surface mark, glare, and parts with no procedure. These are single pilot runs on synthetic scenarios, not general performance claims; see the limits in the evaluation doc.
 
 ## Architecture
 
@@ -80,16 +83,60 @@ Agents only propose. The Coordinator executes every action through the MCP tools
 
 ## Quick start
 
-```bash
-git clone https://github.com/adityagai/inspect-bot-rag.git && cd inspect-bot-rag
-python -m venv .venv && source .venv/bin/activate      # Python 3.11+
-pip install -e ".[dev,agents]"
-cp .env.example .env                                   # add your ANTHROPIC_API_KEY
+**Requirements:** Python **3.11–3.13**; CrewAI does not support 3.14 yet. Check yours with `python3 --version`. On a Mac with a newer Python, install 3.13 with `brew install python@3.13` (or from python.org) and use `python3.13` below.
 
-pytest -q                                              # 58 tests, about 12 s, no API calls
-python -m inspectbot.flow.run S1                       # inspect one scenario
-python -m inspectbot.flow.run S1 S2 S3 S4 S5 --baseline  # all five, plus the baseline
+```bash
+git clone https://github.com/adityagai/inspect-bot-rag.git
+cd inspect-bot-rag
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev,agents,ui]"
+cp .env.example .env
 ```
+
+Add your `ANTHROPIC_API_KEY` to `.env`; it's needed for live runs only. Then:
+
+```bash
+pytest -q
+streamlit run app/streamlit_app.py
+```
+
+`pytest` runs 65 tests in about 13 s with no API calls. Streamlit opens the demo app at http://localhost:8501. From the command line:
+
+```bash
+python -m inspectbot.flow.run S1
+python eval/run_eval.py
+```
+
+The first inspects one scenario; the second runs the full evaluation (20 scenarios × 2 modes, about 15 minutes).
+
+**Just want to look at the UI?** Replay mode needs neither CrewAI nor an API key, and works on any Python 3.11+, including 3.14:
+
+```bash
+pip install -e ".[ui]"
+streamlit run app/streamlit_app.py
+```
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| `No matching distribution found for crewai...` | Your Python is 3.14 or newer. Recreate `.venv` with Python 3.13 (see Requirements), or install only `.[ui]` for replay |
+| `fatal: Too many arguments` when pasting commands | zsh doesn't strip `# comments` pasted after a command. Paste the commands without trailing comments |
+| `streamlit: command not found` | Activate the environment (`source .venv/bin/activate`; on Windows `.venv\Scripts\activate`), and make sure the install finished without errors |
+| Port 8501 already in use | `streamlit run app/streamlit_app.py --server.port 8502` |
+| Live mode shows an authentication or credit error | Check `ANTHROPIC_API_KEY` in `.env` and the credit balance at console.anthropic.com |
+
+### The demo app
+
+`streamlit run app/streamlit_app.py` opens with the saved S1–S5 runs in `demo_runs/`.
+
+| Tab or mode | What it shows |
+| --- | --- |
+| **Replay** | Pick a saved run in the sidebar and drag the **Step** slider. You see the robot cell diagram, camera image and thumbnails, the agent timeline, retrieved and rejected procedures, the Tree-of-Thought tree, the report, and the baseline's answer on the same first image |
+| **Live** | Pick any of the 20 scenarios and press **▶ Start inspection**; the same panels update as the agents work (needs `ANTHROPIC_API_KEY` and the `agents` extra) |
+| **Human review** | Shown on every Insufficient-evidence report. The reviewer records a decision (clarify, supply guidance, authorize one more bounded inspection, close the case), which is saved to `review.json` and the event log |
+| **Evaluation** | The evaluation tables from `eval/results/` |
 
 ### Other commands
 
@@ -101,10 +148,11 @@ python -m inspectbot.flow.run S1 S2 S3 S4 S5 --baseline  # all five, plus the ba
 | `python -m inspectbot.sim.preview --all` | Render every pose × light view per scenario to `runs/preview/<id>/contact_sheet.png` |
 | `python scripts/vision_check.py S1 S2` | Show Claude the first image of each scenario and print what it sees |
 | `python scripts/smoke_crewai_mcp.py` | A CrewAI agent drives the robot through the MCP server (end-to-end check) |
+| `python eval/run_eval.py --set demo` / `--only V03 V13` | Evaluate a subset |
 
 Each run writes `runs/<task_id>/` containing:
 - `task_record.json`: all attempts, observations, findings, ToT candidates and messages
-- `events.jsonl`: for the upcoming Streamlit app
+- `events.jsonl`: what the Streamlit app replays
 - `report.json`
 - `images/`
 
@@ -204,7 +252,15 @@ Predictions are stored as candidates, never as observations.
 | S4 | metal bracket | clamp hides the target | `left_45` unreachable, `right_45` times out, other poses still blocked | Insufficient evidence → review |
 | S5 | pump housing | dark line | no procedure exists; similar tile procedure rejected | Insufficient evidence → review |
 
-Ground truth lives in `scenarios/*.yaml` and is used only for scoring.
+The evaluation adds 15 variants in `scenarios/eval/` (V01–V15):
+- more shadows, cracks and seams
+- a seam with a shadow
+- occluded targets with different failures
+- parts with no procedure
+- a flat surface mark (no lip: procedure CT-2 sends it to a human)
+- a mark hidden by glare
+
+Ground truth lives in the scenario files and is used only for scoring.
 
 ## Configuration (`.env`)
 
@@ -220,7 +276,7 @@ Ground truth lives in `scenarios/*.yaml` and is used only for scoring.
 
 ## Tests
 
-`pytest -q` runs 58 tests in about 12 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
+`pytest -q` runs 65 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
 
 | File | Covers |
 | --- | --- |
@@ -229,6 +285,7 @@ Ground truth lives in `scenarios/*.yaml` and is used only for scoring.
 | `test_mcp_server.py` | Every MCP tool, failures never becoming evidence, budget exhaustion, report validation |
 | `test_flow.py` | Coordinator routing, replanning after failures, rejection limits, conclusion guards, baseline |
 | `test_rag_tot.py` | Corpus versions, category filtering, decoy rejection, injection exclusion, missing guidance, ToT selection, pruning, beam and depth limits, server-side ToT cap |
+| `test_ui_eval.py` | Replay reconstruction at any step, ToT tree rendering, run ordering, evaluation metrics and targets, the balanced scenario set, mark-versus-crack rendering |
 
 ## Repository layout
 
@@ -243,10 +300,14 @@ src/inspectbot/
   rag/         retriever.py (corpus, chunking, Chroma, category filter, injection flags)
   reasoning/   tot.py (bounded Tree-of-Thought)
   baseline/    prompt_only.py
+  ui/          replay.py (rebuilds the app view at any step from events.jsonl)
+app/           streamlit_app.py (replay, live, human review, evaluation)
+eval/          run_eval.py, metrics.py, results/<stamp>/ (cases.json, summary.json, summary.md)
+demo_runs/     saved S1–S5 runs + baseline answers, replayed by the app
 corpus/        14 procedure / guideline / reference documents with front matter
-scenarios/     S1–S5 YAML (features, scripted failures, ground truth)
+scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
 scripts/       vision_check.py, smoke_crewai_mcp.py
-docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md
+docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md
 tests/
 ```
 
@@ -257,11 +318,13 @@ tests/
 | 1 | Data models, simulated inspection cell, S1–S5 scenarios, cell diagram, preview tool | merged (#1) |
 | 2 | MCP server for robot tools and the shared task record; CrewAI → MCP smoke test | merged (#2) |
 | 3 | CrewAI Flow Coordinator, Planning / Inspection / Verification agents, ReAct loop, baseline | merged (#3) |
-| 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | in review (#4) |
-| 5 | Streamlit app (live + replay, ToT tree, human-review panel), evaluation over 20 scenarios, demo recordings | next |
+| 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
+| 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
+| 6 | Demo video, final polish | next |
 
 ## Scope and limitations
 
 - **Simulated only:** one object per inspection, in simulation or advisory mode. No physical equipment is controlled.
 - **Synthetic procedures:** they were written for these experiments and are not industry standards. Public references are paraphrased summaries.
 - **Pilot results:** the results above come from single pilot runs. Model outputs can vary between runs.
+- **No MVTec experiment:** the MVTec AD static-image experiment from the proposal is not part of this MVP.

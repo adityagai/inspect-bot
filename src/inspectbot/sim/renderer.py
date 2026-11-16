@@ -8,6 +8,7 @@ distinguishable are deliberate and documented, because the scenarios depend on t
                the lit edge; oblique_low reveals a bright raised lip and a wider gap.
 - cast_shadow: dark soft band only for the lights listed, at a light-dependent
                position; absent under top or diffuse light.
+- mark:        like a crack under every light, but flat: no lip or gap from any view.
 - seam:        straight, even-width line; also present on the reference sample.
 - glare:       bright spot for the listed lights; hides detail underneath.
 - occlusion:   clamp drawn over a region unless the pose is in `visible_from`.
@@ -21,7 +22,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 from inspectbot.core.models import Lighting, Pose
-from inspectbot.sim.scenario import CastShadow, Crack, Glare, Scenario, Seam
+from inspectbot.sim.scenario import CastShadow, Crack, Glare, Mark, Scenario, Seam
 
 PART_W, PART_H = 512, 384
 OUT_W, OUT_H = 640, 480
@@ -147,6 +148,13 @@ def render_part(scn: Scenario, pose: Pose, light: Lighting, *, include_defects: 
                 strength = 0.55 if pose == Pose.OBLIQUE_LOW else 0.22
                 hm = _mask(lambda d, p=lip: d.line(p, fill=255, width=2), blur=0.6)
                 img = img + (255 - img) * strength * hm
+
+        elif isinstance(feat, Mark) and include_defects:
+            # Same darkness and path style as a crack, but flat: no lip, no widening at oblique_low.
+            pts = _jagged(Crack(points=feat.points, width_px=feat.width_px, jitter=feat.jitter),
+                          _seed(scn.seed, "mark", i))
+            m = _mask(lambda d, p=pts, w=feat.width_px: d.line(p, fill=255, width=w, joint="curve"))
+            img = img * (1 - 0.62 * m)
 
         elif isinstance(feat, CastShadow) and include_defects:
             if light in feat.positions:

@@ -1,0 +1,12 @@
+id: V04
+name: Short crack on tile
+category: ceramic_tile
+goal: Inspect the tile face for cracks.
+seed: 104
+initial_pose: front
+initial_light: diffuse
+target_region: [0.30, 0.20, 0.70, 0.80]
+features:
+  - type: crack
+    points: [[0.50, 0.35], [0.47, 0.50], [0.52, 0.64]]
+ground_truth: {outcome: suspected_defect, resolvable: true, notes: Crack (CT-1).}

@@ -1,0 +1,14 @@
+id: V15
+name: Pump housing with a shadow, no procedure
+category: pump_housing
+goal: Inspect the pump housing cover for cracks.
+seed: 115
+initial_pose: front
+initial_light: right
+target_region: [0.25, 0.20, 0.75, 0.80]
+reference_available: false
+features:
+  - type: cast_shadow
+    orientation: vertical
+    positions: {left: 0.40, right: 0.56}
+ground_truth: {outcome: insufficient_evidence, resolvable: false, notes: No approved procedure for pump_housing.}

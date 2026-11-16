@@ -1,0 +1,140 @@
+{
+  "task_id": "task_6668c3b0",
+  "scenario_id": "S5",
+  "object_category": "pump_housing",
+  "goal": "Inspect the pump housing cover for cracks.",
+  "criteria": [],
+  "budget": {
+    "max_actions": 5,
+    "actions_used": 0,
+    "max_aux_calls": 6,
+    "aux_calls_used": 0,
+    "max_tot_invocations": 1,
+    "tot_invocations": 0,
+    "max_tot_evaluations": 15,
+    "tot_evaluations_used": 0
+  },
+  "attempts": [
+    {
+      "attempt_id": "act_01",
+      "tool": "initial_capture",
+      "args": {
+        "pose": "front",
+        "light": "left"
+      },
+      "status": "success",
+      "error": null,
+      "counts_against_budget": false,
+      "obs_id": "obs_01",
+      "created_at": "2026-11-16T23:49:09.908860Z"
+    }
+  ],
+  "observations": [
+    {
+      "obs_id": "obs_01",
+      "attempt_id": "act_01",
+      "kind": "camera",
+      "pose": "front",
+      "light": "left",
+      "image_path": "demo_runs/S5/images/obs_01.png",
+      "parent_obs_id": null,
+      "bbox": null,
+      "source_id": null,
+      "created_at": "2026-11-16T23:49:09.908909Z"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "fnd_1bd60f47",
+      "obs_ids": [
+        "obs_01"
+      ],
+      "description": "A thin, dark, straight horizontal line crosses the full width of the part face at roughly y=0.52 of the image height. It passes through the target region and continues edge to edge. The line is uniform in thickness and has no visible branching or taper. The surface on both sides looks the same in tone and texture.",
+      "region": null,
+      "hypotheses": [
+        "panel seam or joint between two plates",
+        "machined or molded parting line",
+        "scratch or scribe mark",
+        "crack (cannot be confirmed from appearance alone)"
+      ],
+      "uncertainty": "high",
+      "source_ids": []
+    }
+  ],
+  "candidates": [],
+  "messages": [
+    {
+      "message_id": "msg_d9bed50c",
+      "task_id": "task_6668c3b0",
+      "sender": "coordinator",
+      "recipient": "inspection",
+      "type": "assignment",
+      "content": "Inspect obs_01 for: Inspect the pump housing cover for cracks.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:49:09.910723Z"
+    },
+    {
+      "message_id": "msg_6ab6f7ba",
+      "task_id": "task_6668c3b0",
+      "sender": "inspection",
+      "recipient": "verification",
+      "type": "finding",
+      "content": "obs_01: target_visible=True, anomaly=True; A thin, dark, straight horizontal line crosses the full width of the part face at roughly y=0.52 of the image height. It passes through the target region and continues edge to edge. The line is uniform in thickness and has no visible branching or taper. The surface on both sides looks the same in tone and texture.; The face shows a mild left-to-right brightness gradient, brighter on the left and darker on the right, consistent with the left light. No glare, clamp or plate covers the target region. | No earlier observation is available, so this is the first view and there is nothing to compare against. No raised edge, bright lip or visible gap is seen along the line under left lighting from the front pose.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:49:13.445366Z"
+    },
+    {
+      "message_id": "msg_2bfd18a5",
+      "task_id": "task_6668c3b0",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "result",
+      "content": "Retrieved ['PROC-GEN-003@1.0', 'PROC-GEN-001@1.0', 'PUB-003@1.0']. Rejected: PROC-MB-001 (category mismatch: written for metal_bracket, task is pump_housing); PROC-CT-003 (category mismatch: written for ceramic_tile, task is pump_housing); PROC-GB-001 (category mismatch: written for glass_bottle, task is pump_housing). MISSING: no approved procedure for category 'pump_housing'",
+      "obs_refs": [],
+      "source_ids": [
+        "PROC-GEN-003",
+        "PROC-GEN-001",
+        "PUB-003"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:49:13.457205Z"
+    },
+    {
+      "message_id": "msg_69cb0c23",
+      "task_id": "task_6668c3b0",
+      "sender": "coordinator",
+      "recipient": "human",
+      "type": "escalation",
+      "content": "Insufficient evidence (no approved procedure for category 'pump_housing'). Human review requested.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-16T23:49:13.464447Z"
+    }
+  ],
+  "hypotheses": [],
+  "open_questions": [],
+  "sources_used": [
+    "PROC-GEN-003@1.0",
+    "PROC-GEN-001@1.0",
+    "PUB-003@1.0"
+  ],
+  "missing_guidance": [
+    "no approved procedure for category 'pump_housing'"
+  ],
+  "created_at": "2026-11-16T23:49:09.802437Z"
+}

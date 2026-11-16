@@ -1,0 +1,27 @@
+{
+  "task_id": "task_305a85df",
+  "scenario_id": "S3",
+  "outcome": "no_defect_detected",
+  "summary": "obs_01 shows a thin, straight, uniform-width, full-height vertical line at x≈0.5, within the 0.48-0.52 centre band, with no branching, no bright edge and surface_discontinuity=false. The approved reference obs_02 (REF-GLASS_BOTTLE-v1) has matches_reference=true and shows the same line at the same position, width and darkness. All three GB-1 conditions are met, so this is the expected mold seam and no defect is recorded. PROC-GB-002 explicitly leaves straight centre-line seams to PROC-GB-001, and GB-3 conditions (irregular or off-centre, bright edge) are not met, so it does not apply. PROC-GEN-003 is general technique and did not decide the outcome.",
+  "evidence": [
+    {
+      "claim": "obs_01 shows a thin, straight, uniform-width, full-height vertical line at x≈0.5, within the 0.48-0.52 centre band, with no branching, no bright edge and surface_discontinuity=false. The approved reference obs_02 (REF-GLASS_BOTTLE-v1) has matches_reference=true and shows the same line at the same position, width and darkness. All three GB-1 conditions are met, so this is the expected mold seam and no defect is recorded. PROC-GB-002 explicitly leaves straight centre-line seams to PROC-GB-001, and",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-GB-001@3.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "No raking-light or oblique view was taken, though it is not needed since GB-1 is met"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-GB-001@3.0"
+  ],
+  "needs_human_review": false,
+  "scope_note": "Covers only target region [0.3, 0.1, 0.7, 0.9] of this part, viewed as [('front', 'left')]. Not a safety certification."
+}
