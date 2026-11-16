@@ -83,19 +83,49 @@ Agents only propose. The Coordinator executes every action through the MCP tools
 
 ## Quick start
 
-```bash
-git clone https://github.com/adityagai/inspect-bot-rag.git && cd inspect-bot-rag
-python -m venv .venv && source .venv/bin/activate      # Python 3.11+
-pip install -e ".[dev,agents]"
-cp .env.example .env                                   # add your ANTHROPIC_API_KEY
+**Requirements:** Python **3.11–3.13**; CrewAI does not support 3.14 yet. Check yours with `python3 --version`. On a Mac with a newer Python, install 3.13 with `brew install python@3.13` (or from python.org) and use `python3.13` below.
 
-pytest -q                                              # 65 tests, about 13 s, no API calls
-streamlit run app/streamlit_app.py                     # demo app: replay saved runs or run live
-python -m inspectbot.flow.run S1                       # inspect one scenario from the command line
-python eval/run_eval.py                                # full evaluation (20 scenarios x 2 modes, ~15 min)
+```bash
+git clone https://github.com/adityagai/inspect-bot-rag.git
+cd inspect-bot-rag
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev,agents,ui]"
+cp .env.example .env
 ```
 
-`pip install -e ".[dev,agents,ui]"` adds Streamlit for the app.
+Add your `ANTHROPIC_API_KEY` to `.env`; it's needed for live runs only. Then:
+
+```bash
+pytest -q
+streamlit run app/streamlit_app.py
+```
+
+`pytest` runs 65 tests in about 13 s with no API calls. Streamlit opens the demo app at http://localhost:8501. From the command line:
+
+```bash
+python -m inspectbot.flow.run S1
+python eval/run_eval.py
+```
+
+The first inspects one scenario; the second runs the full evaluation (20 scenarios × 2 modes, about 15 minutes).
+
+**Just want to look at the UI?** Replay mode needs neither CrewAI nor an API key, and works on any Python 3.11+, including 3.14:
+
+```bash
+pip install -e ".[ui]"
+streamlit run app/streamlit_app.py
+```
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| `No matching distribution found for crewai...` | Your Python is 3.14 or newer. Recreate `.venv` with Python 3.13 (see Requirements), or install only `.[ui]` for replay |
+| `fatal: Too many arguments` when pasting commands | zsh doesn't strip `# comments` pasted after a command. Paste the commands without trailing comments |
+| `streamlit: command not found` | Activate the environment (`source .venv/bin/activate`; on Windows `.venv\Scripts\activate`), and make sure the install finished without errors |
+| Port 8501 already in use | `streamlit run app/streamlit_app.py --server.port 8502` |
+| Live mode shows an authentication or credit error | Check `ANTHROPIC_API_KEY` in `.env` and the credit balance at console.anthropic.com |
 
 ### The demo app
 
@@ -103,8 +133,8 @@ python eval/run_eval.py                                # full evaluation (20 sce
 
 | Tab or mode | What it shows |
 | --- | --- |
-| **Replay** | Step through a saved run with a slider: the robot cell diagram, the camera image and thumbnails, the agent timeline, retrieved and rejected procedures, the Tree-of-Thought tree with scores and pruning, the report, and the baseline's answer on the same first image |
-| **Live** | Pick any of the 20 scenarios and press Start; the same panels update as the agents work (needs `ANTHROPIC_API_KEY`) |
+| **Replay** | Pick a saved run in the sidebar and drag the **Step** slider. You see the robot cell diagram, camera image and thumbnails, the agent timeline, retrieved and rejected procedures, the Tree-of-Thought tree, the report, and the baseline's answer on the same first image |
+| **Live** | Pick any of the 20 scenarios and press **▶ Start inspection**; the same panels update as the agents work (needs `ANTHROPIC_API_KEY` and the `agents` extra) |
 | **Human review** | Shown on every Insufficient-evidence report. The reviewer records a decision (clarify, supply guidance, authorize one more bounded inspection, close the case), which is saved to `review.json` and the event log |
 | **Evaluation** | The evaluation tables from `eval/results/` |
 
@@ -289,7 +319,7 @@ tests/
 | 2 | MCP server for robot tools and the shared task record; CrewAI → MCP smoke test | merged (#2) |
 | 3 | CrewAI Flow Coordinator, Planning / Inspection / Verification agents, ReAct loop, baseline | merged (#3) |
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
-| 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | in review (#5) |
+| 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
 | 6 | Demo video, final polish | next |
 
 ## Scope and limitations

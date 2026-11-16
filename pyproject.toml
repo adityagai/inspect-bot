@@ -7,7 +7,7 @@ name = "inspectbot"
 version = "0.1.0"
 description = "InspectBot: multi-agent research assistant for simulated robotic visual inspection (Agentic AI capstone)"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11"  # the [agents] extra (CrewAI) needs < 3.14
 dependencies = [
   "pydantic>=2.7",
   "numpy>=1.26",
