@@ -22,6 +22,8 @@ from inspectbot.core.models import (
     Finding,
     Message,
     MessageType,
+    Outcome,
+    Report,
     TaskRecord,
 )
 from inspectbot.core.task_store import BudgetExhausted, TaskStore, check_budget, record_result
@@ -162,3 +164,19 @@ class SessionManager:
         s.events.emit("message", **m.model_dump(mode="json"))
         self.store.save(s.record)
         return {"message_id": m.message_id}
+
+    def submit_report(self, task_id: str, report: dict[str, Any]) -> dict[str, Any]:
+        """Validate and store the final report. Every cited obs_id must be a real observation."""
+        s = self.get(task_id)
+        rep = Report.model_validate({**report, "task_id": task_id, "scenario_id": s.scenario.id})
+        cited = {o for link in rep.evidence for o in link.obs_ids}
+        unknown = sorted(o for o in cited if s.record.observation(o) is None)
+        if unknown:
+            raise SessionError(f"report cites observations that do not exist: {unknown}")
+        failed = {a.attempt_id for a in s.record.failed_attempts}
+        rep.failed_attempt_ids = sorted(failed)
+        path = self.store.run_dir(task_id) / "report.json"
+        path.write_text(rep.model_dump_json(indent=2))
+        s.events.emit("report", **rep.model_dump(mode="json"))
+        return {"saved": str(path), "outcome": rep.outcome.value,
+                "needs_human_review": rep.needs_human_review or rep.outcome == Outcome.INSUFFICIENT_EVIDENCE}

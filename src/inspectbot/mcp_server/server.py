@@ -17,6 +17,7 @@ import os
 from typing import Any, Literal
 
 from mcp.server.fastmcp import FastMCP, Image
+from pydantic import ValidationError
 from mcp.server.fastmcp.exceptions import ToolError
 
 from inspectbot.mcp_server.session import SessionError, SessionManager
@@ -24,7 +25,7 @@ from inspectbot.mcp_server.session import SessionError, SessionManager
 # Tool groups, used by agents' static tool filters (allow-lists) on the client side.
 ROBOT_TOOLS = ["move_camera", "set_lighting"]
 IMAGE_TOOLS = ["zoom_region", "get_reference", "get_observation_image"]
-RECORD_TOOLS = ["get_task_record", "append_finding", "post_message"]
+RECORD_TOOLS = ["get_task_record", "append_finding", "post_message", "submit_report"]
 LIFECYCLE_TOOLS = ["start_inspection"]
 
 Pose = Literal["front", "left_45", "right_45", "top", "oblique_low"]
@@ -51,7 +52,7 @@ def build_server(manager: SessionManager | None = None, host: str = "127.0.0.1",
     def _call(fn, *args: Any, **kwargs: Any) -> Any:
         try:
             return fn(*args, **kwargs)
-        except SessionError as e:
+        except (SessionError, ValidationError) as e:
             raise ToolError(str(e)) from e
 
     # ---------------------------------------------------------------- lifecycle
@@ -125,6 +126,14 @@ def build_server(manager: SessionManager | None = None, host: str = "127.0.0.1",
         """Post a structured message between agents onto the shared task record."""
         return _call(sessions.post_message, task_id, sender, recipient, type, content,
                      obs_refs, source_ids, next_step)
+
+    @mcp.tool()
+    def submit_report(task_id: str, report: dict[str, Any]) -> dict[str, Any]:
+        """Submit the final inspection report (outcome, summary, evidence links, remaining
+        uncertainty, sources, needs_human_review, scope_note). Rejected unless every definitive
+        outcome cites real observations, No defect detected states its scope, and Insufficient
+        evidence requests human review."""
+        return _call(sessions.submit_report, task_id, report)
 
     mcp.sessions = sessions  # type: ignore[attr-defined]  # handy for in-process tests and the Flow
     return mcp
