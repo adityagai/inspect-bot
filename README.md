@@ -14,8 +14,8 @@ Stack: Anthropic Claude (Sonnet for vision, Haiku for text agents), CrewAI (Flow
 | --- | --- | --- |
 | 1 | Repo scaffold, data models, virtual inspection cell, S1–S5 scenarios, schematic, preview tool | merged (#1) |
 | 2 | MCP server for robot tools + task store; CrewAI agent → MCP smoke test | merged (#2) |
-| 3 | CrewAI Flow Coordinator + Planning / Inspection / Verification agents, ReAct loop, baseline | this branch |
-| 4 | LangChain RAG, bounded ToT, guardrails, escalation | planned |
+| 3 | CrewAI Flow Coordinator + Planning / Inspection / Verification agents, ReAct loop, baseline | merged (#3) |
+| 4 | LangChain RAG over versioned procedures, bounded ToT, guardrails, escalation | this branch |
 | 5 | Streamlit app (live + replay), evaluation | planned |
 
 ## Quick start
@@ -25,10 +25,31 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 cp .env.example .env               # add ANTHROPIC_API_KEY (needed from Day 2; optional today)
 
-pytest -q                          # 45 tests, about 10 s (no API calls)
+pytest -q                          # 58 tests, about 12 s (no API calls)
 python -m inspectbot.sim.preview --all   # writes runs/preview/<id>/contact_sheet.png
 python scripts/vision_check.py S1 S2     # optional: what Claude sees in the first image
 ```
+
+## Procedures and retrieval (Day 4)
+
+`corpus/` holds 14 short documents: synthetic, versioned procedures per category, general guidelines and paraphrased public references. One is a superseded version and one is a decoy for S5. `rag/retriever.py` works like this:
+- **Chunking:** LangChain section-aware splitting.
+- **Index:** a Chroma collection.
+- **Filter first:** only the task's confirmed category plus `general` is eligible.
+- **Ranking:** top 3 by similarity, with duplicates removed.
+- **Visible rejections:** strong hits for other categories are reported as rejected.
+- **Missing guidance:** if no procedure exists for the category, the Coordinator escalates instead of letting an agent invent a criterion.
+
+Embeddings default to `hashing` (offline, deterministic); set `INSPECTBOT_EMBEDDINGS=minilm` to use Chroma's local MiniLM model.
+
+## Tree-of-Thought (Day 4)
+
+`reasoning/tot.py` runs at most once per inspection, when explanations compete.
+- **Generate and score:** Planning proposes up to 3 steps; Verification scores each 0–10 (evidence 0–3, distinguishing 0–3, procedure 0–2, cost 0–2).
+- **Search limits (in code):** prune below 5, beam 2, depth 3, 15 evaluations, stop early at 8 or more.
+- **Server enforcement:** the MCP server rejects a second ToT search or more than 15 evaluations.
+
+Ablations: `--no-rag`, `--no-tot`. Results are in [`docs/day4_live_results.md`](docs/day4_live_results.md).
 
 ## Running an inspection (Day 3)
 
@@ -127,9 +148,11 @@ src/inspectbot/
   agents/      llm.py (Claude for CrewAI), schemas.py, prompts.py, runner.py (CrewAI / scripted)
   flow/        inspection_flow.py (Coordinator), guards.py, gateway.py (MCP / local), run.py
   baseline/    prompt_only.py
-  reasoning/  rag/   # Day 4
+  rag/         retriever.py (corpus loading, chunking, Chroma, category filter, injection flags)
+  reasoning/   tot.py (bounded Tree-of-Thought)
+corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML
 scripts/       vision_check.py, smoke_crewai_mcp.py
-docs/          day1_vision_check.md, day3_live_results.md
+docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md
 tests/
 ```

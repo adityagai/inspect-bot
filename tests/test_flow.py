@@ -14,7 +14,6 @@ from inspectbot.baseline.prompt_only import run_baseline
 from inspectbot.core.models import Outcome
 from inspectbot.flow.gateway import LocalGateway
 from inspectbot.flow.guards import check_conclusion, check_plan
-from inspectbot.flow.inspection_flow import run_inspection
 from inspectbot.mcp_server.session import SessionManager
 
 LINE = FindingDraft(description="dark vertical line", hypotheses=["crack", "cast shadow"], uncertainty="high")
@@ -24,9 +23,16 @@ def insp(visible=True, anomaly=True, findings=(LINE,)):
     return InspectionOutput(obs_id="?", target_visible=visible, anomaly_present=anomaly, findings=list(findings))
 
 
-def verify(outcome, sufficient, cited=(), missing=()):
+def verify(outcome, sufficient, cited=(), missing=(), src=("PROC-MB-001",)):
     return VerificationOutput(proposed_outcome=outcome, evidence_sufficient=sufficient,
-                              cited_obs_ids=list(cited), missing_evidence=list(missing), rationale="r")
+                              cited_obs_ids=list(cited), missing_evidence=list(missing), rationale="r",
+                              source_ids_applied=list(src))
+
+
+def run_inspection(sid, g, runner, **kw):
+    """Day 3 flow tests: retrieval on, ToT off (ToT has its own tests)."""
+    from inspectbot.flow.inspection_flow import run_inspection as _run
+    return _run(sid, g, runner, use_tot=kw.pop("use_tot", False), **kw)
 
 
 def gw(tmp_path):

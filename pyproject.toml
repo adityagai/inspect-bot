@@ -28,6 +28,7 @@ agents = [
   "langchain-anthropic>=0.3",
   "langchain-chroma>=0.2",
   "langchain-text-splitters>=0.3",
+  "scikit-learn>=1.3",
 ]
 ui = ["streamlit>=1.38"]
 dev = ["pytest>=8.0", "ruff>=0.6"]

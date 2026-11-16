@@ -19,6 +19,7 @@ from crewai.flow.flow import Flow, listen, or_, router, start
 from pydantic import BaseModel, Field, PrivateAttr
 
 from inspectbot.agents.prompts import GENERAL_CRITERIA_ID, inspection_prompt, planning_prompt, verification_prompt
+from inspectbot.reasoning.tot import candidates_payload, run_tot
 from inspectbot.agents.runner import AgentRunner
 from inspectbot.agents.schemas import InspectionOutput, PlanOutput, VerificationOutput
 from inspectbot.core.models import Outcome
@@ -40,6 +41,9 @@ class InspectionState(BaseModel):
     pending_obs: list[str] = Field(default_factory=list)
     inspections: dict[str, dict[str, Any]] = Field(default_factory=dict)
     verification: dict[str, Any] | None = None
+    procedures: list[dict[str, Any]] | None = None
+    retrieval: dict[str, Any] | None = None
+    tot: dict[str, Any] | None = None
     plans: list[dict[str, Any]] = Field(default_factory=list)
     steps: int = 0
     stop_reason: str = ""
@@ -50,10 +54,14 @@ class InspectionFlow(Flow[InspectionState]):
     _gateway: Any = PrivateAttr(default=None)
     _runner: Any = PrivateAttr(default=None)
     _max_steps: int = PrivateAttr(default=6)
+    _use_rag: bool = PrivateAttr(default=True)
+    _use_tot: bool = PrivateAttr(default=True)
 
-    def __init__(self, gateway: Gateway, runner: AgentRunner, max_steps: int = 6, **kwargs: Any) -> None:
+    def __init__(self, gateway: Gateway, runner: AgentRunner, max_steps: int = 6, use_rag: bool = True,
+                 use_tot: bool = True, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self._gateway, self._runner, self._max_steps = gateway, runner, max_steps
+        self._use_rag, self._use_tot = use_rag, use_tot
 
     @property
     def gateway(self) -> Gateway:
@@ -127,12 +135,37 @@ class InspectionFlow(Flow[InspectionState]):
                       obs_refs=[oid])
         s.pending_obs = []
 
+    def _retrieve(self) -> None:
+        """Once per inspection: fetch procedures for the confirmed category through MCP."""
+        s = self.state
+        first = s.inspections.get(s.initial_obs, {})
+        seen = "; ".join(f"{f['description']} ({', '.join(f['hypotheses'])})" for f in first.get("findings", []))
+        query = f"{s.task['goal']} {s.task['object_category']} {seen}"
+        r = self.gateway.call("retrieve_procedures", task_id=s.task_id, query=query)
+        s.retrieval, s.procedures = r, r["passages"]
+        rejected = "; ".join(f"{x['source_id']} ({x['reason']})" for x in r["rejected"]) or "none"
+        self._say("planning", "coordinator", "result",
+                  f"Retrieved {[p['source_id'] + '@' + p['version'] for p in r['passages']]}. Rejected: {rejected}."
+                  + (f" MISSING: {r['missing_guidance']}" if r["missing_guidance"] else ""),
+                  source_ids=[p["source_id"] for p in r["passages"]])
+
     @listen(inspect)
     def verify(self) -> None:
         s = self.state
+        if self._use_rag and s.procedures is None:
+            self._retrieve()
+            if s.retrieval["missing_guidance"]:
+                # No criterion to apply: do not let an agent invent one (Checkpoint 3.1).
+                s.verification = VerificationOutput(
+                    proposed_outcome=Outcome.INSUFFICIENT_EVIDENCE, evidence_sufficient=False,
+                    missing_evidence=[s.retrieval["missing_guidance"]],
+                    rationale=(f"{s.retrieval['missing_guidance']}. Similar procedures for other categories were "
+                               "rejected; without an applicable criterion the line cannot be classified.")).model_dump(mode="json")
+                return
         record = self._record()
         attempts = [{k: a[k] for k in ("attempt_id", "tool", "args", "status", "obs_id")} for a in record["attempts"]]
-        v = self.runner.run("verification", verification_prompt(s.task, list(s.inspections.values()), attempts),
+        v = self.runner.run("verification", verification_prompt(s.task, list(s.inspections.values()), attempts,
+                                                                s.procedures if self._use_rag else None),
                             VerificationOutput)
         s.verification = v.model_dump(mode="json")
         self._say("verification", "coordinator", "verification",
@@ -144,9 +177,13 @@ class InspectionFlow(Flow[InspectionState]):
     def decide(self) -> str:
         s = self.state
         v = VerificationOutput.model_validate(s.verification)
+        if s.retrieval and s.retrieval["missing_guidance"]:
+            s.stop_reason = s.retrieval["missing_guidance"]
+            return "needs_human"
         record = self._record()
         inspections = {k: InspectionOutput.model_validate(x) for k, x in s.inspections.items()}
-        guard = check_conclusion(v, record, inspections)
+        guard = check_conclusion(v, record, inspections, s.procedures if self._use_rag else None,
+                                 s.task["object_category"])
         if guard.ok:
             s.stop_reason = "evidence requirements met"
             return "criteria_met"
@@ -180,8 +217,11 @@ class InspectionFlow(Flow[InspectionState]):
                      "observed_views": sorted(observed_views(record)),
                      "failed": [(a["tool"], a["args"], a["status"]) for a in record["attempts"]
                                 if a["status"] != "success"]}
-            plan = self.runner.run("planning", planning_prompt(s.task, state, list(s.inspections.values()),
-                                                               s.verification, feedback), PlanOutput)
+            plan = self._tot_plan(record, state) if feedback is None else None
+            if plan is None:
+                plan = self.runner.run("planning", planning_prompt(s.task, state, list(s.inspections.values()),
+                                                                   s.verification, feedback,
+                                                                   s.procedures if self._use_rag else None), PlanOutput)
             guard = check_plan(plan, record, s.pose, s.light, s.task)
             entry = {**plan.model_dump(), "accepted": guard.ok, "guard": guard.reason}
             s.plans.append(entry)
@@ -209,7 +249,41 @@ class InspectionFlow(Flow[InspectionState]):
         s.stop_reason = f"planner proposals rejected {rejections} times in a row"
         return "needs_human"
 
+    def _competing(self) -> bool:
+        latest = list(self.state.inspections.values())[-1] if self.state.inspections else {}
+        hyps = {h.lower() for f in latest.get("findings", []) for h in f.get("hypotheses", [])}
+        return len(hyps) >= 2
+
+    def _tot_plan(self, record: dict[str, Any], state: dict[str, Any]) -> PlanOutput | None:
+        """Bounded ToT, at most once per inspection, only when explanations compete."""
+        s = self.state
+        if not self._use_tot or s.tot is not None or not self._competing():
+            return None
+        res = run_tot(self.runner, s.task, state, record, list(s.inspections.values()), s.procedures,
+                      s.pose, s.light)
+        self.gateway.call("record_tot", task_id=s.task_id, candidates=candidates_payload(res),
+                          selected_branch=res.selected.branch_id if res.selected else None)
+        s.tot = {"selected": res.selected.branch_id if res.selected else None, "evaluations": res.evaluations,
+                 "llm_calls": res.llm_calls, "stop_reason": res.stop_reason,
+                 "nodes": candidates_payload(res)}
+        if res.selected:
+            c = res.selected
+            self._say("planning", "coordinator", "proposal",
+                      f"ToT selected {c.branch_id} (score {c.score:.0f}/10, {res.evaluations} candidates evaluated, "
+                      f"{res.stop_reason}). Tests: {c.hypothesis}. Expects: {c.expected_evidence}",
+                      source_ids=c.source_ids)
+        return res.selected_step
+
     # ------------------------------------------------------------------ outcomes
+
+    def _sources(self, applied: list[str] | None = None) -> list[str]:
+        """Source ids with versions; all retrieved ones unless a specific applied set is given."""
+        procs = self.state.procedures
+        if procs is None:
+            return [GENERAL_CRITERIA_ID]
+        ids = applied if applied else [p["source_id"] for p in procs]
+        ver = {p["source_id"]: p["version"] for p in procs}
+        return [f"{i}@{ver[i]}" if i in ver else i for i in ids]
 
     def _submit(self, report: dict[str, Any]) -> dict[str, Any]:
         self.gateway.call("submit_report", task_id=self.state.task_id, report=report)
@@ -226,15 +300,15 @@ class InspectionFlow(Flow[InspectionState]):
             "outcome": v.proposed_outcome.value,
             "summary": v.rationale,
             "evidence": [{"claim": v.rationale[:500], "obs_ids": [o for o in v.cited_obs_ids if o in s.obs_paths],
-                          "source_ids": [GENERAL_CRITERIA_ID]}],
+                          "source_ids": self._sources(v.source_ids_applied)}],
             "remaining_uncertainty": v.missing_evidence,
-            "sources": [GENERAL_CRITERIA_ID],
+            "sources": self._sources(v.source_ids_applied),
             "needs_human_review": False,
             "scope_note": (f"Covers only target region {s.task['target_region']} of this part, viewed as "
                            f"{views}. Not a safety certification.") if v.proposed_outcome == Outcome.NO_DEFECT_DETECTED else None,
         }
         self._say("coordinator", "human", "report", f"{v.proposed_outcome.value}: {v.rationale}",
-                  obs_refs=report["evidence"][0]["obs_ids"], source_ids=[GENERAL_CRITERIA_ID])
+                  obs_refs=report["evidence"][0]["obs_ids"], source_ids=report["sources"])
         return self._submit(report)
 
     @listen("needs_human")
@@ -247,9 +321,9 @@ class InspectionFlow(Flow[InspectionState]):
             "outcome": Outcome.INSUFFICIENT_EVIDENCE.value,
             "summary": f"Stopped: {s.stop_reason}. " + (v.rationale if v else ""),
             "evidence": [{"claim": "Observations reviewed before escalation", "obs_ids": all_obs,
-                          "source_ids": [GENERAL_CRITERIA_ID]}] if all_obs else [],
+                          "source_ids": self._sources()}] if all_obs else [],
             "remaining_uncertainty": (v.missing_evidence + v.contradictions) if v else [s.stop_reason],
-            "sources": [GENERAL_CRITERIA_ID],
+            "sources": self._sources(),
             "needs_human_review": True,
         }
         self._say("coordinator", "human", "escalation",
@@ -257,7 +331,8 @@ class InspectionFlow(Flow[InspectionState]):
         return self._submit(report)
 
 
-def run_inspection(scenario_id: str, gateway: Gateway, runner: AgentRunner, max_steps: int = 6) -> InspectionState:
-    flow = InspectionFlow(gateway=gateway, runner=runner, max_steps=max_steps)
+def run_inspection(scenario_id: str, gateway: Gateway, runner: AgentRunner, max_steps: int = 6,
+                   use_rag: bool = True, use_tot: bool = True) -> InspectionState:
+    flow = InspectionFlow(gateway=gateway, runner=runner, max_steps=max_steps, use_rag=use_rag, use_tot=use_tot)
     flow.kickoff(inputs={"scenario_id": scenario_id})
     return flow.state

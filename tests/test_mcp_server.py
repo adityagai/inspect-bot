@@ -12,6 +12,7 @@ from inspectbot.mcp_server.session import SessionManager
 EXPECTED_TOOLS = {
     "start_inspection", "move_camera", "set_lighting", "zoom_region", "get_reference",
     "get_observation_image", "get_task_record", "append_finding", "post_message", "submit_report",
+    "retrieve_procedures", "record_tot",
 }
 
 
