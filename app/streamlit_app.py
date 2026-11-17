@@ -4,6 +4,9 @@
 
 Replay: step through a saved run (demo_runs/ ships with S1-S5).
 Live:   run an inspection now (needs ANTHROPIC_API_KEY) and watch it update.
+
+URL parameters (handy for demos and recording), e.g. http://localhost:8501/?run=S1&step=11
+    run=<run folder name>   step=<event number>   open=rag   sidebar=collapsed
 """
 
 from __future__ import annotations
@@ -29,7 +32,9 @@ OUTCOME_STYLE = {"suspected_defect": ("Suspected defect", "#d9534f"),
                  "no_defect_detected": ("No defect detected", "#2fb37a"),
                  "insufficient_evidence": ("Insufficient evidence: human review", "#e0a030")}
 
-st.set_page_config(page_title="InspectBot", page_icon="🔎", layout="wide")
+QP = st.query_params
+st.set_page_config(page_title="InspectBot", page_icon="🔎", layout="wide",
+                   initial_sidebar_state="collapsed" if QP.get("sidebar") == "collapsed" else "auto")
 st.markdown("""<style>
 .badge{display:inline-block;padding:6px 14px;border-radius:8px;color:white;font-weight:600;font-size:1.05rem}
 .msg{border-left:4px solid #999;padding:4px 10px;margin:4px 0;background:rgba(127,127,127,.07);border-radius:4px;font-size:.88rem}
@@ -145,7 +150,8 @@ def render_run(run_dir: Path, step: int | None) -> None:
                             + (f" — {a['error']}" if a.get("error") else ""))
 
     if v.retrieval:
-        with st.expander("📚 Retrieved procedures", expanded=bool(v.retrieval.get("missing_guidance"))):
+        with st.expander("📚 Retrieved procedures",
+                         expanded=bool(v.retrieval.get("missing_guidance")) or QP.get("open") == "rag"):
             for p in v.retrieval["passages"]:
                 st.markdown(f"✅ **{p['source_id']}** v{p['version']} · {p['category']} · similarity {p['score']}")
             for r in v.retrieval["rejected"]:
@@ -160,6 +166,7 @@ def render_run(run_dir: Path, step: int | None) -> None:
 
     if v.report:
         r = v.report
+        st.markdown('<div id="report-anchor"></div>', unsafe_allow_html=True)  # scroll target for demos
         st.markdown("---")
         st.markdown(f"#### Report &nbsp; {badge(r['outcome'])}", unsafe_allow_html=True)
         st.write(r["summary"])
@@ -221,9 +228,15 @@ with st.sidebar:
             st.warning("No saved runs found.")
             run_dir = None
         else:
-            run_dir = st.selectbox("Saved run", runs, format_func=run_label)
+            wanted = QP.get("run")
+            idx = next((i for i, r in enumerate(runs) if r.name == wanted), 0)
+            run_dir = st.selectbox("Saved run", runs, index=idx, format_func=run_label)
             total = view_at(run_dir).total_steps
-            step = st.slider("Step", 1, total, total)
+            try:
+                start = min(max(int(QP.get("step", total)), 1), total) if run_dir.name == wanted else total
+            except ValueError:
+                start = total
+            step = st.slider("Step", 1, total, start)
             st.caption(f"Event {step} of {total}")
     else:
         scenarios = list_scenarios(include_eval=True)

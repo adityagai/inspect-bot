@@ -16,6 +16,10 @@ The problem it tackles is that a single image often can't tell a crack from a sh
 | **Tools** | MCP server (FastMCP) exposing the robot cell, the shared task record, retrieval and reports |
 | **Robot** | CPU-only simulated inspection cell (numpy + Pillow); no GPU, no physical hardware |
 
+## Demo
+
+**[Watch the 3-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, then the evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
+
 ## Results
 
 **Evaluation over 20 scenarios** (10 resolvable, 10 unresolvable): InspectBot against a prompt-only baseline using the same model and the same first image ([details](docs/day5_evaluation.md), [raw results](eval/results/20261116-1539/summary.md)).
@@ -137,6 +141,15 @@ streamlit run app/streamlit_app.py
 | **Live** | Pick any of the 20 scenarios and press **▶ Start inspection**; the same panels update as the agents work (needs `ANTHROPIC_API_KEY` and the `agents` extra) |
 | **Human review** | Shown on every Insufficient-evidence report. The reviewer records a decision (clarify, supply guidance, authorize one more bounded inspection, close the case), which is saved to `review.json` and the event log |
 | **Evaluation** | The evaluation tables from `eval/results/` |
+
+Any moment can be opened directly by URL, for example `http://localhost:8501/?run=S1&step=11`. The parameters are:
+
+| Parameter | Effect |
+| --- | --- |
+| `run` | Which saved run to open, e.g. `S1` |
+| `step` | Which event to show, e.g. `11` |
+| `open=rag` | Expands the retrieved-procedures panel |
+| `sidebar=collapsed` | Hides the sidebar |
 
 ### Other commands
 
@@ -306,8 +319,9 @@ eval/          run_eval.py, metrics.py, results/<stamp>/ (cases.json, summary.js
 demo_runs/     saved S1–S5 runs + baseline answers, replayed by the app
 corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
-scripts/       vision_check.py, smoke_crewai_mcp.py
-docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md
+scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
+docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md,
+               demo_script.md, demo/inspectbot_demo.mp4
 tests/
 ```
 
@@ -320,7 +334,7 @@ tests/
 | 3 | CrewAI Flow Coordinator, Planning / Inspection / Verification agents, ReAct loop, baseline | merged (#3) |
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
-| 6 | Demo video, final polish | next |
+| 6 | Captioned demo video, narration script, app URL parameters for demos | in review (#6) |
 
 ## Scope and limitations
 
