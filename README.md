@@ -2,7 +2,7 @@
 
 InspectBot is a multi-agent research assistant for **simulated robotic visual inspection**, built for the Agentic AI capstone. Given one object and an inspection goal, it gathers evidence by moving a virtual camera arm and changing the light, and it checks that evidence against retrieved inspection procedures. It reports one of three outcomes, each linked to the observations and procedures that support it:
 
-- **Suspected defect**
+- **Suspected defect**: the evidence meets the procedure's defect criterion; flagged for follow-up, not a confirmed failure.
 - **No defect detected**: covers only the inspected region; it is not a safety certification.
 - **Insufficient evidence**: always escalated for human review.
 
