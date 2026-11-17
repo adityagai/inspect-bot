@@ -90,8 +90,8 @@ Agents only propose. The Coordinator executes every action through the MCP tools
 **Requirements:** Python **3.11–3.13**; CrewAI does not support 3.14 yet. Check yours with `python3 --version`. On a Mac with a newer Python, install 3.13 with `brew install python@3.13` (or from python.org) and use `python3.13` below.
 
 ```bash
-git clone https://github.com/adityagai/inspect-bot-rag.git
-cd inspect-bot-rag
+git clone https://github.com/adityagai/inspect-bot.git
+cd inspect-bot
 python3.13 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev,agents,ui]"

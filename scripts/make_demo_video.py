@@ -247,7 +247,7 @@ def card(kind: str) -> Image.Image:
             for k, line in enumerate(textwrap.wrap(body, 70)):
                 d.text((520, y + 2 + k * 44), line, font=font("Regular", 34), fill=TEXT)
             y += 150
-        d.text((140, 930), "github.com/adityagai/inspect-bot-rag", font=font("Medium", 32), fill=MUTED)
+        d.text((140, 930), "github.com/adityagai/inspect-bot", font=font("Medium", 32), fill=MUTED)
     return img
 
 
