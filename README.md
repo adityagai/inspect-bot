@@ -334,7 +334,7 @@ tests/
 | 3 | CrewAI Flow Coordinator, Planning / Inspection / Verification agents, ReAct loop, baseline | merged (#3) |
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
-| 6 | Captioned demo video, narration script, app URL parameters for demos | in review (#6) |
+| 6 | Captioned demo video, narration script, app URL parameters for demos | merged (#6) |
 
 ## Scope and limitations
 
