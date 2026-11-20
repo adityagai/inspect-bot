@@ -21,7 +21,7 @@ It is also tested on real photos: in **static-image mode**, it inspects MVTec AD
 
 ## Demo
 
-**[Watch the 4-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, the simulation evaluation, then real MVTec AD images and their evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
+**[Watch the 4½-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, the simulation evaluation, then real MVTec AD images (a good bottle cleared, a contaminated bottle and a rough tile caught where the baseline missed them, an ambiguous tile escalated) and their evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
 
 ## Results
 
@@ -148,7 +148,7 @@ streamlit run app/streamlit_app.py
 
 ### The demo app
 
-`streamlit run app/streamlit_app.py` opens with the saved S1–S5 runs and three MVTec AD runs (M1–M3) in `demo_runs/`.
+`streamlit run app/streamlit_app.py` opens with the saved S1–S5 runs and five MVTec AD runs (M1–M5) in `demo_runs/`.
 
 | Tab or mode | What it shows |
 | --- | --- |
@@ -315,7 +315,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 | `test_mcp_server.py` | Every MCP tool, failures never becoming evidence, budget exhaustion, report validation |
 | `test_flow.py` | Coordinator routing, replanning after failures, rejection limits, conclusion guards, baseline |
 | `test_rag_tot.py` | Corpus versions, category filtering, decoy rejection, injection exclusion, missing guidance, ToT selection, pruning, beam and depth limits, server-side ToT cap |
-| `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss, replay of the saved M1–M3 runs |
+| `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss, replay of the saved M1–M5 runs |
 | `test_live_check.py` | The Live-mode setup check: missing agent packages, missing or empty API key |
 | `test_ui_eval.py` | Replay reconstruction at any step, ToT tree rendering, run ordering, evaluation metrics and targets, the balanced scenario set, mark-versus-crack rendering |
 
@@ -335,7 +335,7 @@ src/inspectbot/
   ui/          replay.py (rebuilds the app view at any step from events.jsonl)
 app/           streamlit_app.py (replay, live, human review, evaluation)
 eval/          run_eval.py, metrics.py, results/<stamp>/ (cases.json, summary.json, summary.md)
-demo_runs/     saved S1–S5 and MVTec M1–M3 runs + baseline answers, replayed by the app (MVTEC_NOTICE.md: image license)
+demo_runs/     saved S1–S5 and MVTec M1–M5 runs + baseline answers, replayed by the app (MVTEC_NOTICE.md: image license)
 corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
 scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
@@ -355,7 +355,8 @@ tests/
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
 | 6 | Captioned demo video, narration script, app URL parameters for demos | merged (#6) |
 | 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | merged (#10) |
-| 8 | Live mode checks its setup and says what's missing instead of failing | in review |
+| 8 | Live mode checks its setup and says what's missing instead of failing | merged (#11) |
+| 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | in review |
 
 ## Scope and limitations
 

@@ -1,0 +1,257 @@
+{
+  "task_id": "task_703369c4",
+  "scenario_id": "bottle_test_contamination_011",
+  "object_category": "glass_bottle",
+  "goal": "Inspect this glass bottle for defects. Single static image from a fixed camera: no other viewpoints or lighting exist.",
+  "criteria": [],
+  "budget": {
+    "max_actions": 5,
+    "actions_used": 0,
+    "max_aux_calls": 6,
+    "aux_calls_used": 1,
+    "max_tot_invocations": 1,
+    "tot_invocations": 0,
+    "max_tot_evaluations": 15,
+    "tot_evaluations_used": 0
+  },
+  "attempts": [
+    {
+      "attempt_id": "act_01",
+      "tool": "initial_capture",
+      "args": {
+        "pose": "front",
+        "light": "left"
+      },
+      "status": "success",
+      "error": null,
+      "counts_against_budget": false,
+      "obs_id": "obs_01",
+      "created_at": "2026-11-20T20:25:51.356540Z"
+    },
+    {
+      "attempt_id": "act_02",
+      "tool": "get_reference",
+      "args": {
+        "category": "glass_bottle"
+      },
+      "status": "success",
+      "error": null,
+      "counts_against_budget": false,
+      "obs_id": "obs_02",
+      "created_at": "2026-11-20T20:26:08.712766Z"
+    }
+  ],
+  "observations": [
+    {
+      "obs_id": "obs_01",
+      "attempt_id": "act_01",
+      "kind": "camera",
+      "pose": null,
+      "light": null,
+      "image_path": "/home/claude/inspect-bot/runs/mvtec/20261120-1225/task_703369c4/images/obs_01.png",
+      "parent_obs_id": null,
+      "bbox": null,
+      "source_id": null,
+      "created_at": "2026-11-20T20:25:51.356564Z"
+    },
+    {
+      "obs_id": "obs_02",
+      "attempt_id": "act_02",
+      "kind": "reference",
+      "pose": null,
+      "light": null,
+      "image_path": "/home/claude/inspect-bot/runs/mvtec/20261120-1225/task_703369c4/images/obs_02.png",
+      "parent_obs_id": null,
+      "bbox": null,
+      "source_id": "REF-GLASS_BOTTLE-approved",
+      "created_at": "2026-11-20T20:26:08.712795Z"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "fnd_2ebbc3b6",
+      "obs_ids": [
+        "obs_01"
+      ],
+      "description": "Top-down view of a brown glass bottle mouth. At the upper right of the finish (about 2 o'clock), a step or overlapping edge in the rim is visible, with a small dark round dot just below it near the outer rim at about 3 o'clock.",
+      "region": null,
+      "hypotheses": [
+        "normal thread start or mold seam on the finish",
+        "small bubble or inclusion in the glass",
+        "minor chip or rim irregularity",
+        "reflection artifact"
+      ],
+      "uncertainty": "high",
+      "source_ids": []
+    },
+    {
+      "finding_id": "fnd_1036dc9b",
+      "obs_ids": [
+        "obs_02"
+      ],
+      "description": "The bore interior differs from the reference. The reference bore is uniformly dark, while this image shows a brown/amber lit disc with a blurry grey central region and a small dark spot. A faint light streak sits near the spot.",
+      "region": null,
+      "hypotheses": [
+        "different lighting or transmission through the bottle body, showing the bottle base or interior",
+        "normal variation in how the bore is lit",
+        "foreign object or residue inside the bottle",
+        "bottle base seen through the bore"
+      ],
+      "uncertainty": "high",
+      "source_ids": []
+    }
+  ],
+  "candidates": [],
+  "messages": [
+    {
+      "message_id": "msg_b49d6607",
+      "task_id": "task_703369c4",
+      "sender": "coordinator",
+      "recipient": "inspection",
+      "type": "assignment",
+      "content": "Inspect obs_01 for: Inspect this glass bottle for defects. Single static image from a fixed camera: no other viewpoints or lighting exist.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:25:51.357566Z"
+    },
+    {
+      "message_id": "msg_f8ffc8db",
+      "task_id": "task_703369c4",
+      "sender": "inspection",
+      "recipient": "verification",
+      "type": "finding",
+      "content": "obs_01: target_visible=True, anomaly=True; Top-down view of a brown glass bottle mouth. At the upper right of the finish (about 2 o'clock), a step or overlapping edge in the rim is visible, with a small dark round dot just below it near the outer rim at about 3 o'clock.; The dark annular band around the bore (the sealing surface) has a granular, speckled, rough texture, especially at the top and left.; Bright orange-copper reflective streaks run along the outer lower-left and right edges of the finish. | Single image only; no earlier observation to compare.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:00.057870Z"
+    },
+    {
+      "message_id": "msg_36c7ace9",
+      "task_id": "task_703369c4",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "result",
+      "content": "Retrieved ['PROC-GB-004@1.0', 'PUB-003@1.0', 'PROC-GB-002@1.1']. Rejected: PROC-CT-004 (category mismatch: written for ceramic_tile, task is glass_bottle).",
+      "obs_refs": [],
+      "source_ids": [
+        "PROC-GB-004",
+        "PUB-003",
+        "PROC-GB-002"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:00.835353Z"
+    },
+    {
+      "message_id": "msg_13d740d4",
+      "task_id": "task_703369c4",
+      "sender": "verification",
+      "recipient": "coordinator",
+      "type": "verification",
+      "content": "proposed=insufficient_evidence, sufficient=False. PROC-GB-004 is the procedure for static top-view images and requires comparison with the approved reference. The reference has not been fetched, so the rim step at 2 o'clock and the dark dot at 3 o'clock cannot be classified as a broken rim, contamination, or normal features (thread start, seam). The observation itself lists these as high-uncertainty with normal hypotheses. The image is not too blurred or dark, so this is a request for the reference, not a final insufficient-evidence verdict. PROC-GB-002 requires multiple lights and raking light, so it does not apply; PUB-003 is general lighting guidance and not applicable to a fixed-light image.",
+      "obs_refs": [
+        "obs_01"
+      ],
+      "source_ids": [
+        "PROC-GB-004"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:05.687792Z"
+    },
+    {
+      "message_id": "msg_f771307f",
+      "task_id": "task_703369c4",
+      "sender": "planning",
+      "recipient": "coordinator",
+      "type": "proposal",
+      "content": "get_reference {'category': 'glass_bottle'}: The only pending evidence action that can separate the hypotheses is fetching the approved reference, which the procedure requires for GB-4. Lighting and pose changes are unavailable (no other poses or lights exist), so get_reference is the only available discriminating step. Observation obs_01 is not too blurred or dark to judge, so the next step is the reference comparison. | expects: If the step at about 2 o'clock and the dark dot at about 3 o'clock are normal finish features (thread start, mold seam, or reflection), the approved reference should show the same step/seam and a similar dot or none at the same location, so the observed features match. If they are a rim defect (chip or interruption) or contamination, the reference will show a smooth continuous rim and a clean interior at those positions, so the discrepancy is confirmed. Rim texture differences from the reference would also point to surface wear or residue rather than normal matte finish.",
+      "obs_refs": [],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": "get_reference",
+      "created_at": "2026-11-20T20:26:08.603317Z"
+    },
+    {
+      "message_id": "msg_70c68657",
+      "task_id": "task_703369c4",
+      "sender": "coordinator",
+      "recipient": "planning",
+      "type": "result",
+      "content": "get_reference {'category': 'glass_bottle'} -> success",
+      "obs_refs": [],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:08.714278Z"
+    },
+    {
+      "message_id": "msg_5aa20a9d",
+      "task_id": "task_703369c4",
+      "sender": "inspection",
+      "recipient": "verification",
+      "type": "finding",
+      "content": "obs_02: target_visible=True, anomaly=True; The bore interior differs from the reference. The reference bore is uniformly dark, while this image shows a brown/amber lit disc with a blurry grey central region and a small dark spot. A faint light streak sits near the spot.; A small round dark dot sits on the right side of the finish, near the outer ring at about 3 o'clock. A step or overlapping edge appears in the glass ring at upper right (about 1-2 o'clock), where the ring outline seems to double or kink.; Small bright specks are visible at the right edge near 3-4 o'clock and at the lower-left rim, with the orange-copper reflection partly broken. The reference has similar copper reflections, though the lower-left one differs a little in position. | Compared with the reference, the bore looks very different: amber with a grey blurred center and dark spot instead of uniformly dark. There is also a distinct small round dot at the right and a visible ring step at the upper right that the reference lacks. The textured dark ring around the bore looks broadly similar in both.",
+      "obs_refs": [
+        "obs_02"
+      ],
+      "source_ids": [],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:14.458527Z"
+    },
+    {
+      "message_id": "msg_04543221",
+      "task_id": "task_703369c4",
+      "sender": "verification",
+      "recipient": "coordinator",
+      "type": "verification",
+      "content": "proposed=suspected_defect, sufficient=True. This is a static single-image task, so PROC-GB-004 applies and the multi-view PROC-GB-002 and the lighting summary PUB-003 do not. The approved reference was fetched (obs_02) and compared with the image (obs_01). The comparison found matches_reference=false: a visible step or doubled kink in the rim ring at about 1-2 o'clock, a distinct small round dark dot near the outer ring at 3 o'clock, bright specks at the rim, and a dark spot in the bore, none of which the reference shows. The rim irregularity meets the GB-4 broken-rim criterion, and the dot and spot may be contamination. These are localized deviations from the reference, which GB-4 lists as a defect, so the outcome is suspected defect.",
+      "obs_refs": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-GB-004"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:19.565285Z"
+    },
+    {
+      "message_id": "msg_46231314",
+      "task_id": "task_703369c4",
+      "sender": "coordinator",
+      "recipient": "human",
+      "type": "report",
+      "content": "suspected_defect: This is a static single-image task, so PROC-GB-004 applies and the multi-view PROC-GB-002 and the lighting summary PUB-003 do not. The approved reference was fetched (obs_02) and compared with the image (obs_01). The comparison found matches_reference=false: a visible step or doubled kink in the rim ring at about 1-2 o'clock, a distinct small round dark dot near the outer ring at 3 o'clock, bright specks at the rim, and a dark spot in the bore, none of which the reference shows. The rim irregularity meets the GB-4 broken-rim criterion, and the dot and spot may be contamination. These are localized deviations from the reference, which GB-4 lists as a defect, so the outcome is suspected defect.",
+      "obs_refs": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-GB-004@1.0"
+      ],
+      "action_status": null,
+      "next_step": null,
+      "created_at": "2026-11-20T20:26:19.575373Z"
+    }
+  ],
+  "hypotheses": [],
+  "open_questions": [],
+  "sources_used": [
+    "PROC-GB-004@1.0",
+    "PUB-003@1.0",
+    "PROC-GB-002@1.1"
+  ],
+  "missing_guidance": [],
+  "created_at": "2026-11-20T20:25:51.102613Z"
+}

@@ -1,0 +1,7 @@
+{
+  "scenario_id": "tile_test_rough_007",
+  "mode": "baseline",
+  "image": "tile/test/rough/007.png",
+  "outcome": "no_defect_detected",
+  "rationale": "The close-up shows a speckled glaze with dark spots spread evenly across the surface. This looks like the tile's intended decorative texture, not damage. I see no cracks, chips, glaze pooling, scratches or large foreign contamination. The brighter, blurry patch in the top-right corner looks like a l"
+}

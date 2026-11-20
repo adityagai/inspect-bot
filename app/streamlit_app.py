@@ -2,7 +2,7 @@
 
     streamlit run app/streamlit_app.py
 
-Replay: step through a saved run (demo_runs/ ships with S1-S5 and MVTec AD runs M1-M3).
+Replay: step through a saved run (demo_runs/ ships with S1-S5 and MVTec AD runs M1-M5).
 Live:   run an inspection now (needs ANTHROPIC_API_KEY) and watch it update.
 
 URL parameters (handy for demos and recording), e.g. http://localhost:8501/?run=S1&step=11
