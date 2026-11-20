@@ -1,0 +1,28 @@
+{
+  "task_id": "task_fdfc1fee",
+  "scenario_id": "tile_test_rough_007",
+  "outcome": "suspected_defect",
+  "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-002 concerns crazing or cracks, and no linear feature was found. obs_01 shows a localized rough, grainy, bright-speckled patch in the upper-right corner that differs from the surrounding texture. The approved reference (obs_02) was fetched and has no such patch (matches_reference=false). This matches the 'Rough' example in CT-4, so it is a suspected defect. The lack of surface discontinuity is irrelevant because CT-1 does not apply.",
+  "evidence": [
+    {
+      "claim": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-002 concerns crazing or cracks, and no linear feature was found. obs_01 shows a localized rough, grainy, bright-speckled patch in the upper-right corner that differs from the surrounding texture. The approved reference (obs_02) was fetched and has no such patch (matches_reference=false). This matches the 'Rough' example in CT-4, so it is a suspected defect. The lack of surface ",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-CT-004@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "Tiny tan specks are ambiguous (debris vs inclusion) but do not affect the outcome",
+    "Cause of rough patch (glare vs true rough) cannot be tested with a fixed camera, but the reference comparison shows the patch is absent from the reference"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-CT-004@1.0"
+  ],
+  "needs_human_review": false,
+  "scope_note": null
+}

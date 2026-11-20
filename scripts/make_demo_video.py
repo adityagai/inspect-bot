@@ -97,6 +97,14 @@ SHOTS: list[Shot] = [
          "the photo with an approved good reference under static procedure GB-4.", 11, "M1", None, "Static image"),
     Shot("MVTec AD · good bottle", "No defect detected: every rim mark also appears on the reference. The prompt-only baseline "
          "flagged this good bottle as a defect.", 10, "M1", None, "#report-anchor"),
+    Shot("MVTec AD · bottle contamination", "A bottle the dataset labels contaminated. Inspection notes a foreign shape at the "
+         "1–2 o’clock rim and a dark spot in the bore, then fetches the approved reference to compare.", 9, "M4", 9, "Static image"),
+    Shot("MVTec AD · bottle contamination", "Neither mark is on the reference, so GB-4 is met: Suspected defect. The prompt-only "
+         "baseline called the rim continuous and cleared this bottle.", 10, "M4", None, "#report-anchor"),
+    Shot("MVTec AD · rough tile", "A tile labelled rough. Inspection finds a grainy, hazy patch in the top-right corner that "
+         "differs from the speckle around it, and asks for the reference.", 9, "M5", 9, "Static image"),
+    Shot("MVTec AD · rough tile", "The reference has no such patch, which matches CT-4’s rough example: Suspected defect. "
+         "The baseline put the patch down to blur and cleared the tile.", 10, "M5", None, "#report-anchor"),
     Shot("MVTec AD · ambiguous tile", "Tiny flecks the reference lacks: no defect criterion is met, but the tile doesn't match "
          "the reference either. InspectBot asks a human instead of guessing.", 11, "M3", None, "#report-anchor"),
     Shot("Evaluation · 40 MVTec images", "40 held-out images (bottle, tile): precision 86% vs 75%, recall 95% vs 90%, half the "

@@ -1,0 +1,27 @@
+{
+  "task_id": "task_703369c4",
+  "scenario_id": "bottle_test_contamination_011",
+  "outcome": "suspected_defect",
+  "summary": "This is a static single-image task, so PROC-GB-004 applies and the multi-view PROC-GB-002 and the lighting summary PUB-003 do not. The approved reference was fetched (obs_02) and compared with the image (obs_01). The comparison found matches_reference=false: a visible step or doubled kink in the rim ring at about 1-2 o'clock, a distinct small round dark dot near the outer ring at 3 o'clock, bright specks at the rim, and a dark spot in the bore, none of which the reference shows. The rim irregularity meets the GB-4 broken-rim criterion, and the dot and spot may be contamination. These are localized deviations from the reference, which GB-4 lists as a defect, so the outcome is suspected defect.",
+  "evidence": [
+    {
+      "claim": "This is a static single-image task, so PROC-GB-004 applies and the multi-view PROC-GB-002 and the lighting summary PUB-003 do not. The approved reference was fetched (obs_02) and compared with the image (obs_01). The comparison found matches_reference=false: a visible step or doubled kink in the rim ring at about 1-2 o'clock, a distinct small round dark dot near the outer ring at 3 o'clock, bright specks at the rim, and a dark spot in the bore, none of which the reference shows. The rim irregula",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-GB-004@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "Each individual finding is high-uncertainty (the dot and step could be a bubble or normal finish geometry), but a static image allows no further views"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-GB-004@1.0"
+  ],
+  "needs_human_review": false,
+  "scope_note": null
+}

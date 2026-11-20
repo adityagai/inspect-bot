@@ -1,6 +1,6 @@
 # Demo video: script and narration
 
-**Video:** [`docs/demo/inspectbot_demo.mp4`](demo/inspectbot_demo.mp4). It is 3:51 long, 1920×1080 at 30 fps, with burned-in captions and no audio. Rebuild it with `scripts/make_demo_video.py` (see the bottom of this file).
+**Video:** [`docs/demo/inspectbot_demo.mp4`](demo/inspectbot_demo.mp4). It is 4:29 long, 1920×1080 at 30 fps, with burned-in captions and no audio. Rebuild it with `scripts/make_demo_video.py` (see the bottom of this file).
 
 The narration below is timed to each scene at a relaxed pace of about 2.3 words per second. Record it in one take over the video, or read it live while screen-sharing the app. Every scene can also be opened directly in the app through its URL, for example `http://localhost:8501/?run=S1&step=11`.
 
@@ -25,9 +25,13 @@ The narration below is timed to each scene at a relaxed pace of about 2.3 words 
 | 17 | 2:46–2:56 | Evaluation targets | "Every target from the proposal is met, including zero false clears and full escalation of the cases that need a human." |
 | 18 | 2:56–3:07 | MVTec AD, static image (`?run=M1`) | "Now real photos from the MVTec AD dataset. With one fixed camera nothing can move, so InspectBot compares the photo with an approved good reference, under a static-image procedure." |
 | 19 | 3:07–3:17 | M1, report | "Every mark on this bottle rim also appears on the reference: no defect detected. The baseline flagged this good bottle as a defect." |
-| 20 | 3:17–3:28 | M3, report and human review (`?run=M3`) | "This tile has a few tiny flecks the reference lacks. They don't meet any defect criterion, but they don't match the reference either, so InspectBot asks a human instead of guessing." |
-| 21 | 3:28–3:39 | MVTec evaluation (`?eval=mvtec-eval-20261120-1225`, Evaluation tab) | "On forty held-out images, precision is eighty-six percent against seventy-five, recall ninety-five against ninety, with half the false alarms on good parts. All three targets are met." |
-| 22 | 3:39–3:51 | Closing card | "The trade-off is time: twenty-five to forty seconds per inspection. These are single pilot runs. Next steps are more MVTec categories and repeated runs. Thanks for watching." |
+| 20 | 3:17–3:26 | M4, bottle under test (`?run=M4&step=9`) | "This bottle is labelled contaminated. Inspection notes a foreign shape at the rim and a dark spot in the bore, then fetches the reference." |
+| 21 | 3:26–3:36 | M4, report | "Neither mark is on the reference, so the static criterion is met: suspected defect. The baseline called the rim continuous and cleared it." |
+| 22 | 3:36–3:45 | M5, tile under test (`?run=M5&step=9`) | "This tile is labelled rough. Inspection finds a grainy, hazy patch in the top-right corner and asks for the reference." |
+| 23 | 3:45–3:55 | M5, report | "The reference has no such patch, which matches the procedure's rough example: suspected defect. The baseline put it down to blur." |
+| 24 | 3:55–4:06 | M3, report and human review (`?run=M3`) | "This tile has a few tiny flecks the reference lacks. They don't meet any defect criterion, but they don't match the reference either, so InspectBot asks a human instead of guessing." |
+| 25 | 4:06–4:17 | MVTec evaluation (`?eval=mvtec-eval-20261120-1225`, Evaluation tab) | "On forty held-out images, precision is eighty-six percent against seventy-five, recall ninety-five against ninety, with half the false alarms on good parts. All three targets are met." |
+| 26 | 4:17–4:29 | Closing card | "The trade-off is time: twenty-five to forty seconds per inspection. These are single pilot runs. Next steps are more MVTec categories and repeated runs. Thanks for watching." |
 
 ## Recording tips
 - **Mac:** QuickTime → File → New Audio Recording. Play the video muted on a second screen and read along, then combine the two in iMovie or Clipchamp with the audio starting at 0:00.

@@ -57,7 +57,8 @@ def test_saved_mvtec_runs_replay():
     from inspectbot.ui.replay import view_at
 
     root = Path(__file__).resolve().parents[1] / "demo_runs"
-    expected = {"M1": "no_defect_detected", "M2": "suspected_defect", "M3": "insufficient_evidence"}
+    expected = {"M1": "no_defect_detected", "M2": "suspected_defect", "M3": "insufficient_evidence",
+                "M4": "suspected_defect", "M5": "suspected_defect"}
     for name, outcome in expected.items():
         v = view_at(root / name)
         assert v.task["static_image"] is True

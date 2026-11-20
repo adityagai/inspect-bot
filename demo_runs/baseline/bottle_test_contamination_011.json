@@ -1,0 +1,7 @@
+{
+  "scenario_id": "bottle_test_contamination_011",
+  "mode": "baseline",
+  "image": "bottle/test/contamination/011.png",
+  "outcome": "no_defect_detected",
+  "rationale": "Top-down view of an amber glass bottle mouth. The rim and thread rings are concentric and continuous, with no visible chips, cracks, or breaks. The dark textured band inside the rim looks like normal glass finish or optical effects. The small bump near the right edge and the thread start at upper ri"
+}
