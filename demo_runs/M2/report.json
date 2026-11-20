@@ -1,0 +1,27 @@
+{
+  "task_id": "task_efa2970a",
+  "scenario_id": "tile_test_crack_005",
+  "outcome": "suspected_defect",
+  "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which need two lights and an oblique view and cannot be checked). PROC-CT-002 covers crazing, which does not match here because the feature is a single dominant line rather than a cobweb network. The approved reference was fetched (obs_02) and shows only uniform speckled glaze. obs_01 shows a localized curved brownish band from the top edge to the left edge that breaks the uniform speckle texture, and the comparison reports matches_reference=false with no counterpart on the reference. This meets CT-4 for a suspected defect. The rest of the surface is uniform and matches the reference. The feature may be a foreign fiber or a glaze fissure, but under CT-4 it is a localized deviation absent from the reference, so I report suspected defect for human follow-up.",
+  "evidence": [
+    {
+      "claim": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which need two lights and an oblique view and cannot be checked). PROC-CT-002 covers crazing, which does not match here because the feature is a single dominant line rather than a cobweb network. The approved reference was fetched (obs_02) and shows only uniform speckled glaze. obs_01 shows a localized curved brownish band from the top edge to the left edge that breaks the uniform spec",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-CT-004@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "Nature of the feature (crack vs fiber/hair/smear) cannot be determined from a single static view, but CT-4 does not require classification"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-CT-004@1.0"
+  ],
+  "needs_human_review": false,
+  "scope_note": null
+}

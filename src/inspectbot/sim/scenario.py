@@ -103,6 +103,13 @@ class Scenario(BaseModel):
     scripted_failures: list[ScriptedFailure] = Field(default_factory=list)
     ground_truth: GroundTruth
     demo_notes: str = ""
+    # Static-image mode (e.g. MVTec AD): a real photo replaces the renderer; no robot moves exist.
+    static_image: str | None = None
+    reference_image: str | None = None
+
+    @property
+    def is_static(self) -> bool:
+        return self.static_image is not None
 
     def public_view(self) -> dict[str, Any]:
         """What agents may know: task definition and supported actions, no ground truth."""
@@ -113,8 +120,9 @@ class Scenario(BaseModel):
             "target_region": self.target_region,
             "initial_pose": self.initial_pose.value,
             "initial_light": self.initial_light.value,
-            "poses": [p.value for p in Pose],
-            "lights": [lt.value for lt in self.supported_lights],
+            "poses": [] if self.is_static else [p.value for p in Pose],
+            "lights": [] if self.is_static else [lt.value for lt in self.supported_lights],
+            "static_image": self.is_static,
         }
 
 

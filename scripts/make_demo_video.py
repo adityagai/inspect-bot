@@ -93,6 +93,15 @@ SHOTS: list[Shot] = [
     Shot("Evaluation · 20 scenarios", "All Checkpoint 2.1 and 6.1 targets met: no false clears, 10/10 escalations, every "
          "conclusion grounded, 1.3 robot actions per resolvable case.", 10, "S1", None, "Targets (Checkpoints 2.1 and 6.1)",
          tab="Evaluation"),
+    Shot("MVTec AD · real images", "Real photos from MVTec AD. One fixed camera means nothing can move, so InspectBot compares "
+         "the photo with an approved good reference under static procedure GB-4.", 11, "M1", None, "Static image"),
+    Shot("MVTec AD · good bottle", "No defect detected: every rim mark also appears on the reference. The prompt-only baseline "
+         "flagged this good bottle as a defect.", 10, "M1", None, "#report-anchor"),
+    Shot("MVTec AD · ambiguous tile", "Tiny flecks the reference lacks: no defect criterion is met, but the tile doesn't match "
+         "the reference either. InspectBot asks a human instead of guessing.", 11, "M3", None, "#report-anchor"),
+    Shot("Evaluation · 40 MVTec images", "40 held-out images (bottle, tile): precision 86% vs 75%, recall 95% vs 90%, half the "
+         "false alarms on good parts. All three Checkpoint 2.1 targets met.", 11, "M1", None,
+         "MVTec AD static-image evaluation", "&eval=mvtec-eval-20261120-1225", tab="Evaluation"),
     Shot("", "", 12, card="closing"),
 ]
 
@@ -182,7 +191,7 @@ def card(kind: str) -> Image.Image:
     if kind == "title":
         d.text((140, 330), "InspectBot", font=font("Bold", 120), fill=TEXT)
         d.text((146, 480), "A multi-agent research assistant for robotic visual inspection", font=font("Medium", 44), fill=TEXT)
-        d.text((146, 550), "Simulated robot cell  ·  CrewAI  ·  LangChain RAG  ·  MCP  ·  Claude", font=font("Regular", 34),
+        d.text((146, 550), "Simulated robot cell + MVTec AD  ·  CrewAI  ·  LangChain RAG  ·  MCP  ·  Claude", font=font("Regular", 34),
                fill=MUTED)
         d.rectangle([146, 640, 420, 646], fill=ACCENT)
         d.text((146, 680), "Agentic AI capstone  ·  MVP demo", font=font("Regular", 30), fill=MUTED)
@@ -236,18 +245,19 @@ def card(kind: str) -> Image.Image:
         _box(d, (1190, 790, 1790, 940), "Report", (52, 60, 76), "outcome · evidence obs_ids · procedures\nscope · human review")
     elif kind == "closing":
         d.text((140, 150), "Results, limits and next steps", font=font("Bold", 60), fill=TEXT)
-        items = [("Pilot result", "20/20 correct vs 8/20 for a prompt-only baseline; 0 incorrect definitive calls vs 12."),
-                 ("Cost", "About 43 s per inspection vs 2.5 s: several model calls per evidence step."),
-                 ("Limits", "Single runs on 20 synthetic scenarios; synthetic procedures; simulation / advisory only."),
-                 ("Next", "MVTec AD static-image study, AI2-THOR viewpoints, repeated runs for variance, "
+        items = [("Simulation", "20/20 correct vs 8/20 for a prompt-only baseline; 0 incorrect definitive calls vs 12."),
+                 ("Real images", "MVTec AD, 40 images: precision 86% vs 75%, recall 95% vs 90%, coverage 92%."),
+                 ("Cost", "25–43 s per inspection vs 2.5 s: several model calls per evidence step."),
+                 ("Limits", "Single runs; 2 of 15 MVTec categories; synthetic procedures; advisory only."),
+                 ("Next", "More MVTec categories, AI2-THOR viewpoints, repeated runs for variance, "
                           "a real arm with human-authorized actions.")]
         y = 290
         for head, body in items:
             d.text((140, y), head, font=font("SemiBold", 36), fill=ACCENT)
             for k, line in enumerate(textwrap.wrap(body, 70)):
                 d.text((520, y + 2 + k * 44), line, font=font("Regular", 34), fill=TEXT)
-            y += 150
-        d.text((140, 930), "github.com/adityagai/inspect-bot", font=font("Medium", 32), fill=MUTED)
+            y += 128
+        d.text((140, 950), "github.com/adityagai/inspect-bot", font=font("Medium", 32), fill=MUTED)
     return img
 
 

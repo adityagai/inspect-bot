@@ -1,0 +1,27 @@
+{
+  "task_id": "task_03b9fa17",
+  "scenario_id": "bottle_test_good_006",
+  "outcome": "no_defect_detected",
+  "summary": "The task is a single static top-view image, so PROC-GB-004 applies and replaces the multi-view criteria of PROC-GB-001 and PROC-GB-002. The approved reference was fetched (obs_02, matches_reference=true). The image (obs_01) is clear enough to judge the rim and interior. The glints, breaks in the orange reflection, the lower-left bright spot near 8 o'clock and the dark mark near 1-2 o'clock also appear in the reference. Position differences are consistent with small pose or lighting variation. The mottled grey-green band is also present in the reference. The comparison found no clear extra line, chip, gap, stain or foreign object, so neither GB-4 defect condition is met. The rim is continuous and the interior matches the reference pattern.",
+  "evidence": [
+    {
+      "claim": "The task is a single static top-view image, so PROC-GB-004 applies and replaces the multi-view criteria of PROC-GB-001 and PROC-GB-002. The approved reference was fetched (obs_02, matches_reference=true). The image (obs_01) is clear enough to judge the rim and interior. The glints, breaks in the orange reflection, the lower-left bright spot near 8 o'clock and the dark mark near 1-2 o'clock also appear in the reference. Position differences are consistent with small pose or lighting variation. Th",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-GB-004@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "The notch-like mark at about 7-8 o'clock and the dark tick at about 1-2 o'clock cannot be fully ruled out as a micro-chip at this resolution. The reference shows similar marks, so they are not treated as deviations."
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-GB-004@1.0"
+  ],
+  "needs_human_review": false,
+  "scope_note": "Covers only target region [0.0, 0.0, 1.0, 1.0] of this part, viewed as [(None, None)]. Not a safety certification."
+}

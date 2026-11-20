@@ -35,7 +35,7 @@ def retriever():
 
 def test_corpus_versions_and_chunks():
     docs, skipped = load_corpus()
-    assert len(docs) == 13 and {"source_id": "PROC-GB-001", "version": "1.0", "reason": "superseded"} in skipped
+    assert len(docs) == 15 and {"source_id": "PROC-GB-001", "version": "1.0", "reason": "superseded"} in skipped
     assert next(d for d in docs if d.meta["source_id"] == "PROC-GB-001").meta["version"] == "3.0"
     for c in chunk(docs):  # chunks keep whole rules: ~150-300 words, never tiny fragments
         assert 20 <= len(c.page_content.split()) <= 320

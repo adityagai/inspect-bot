@@ -96,6 +96,9 @@ class InspectionCell:
         return ToolResult(attempt, obs, image)
 
     def _capture(self, tool: str, args: dict[str, Any]) -> ToolResult:
+        if self.scenario.is_static:  # a real photo from a fixed camera
+            img = Image.open(self.scenario.static_image).convert("RGB")
+            return self._save(tool, args, img, "camera")
         img = render_view(self.scenario, self.pose, self.light)
         return self._save(tool, args, img, "camera", pose=self.pose, light=self.light)
 
@@ -107,6 +110,9 @@ class InspectionCell:
 
     def move_camera(self, pose: str) -> ToolResult:
         args = {"pose": pose}
+        if self.scenario.is_static:
+            return self._fail("move_camera", args, ActionStatus.UNSUPPORTED,
+                              "static image: the camera cannot move")
         try:
             target = Pose(pose)
         except ValueError:
@@ -123,6 +129,9 @@ class InspectionCell:
 
     def set_lighting(self, setting: str) -> ToolResult:
         args = {"setting": setting}
+        if self.scenario.is_static:
+            return self._fail("set_lighting", args, ActionStatus.UNSUPPORTED,
+                              "static image: the lighting cannot change")
         try:
             target = Lighting(setting)
         except ValueError:
@@ -161,6 +170,9 @@ class InspectionCell:
         if category != self.scenario.category or not self.scenario.reference_available:
             return self._fail("get_reference", args, ActionStatus.NOT_FOUND,
                               f"no approved reference image for category '{category}'")
+        if self.scenario.is_static:
+            img = Image.open(self.scenario.reference_image).convert("RGB")
+            return self._save("get_reference", args, img, "reference", source_id=f"REF-{category.upper()}-approved")
         img = render_reference(self.scenario)
         return self._save("get_reference", args, img, "reference", pose=Pose.FRONT, light=Lighting.DIFFUSE,
                           source_id=f"REF-{category.upper()}-v1")

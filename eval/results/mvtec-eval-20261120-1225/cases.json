@@ -1,0 +1,1128 @@
+[
+  {
+    "image": "bottle/test/broken_large/000.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The top-down view of the bottle mouth shows a broken section on the lower right rim. The glass has an irregular, chipped edge with jagged fragments and a rough fractured surface, and the rim is no longer a smooth circle. This is consistent with a chip or break on the finish.",
+    "latency_s": 1.9
+  },
+  {
+    "image": "bottle/test/broken_large/000.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_a1530f73",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The reference was fetched (obs_02) and compared with the single static image (obs_01). obs_01 shows the rim interrupted by an irregular, jagged, faceted break in the lower-right region, roughly 3 to 6 o'clock. The reference comparison reports matches_reference=False, with a smooth continuous ring in the reference against a broken rim here. This meets the GB-4 broken-rim criterion. PROC-GB-004 is t",
+    "latency_s": 34.5
+  },
+  {
+    "image": "bottle/test/broken_large/003.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The top-down view of the bottle mouth shows an irregular, jagged rim. Chipped or broken glass with fractured edges is visible at the upper right and lower center, and the opening is not a clean circle. This is consistent with a broken or chipped finish.",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/broken_large/003.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_6a3e9556",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies. The approved reference (obs_02) was fetched and compared. It shows an intact circular rim with concentric rings, while obs_01 shows a jagged, faceted, notched rim with a gap and fragments at the upper right and lower right. The comparison records matches_reference=false. This meets the GB-4 broken rim criterion. The blurred left side limi",
+    "latency_s": 36.1
+  },
+  {
+    "image": "bottle/test/broken_large/007.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows the rim and thread area is broken. The left and lower-left sides have jagged, chipped glass with bright fracture facets, and the right side shows irregular broken edges. The lip is no longer a smooth, continuous ring, which is consistent with a chipped or brok",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/broken_large/007.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_44c135a8",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies. The approved reference was fetched (obs_02). obs_01 shows a jagged, interrupted rim on the left with a missing section and faceted edges, and a stepped jagged contour near 3 o'clock. The reference shows a smooth continuous ring in those places, which meets the broken-rim criterion of GB-4. PROC-GB-002 needs lighting changes and raking-lig",
+    "latency_s": 25.9
+  },
+  {
+    "image": "bottle/test/broken_large/008.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows a clear break in the rim/finish at the lower portion. The glass is chipped away with jagged, fractured edges and bright shards or facets on both sides of the gap, so the circular rim is no longer continuous. This is consistent with a broken or chipped neck, wh",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/broken_large/008.png",
+    "category": "bottle",
+    "defect_type": "broken_large",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_afa8975a",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The static-image procedure PROC-GB-004 applies. obs_01 shows the rim outline interrupted along the lower and right arc with an irregular, jagged edge and angular facets. obs_02 is the approved reference comparison: it records matches_reference=False and a missing or broken rim section where the reference shows a continuous smooth ring. This meets the broken-rim criterion (GB-4). The image is clear",
+    "latency_s": 25.2
+  },
+  {
+    "image": "bottle/test/broken_small/006.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows a localized irregularity on the rim at the upper area: a chipped or broken section with bright specular glints, a rainbow-like fracture reflection, and a disrupted rim contour. The rest of the rim is smooth and concentric, so this looks like a chip in the fini",
+    "latency_s": 2.3
+  },
+  {
+    "image": "bottle/test/broken_small/006.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_697723cb",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies. The approved reference (obs_02) was fetched and compared with the image. At 12 o'clock the rim is interrupted by an irregular region with jagged dark patches, a bright speck and an iridescent facet, and the reference shows a smooth continuous rim there. That meets the GB-4 broken-rim criterion, so this is a suspected defect. The compariso",
+    "latency_s": 34.0
+  },
+  {
+    "image": "bottle/test/broken_small/017.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows a chipped or broken area on the rim at the left (around 9\u201310 o'clock). There is a bright, irregular fractured patch with fragmented, faceted glass surfaces that disrupts the otherwise smooth, concentric rim. This is consistent with a chip or break in the finis",
+    "latency_s": 2.3
+  },
+  {
+    "image": "bottle/test/broken_small/017.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_f8718a76",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and the multi-view lighting techniques (PROC-GEN-003, PUB-003) cannot be checked and do not apply. The approved reference (obs_02, REF-GLASS_BOTTLE-approved) was fetched. Compared with it, obs_01 shows a localized irregular bright patch with grey faceted areas on the left rim (about 9-10 o'clock) where the rim contour is interrupted. The r",
+    "latency_s": 35.2
+  },
+  {
+    "image": "bottle/test/broken_small/021.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows an irregular chipped or broken area on the right rim near the 4 o'clock position, with bright fractured, reflective glass edges and a flaking, peeling look. A small irregular mark also appears at the left rim. The rim should be a smooth, continuous ring, so th",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/broken_small/021.png",
+    "category": "bottle",
+    "defect_type": "broken_small",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_f25032e9",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "PROC-GB-004 is the procedure written for a single static top-view image of a glass bottle, so it replaces GB-1 and GB-3, which need extra lighting or viewpoints. The approved reference was fetched (obs_02) and describes a smooth, continuous rim with only normal amber reflections. obs_01 shows a localized bright, irregular, flake-like wedge at about 3-4 o'clock where the rim ring appears interrupte",
+    "latency_s": 26.1
+  },
+  {
+    "image": "bottle/test/contamination/008.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows an irregular, bulging glass blob on the upper-right inner rim at about (680,375). There is also an off-center curved overlapping edge near the top of the rim, which breaks the otherwise concentric ring symmetry. These look like a glass irregularity or finish d",
+    "latency_s": 2.9
+  },
+  {
+    "image": "bottle/test/contamination/008.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_641083a1",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The static-image procedure PROC-GB-004 applies. The image is usable and the approved reference was fetched (obs_02). The comparison shows a distinct small, rounded, glossy dark blob on the inner rim/finish at about 2 o'clock in obs_01 that the reference does not show, and obs_02 states it is an extra feature not on the reference. This meets the GB-4 contamination criterion (irregular blob that the",
+    "latency_s": 24.7
+  },
+  {
+    "image": "bottle/test/contamination/011.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "Top-down view of an amber glass bottle mouth. The rim and thread rings are concentric and continuous, with no visible chips, cracks, or breaks. The dark textured band inside the rim looks like normal glass finish or optical effects. The small bump near the right edge and the thread start at upper ri",
+    "latency_s": 2.9
+  },
+  {
+    "image": "bottle/test/contamination/011.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_703369c4",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and the multi-view PROC-GB-002 and the lighting summary PUB-003 do not. The approved reference was fetched (obs_02) and compared with the image (obs_01). The comparison found matches_reference=false: a visible step or doubled kink in the rim ring at about 1-2 o'clock, a distinct small round dark dot near the outer ring at 3 o'clock, bright",
+    "latency_s": 32.9
+  },
+  {
+    "image": "bottle/test/contamination/020.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows irregularities along the rim and inner neck. There are bright orange reflective fragments at the upper-left, right and lower-left edges, a notch or step in the rim at the lower right, and a rough, uneven texture on the dark inner ring. These look like chips or",
+    "latency_s": 2.6
+  },
+  {
+    "image": "bottle/test/contamination/020.png",
+    "category": "bottle",
+    "defect_type": "contamination",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_73d3ba6e",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and replaces the multi-view criteria of PROC-GB-001 and PROC-GB-002, which need lighting changes or other viewpoints. The reference (obs_02) was fetched and compared with the image (obs_01). The rim ring, grainy texture, edge highlights and the lower-left smudge all appear in similar places in the reference. The only visible difference is ",
+    "latency_s": 34.0
+  },
+  {
+    "image": "bottle/test/good/000.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth. The rim shows irregular, broken orange highlights, especially upper left and right, and there is a visible discontinuity or flake-like edge near the bottom of the finish (around 6 o'clock). This suggests a possible chip or rim damage. The lighting is dark and the e",
+    "latency_s": 2.8
+  },
+  {
+    "image": "bottle/test/good/000.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_cbaa846a",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The static-image procedure PROC-GB-004 applies; PROC-GB-001 and PROC-GB-002 need multiple lights or views and a body seam or check, so they do not apply. The reference was fetched (obs_02) and compared with obs_01. The rim in obs_01 shows orange glints, a small bright edge at the lower left, and a speckled inner neck. The reference shows the same features: orange highlights at the upper-left, righ",
+    "latency_s": 22.9
+  },
+  {
+    "image": "bottle/test/good/001.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows thin, hairline crack-like lines on the finish/rim: one near the lower right (around 5 o'clock) running across the rim, another curved line at the bottom, and a small one on the left edge. These look like checks or cracks in the glass, and the uneven copper-col",
+    "latency_s": 2.7
+  },
+  {
+    "image": "bottle/test/good/001.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_4f84a73a",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The task gives a single static top-view image, so PROC-GB-004 applies. PROC-GB-001 and PROC-GB-002 need lighting changes or other views and do not apply. The image is usable, and the approved reference (obs_02) was fetched and compared. The comparison found thin bright curved hairline marks that the reference lacks: lower right of the inner ring at about 4-5 o'clock with a short branch, along the ",
+    "latency_s": 28.6
+  },
+  {
+    "image": "bottle/test/good/004.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth. At the upper left of the finish rim (about 10-11 o'clock) there is a distinct curved, sharp-edged line that breaks the otherwise concentric ring pattern. It looks like a chip, crack, or irregular glass edge on the sealing surface. The orange reflections along the r",
+    "latency_s": 2.9
+  },
+  {
+    "image": "bottle/test/good/004.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_91fadf2a",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and replaces the multi-view criteria of GB-001 and GB-002, which need lighting changes or other viewpoints. The reference (obs_02) was fetched and compared with the image (obs_01). The one deviation is a thin, sharp bright arc at the 10-11 o'clock position on the rim that the reference does not show, since the reference has a smooth orange",
+    "latency_s": 27.4
+  },
+  {
+    "image": "bottle/test/good/006.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth. The finish rim shows irregular, discontinuous bright orange reflections, with a notch or break near the upper right (around 1-2 o'clock) and small chip-like bright artifacts at the lower left (around 8 o'clock). The sealing surface looks uneven and ragged, which is",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/good/006.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_03b9fa17",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The task is a single static top-view image, so PROC-GB-004 applies and replaces the multi-view criteria of PROC-GB-001 and PROC-GB-002. The approved reference was fetched (obs_02, matches_reference=true). The image (obs_01) is clear enough to judge the rim and interior. The glints, breaks in the orange reflection, the lower-left bright spot near 8 o'clock and the dark mark near 1-2 o'clock also ap",
+    "latency_s": 26.1
+  },
+  {
+    "image": "bottle/test/good/009.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth. The rim has an irregular bright refractive feature on the right side (around 3 o'clock), where the glass looks distorted and kinked. This could be a chip, crack or finish irregularity. The rest of the rim and the inner ring are fairly uniform, but this local anomal",
+    "latency_s": 1.9
+  },
+  {
+    "image": "bottle/test/good/009.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_dd07a337",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "PROC-GB-004 is the static top-view procedure for glass bottles, so I applied it. PROC-GB-002 needs lighting changes and raking light, which are impossible here. PUB-001 is a general dataset overview and sets no criteria. The reference was fetched (obs_02) and compared with the image. The comparison finds the same structure: concentric rings, dark bore and granular grey-green inner ring. It records",
+    "latency_s": 28.8
+  },
+  {
+    "image": "bottle/test/good/011.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "Top-down view of the bottle mouth shows concentric rings that look regular and symmetric. The rim is continuous, with no visible chips, cracks, or deformation. The orange glints at the edges look like normal light reflections from the glass finish. The textured dark ring inside appears uniform, with",
+    "latency_s": 2.4
+  },
+  {
+    "image": "bottle/test/good/011.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_0a6ba0b4",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and replaces the multi-view procedures PROC-GB-001 and PROC-GB-002, which require lighting or viewpoint changes and cannot be checked. The reference (obs_02) was fetched and compared with obs_01. Both show the same concentric rings, textured inner band, and rim highlights at about 8 and 3 o'clock. The rim is continuous with no chip, gap or",
+    "latency_s": 24.4
+  },
+  {
+    "image": "bottle/test/good/015.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "Top-down view of an amber bottle mouth shows a circular opening with concentric rim rings. The rim looks continuous and round, with no visible chips, cracks, or missing glass. The faint scratch-like marks near the upper left and upper right rim are very small and likely surface artifacts or reflecti",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/good/015.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_e385867e",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a single static top-view image, so PROC-GB-004 applies. PROC-GB-001 and PROC-GB-002 need seam or lighting comparisons that are not possible here. The approved reference was fetched (obs_02) and the image was compared with it. The image is clear, so the insufficient-evidence condition of GB-4 does not hold. obs_01 and obs_02 both show that the inspected rim deviates from the reference (matc",
+    "latency_s": 28.8
+  },
+  {
+    "image": "bottle/test/good/016.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "Top-down view of the bottle mouth shows an irregular orange/copper-colored discoloration along the rim and finish, mainly on the left, lower-left and right sides. There are also small thin line marks near the left edge (about 9 o'clock) and the right edge (about 4 o'clock), plus bright reflective pa",
+    "latency_s": 2.5
+  },
+  {
+    "image": "bottle/test/good/016.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_465809c0",
+    "outcome": "insufficient_evidence",
+    "stop_reason": "every reachable view has been captured",
+    "sources": [
+      "PROC-GB-004@1.0",
+      "PROC-GB-002@1.1",
+      "PROC-GB-001@3.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "Stopped: every reachable view has been captured. The reference was fetched (obs_02) and the static top-view procedure PROC-GB-004 applies. PROC-GB-001 and PROC-GB-002 need multiple lights or views, which do not exist here, so they are inapplicable. The image does not match the reference (matches_reference=false). The differences are thin pale line marks at ~9 and ~4 o'clock and a different orange ",
+    "latency_s": 30.3
+  },
+  {
+    "image": "bottle/test/good/018.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "Top-down view of the bottle mouth shows concentric rings with a uniform, round opening. The rough textured band inside the neck looks like normal glass surface texture and is evenly distributed. The orange reflections along the rim look like lighting artifacts rather than chips or cracks. No clear b",
+    "latency_s": 2.4
+  },
+  {
+    "image": "bottle/test/good/018.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_89f43de2",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-GB-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-GB-004 applies and replaces the multi-view criteria. The approved reference (obs_02) was fetched and compared with obs_01. The comparison reports matches_reference=true: same concentric rings, central bore and textured rim. The rim ring is continuous, with no chip, jagged section or missing arc. No distinct foreign object, particle, fibre or blob is visi",
+    "latency_s": 23.0
+  },
+  {
+    "image": "bottle/test/good/019.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "Top-down view of the bottle mouth shows concentric rings with a uniform circular opening. The orange-brown reflections on the rim look like lighting and glass coloration rather than chips or cracks. The rim contour is continuous, with no visible breaks, and no foreign material or deformation is evid",
+    "latency_s": 2.4
+  },
+  {
+    "image": "bottle/test/good/019.png",
+    "category": "bottle",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_d4321b59",
+    "outcome": "insufficient_evidence",
+    "stop_reason": "every reachable view has been captured",
+    "sources": [
+      "PROC-GB-004@1.0",
+      "PROC-GB-002@1.1",
+      "PUB-003@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "Stopped: every reachable view has been captured. This is a static single-image task, so PROC-GB-004 applies. PROC-GB-002 needs two-light and raking-light checks that are impossible here, and PUB-003 is only general lighting guidance. The reference was fetched (obs_02) and matches_reference is false. The listed differences are a small bright mark at the upper-left rim, a patchier orange reflection ",
+    "latency_s": 29.5
+  },
+  {
+    "image": "tile/test/crack/005.png",
+    "category": "tile",
+    "defect_type": "crack",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The tile has a uniform speckled glaze pattern, but a distinct brownish curved line runs from the top edge into the upper-left area. It looks like a crack, hair, or foreign fiber and does not match the random speckle texture. This anomaly suggests a defect.",
+    "latency_s": 2.2
+  },
+  {
+    "image": "tile/test/crack/005.png",
+    "category": "tile",
+    "defect_type": "crack",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_efa2970a",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which need two lights and an oblique view and cannot be checked). PROC-CT-002 covers crazing, which does not match here because the feature is a single dominant line rather than a cobweb network. The approved reference was fetched (obs_02) and shows only uniform speckled glaze. obs_01 sh",
+    "latency_s": 23.2
+  },
+  {
+    "image": "tile/test/crack/014.png",
+    "category": "tile",
+    "defect_type": "crack",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "A thin, dark, continuous line runs diagonally across the whole tile from top to bottom. It cuts through the speckled glaze pattern and looks like a crack. A bright, chipped-looking spot sits on the line near the center, which suggests damage at the crack. The line does not follow the speckle texture",
+    "latency_s": 3.1
+  },
+  {
+    "image": "tile/test/crack/014.png",
+    "category": "tile",
+    "defect_type": "crack",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_40dcb4bc",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "PROC-CT-004 is the procedure written for static single-image tile inspection and replaces the multi-view criteria of PROC-CT-001. obs_01 shows a thin, dark, continuous line crossing the whole tile with a bright spot on it where the line kinks. obs_02 is the approved reference, which shows only the uniform speckle texture and has matches_reference=False. The line is a sharp dark crack-like feature ",
+    "latency_s": 22.0
+  },
+  {
+    "image": "tile/test/glue_strip/006.png",
+    "category": "tile",
+    "defect_type": "glue_strip",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "A translucent, irregular triangular fragment (looks like a glass or plastic shard, or a glaze flake) lies on the speckled tile surface. It has sharp edges and visibly disrupts the speckle pattern. This is a foreign object or surface contamination, so I flag it as a suspected defect.",
+    "latency_s": 2.4
+  },
+  {
+    "image": "tile/test/glue_strip/006.png",
+    "category": "tile",
+    "defect_type": "glue_strip",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_80457360",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a single static image, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-GEN-003 relies on lighting and viewpoint changes that are not available. obs_01 shows a localized, sharply bounded translucent, pale, shard-shaped patch that disrupts the speckle texture. The reference was fetched (obs_02) and shows a uniform speckled surface with no such feature (matche",
+    "latency_s": 24.0
+  },
+  {
+    "image": "tile/test/glue_strip/010.png",
+    "category": "tile",
+    "defect_type": "glue_strip",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The speckled tile surface has a translucent, tape-like film or overlay on the right side, roughly a trapezoid with sharp straight edges. It dulls the underlying speckle pattern and has a visible curled corner near the bottom. This is foreign material or a surface anomaly and not part of the normal g",
+    "latency_s": 2.4
+  },
+  {
+    "image": "tile/test/glue_strip/010.png",
+    "category": "tile",
+    "defect_type": "glue_strip",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_59f53bb3",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a single static image, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 and PROC-CT-003, which need lighting changes and the oblique_low view. The approved reference was fetched (obs_02). It shows uniform speckled glaze with no overlay and matches_reference=false for the image. obs_01 shows a translucent, trapezoidal, semi-opaque patch with straight edges on the r",
+    "latency_s": 21.2
+  },
+  {
+    "image": "tile/test/good/005.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled gray glaze with dark mottling evenly distributed across the whole surface. I see no cracks, chips, scratches, glaze pooling, pinholes, or discolored patches that stand out from the speckle pattern, so the texture looks like normal design rather than a defect.",
+    "latency_s": 3.4
+  },
+  {
+    "image": "tile/test/good/005.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_4d324320",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-001 needs two light settings and an oblique_low view, which cannot be obtained here. PROC-CT-002 covers crazing, and no hairline network was observed. The approved reference was fetched (obs_02) and compared with the inspected image. obs_01 shows an evenly speckled surface with n",
+    "latency_s": 19.1
+  },
+  {
+    "image": "tile/test/good/006.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile has a uniform speckled glaze, gray-green with dark mottling, and the pattern is consistent across the whole surface. I see no cracks, chips, glaze pits, scratches or large discolored patches that depart from the speckle texture. There are a few tiny specks, for example a small dark dot near",
+    "latency_s": 2.8
+  },
+  {
+    "image": "tile/test/good/006.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_65799ee0",
+    "outcome": "insufficient_evidence",
+    "stop_reason": "every reachable view has been captured",
+    "sources": [
+      "PROC-CT-004@1.0",
+      "PROC-CT-001@1.3",
+      "PROC-CT-002@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "Stopped: every reachable view has been captured. This is a single static image, so PROC-CT-004 applies and the multi-view criteria of PROC-CT-001 do not. PROC-CT-002 covers crazing and single dominant lines, and there is no linear feature here, so it does not apply. The reference was fetched (obs_02). The overall speckle texture matches it in density and scale, with no crack, glue strip, gray stro",
+    "latency_s": 28.8
+  },
+  {
+    "image": "tile/test/good/012.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled glaze pattern, with dark spots of varying size spread evenly across the whole surface. I see no cracks, chips, scratches, glaze voids, stains or localized anomalies that break the pattern, so the speckling looks like intentional decorative texture rather than a defe",
+    "latency_s": 2.3
+  },
+  {
+    "image": "tile/test/good/012.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_d9aec466",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a single static image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 and PROC-CT-003. PROC-CT-001 needs two light settings and an oblique_low view, which cannot be checked. PROC-CT-002 covers crazing and a structural crack, and no hairline network or dominant line was seen. The approved reference was fetched (obs_02). It shows the same speckled glaze textu",
+    "latency_s": 19.7
+  },
+  {
+    "image": "tile/test/good/013.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled glaze pattern with dark spots spread evenly over a gray-green background. I see no cracks, chips, scratches, glaze pooling, or localized anomalies. The speckle looks like an intentional decorative texture, not a defect.",
+    "latency_s": 2.1
+  },
+  {
+    "image": "tile/test/good/013.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_ebabd503",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The approved reference was fetched (obs_02) and the tile image (obs_01) shows a uniform pale grey-green speckled glaze with no localized region that breaks the texture. The comparison in obs_02 reports matches_reference=true, with no extra line, stain, smear, chip or foreign object. The tiny bright specks appear in both the image and the reference, so they are the same kind of variation and not a ",
+    "latency_s": 18.9
+  },
+  {
+    "image": "tile/test/good/017.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled gray-and-black glaze pattern across the whole field of view. I see no cracks, chips, scratches, glaze pooling, pinholes, or abrupt discontinuities in the pattern, and nothing stands out from the surrounding texture, so the speckling looks like the intended design.",
+    "latency_s": 2.7
+  },
+  {
+    "image": "tile/test/good/017.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_f7be5c04",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which need two lights and an oblique_low view). PROC-CT-002 (crazing vs structural crack) is not relevant, because no fine line network or dominant line is reported. The approved reference was fetched (obs_02) and compared: matches_reference=true, with the same mottled speckle pattern an",
+    "latency_s": 20.5
+  },
+  {
+    "image": "tile/test/good/022.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled gray and black glaze pattern across the whole surface. I see no cracks, chips, scratches, glaze pooling, pinholes, or discolored patches that break the pattern, so the speckle looks like intended texture rather than a defect.",
+    "latency_s": 3.1
+  },
+  {
+    "image": "tile/test/good/022.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_4d3386ee",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-002 concerns crazing versus structural crack, which needs raking light and an oblique view, and no line is reported here. obs_01 shows a uniform speckled glaze with no linear feature, chip, stain, smear or rough patch. The approved reference was fetched (obs_02) and reports match",
+    "latency_s": 18.7
+  },
+  {
+    "image": "tile/test/good/024.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile surface shows a uniform speckled glaze pattern of dark spots on a gray-green background across the whole frame. I see no cracks, chips, glaze pooling, scratches, or localized anomalies that break the texture. The only possible irregularity is a tiny bright fleck near the lower right, which ",
+    "latency_s": 2.5
+  },
+  {
+    "image": "tile/test/good/024.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_719fd62a",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which needs multiple lights and an oblique_low view that do not exist here). PROC-GEN-003 is a lighting/viewpoint technique note and cannot be applied. The image (obs_01) shows a uniform speckled texture with no crack, glue strip, gray stroke, oil stain or rough patch. The approved refer",
+    "latency_s": 20.2
+  },
+  {
+    "image": "tile/test/good/025.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled glaze, with dark spots spread evenly across a gray-green background. I see no cracks, chips, glaze voids, scratches, or localized anomalies that break the pattern. The speckle looks like the intended decorative texture rather than a defect.",
+    "latency_s": 2.3
+  },
+  {
+    "image": "tile/test/good/025.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_0b04b683",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a single static image, so PROC-CT-004 (written for static single-view ceramic tile images) replaces the multi-view criteria of PROC-CT-001 and PROC-CT-003. The multi-light criteria in PROC-CT-001 cannot be checked, and PROC-CT-002 (crazing) does not apply because there is no fine hairline network. obs_01 shows a uniform speckle pattern with no localized region standing out and no discontin",
+    "latency_s": 18.1
+  },
+  {
+    "image": "tile/test/good/026.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The tile shows a uniform speckled glaze, with dark spots spread evenly across a light grey-green background. I see no cracks, chips, scratches, glaze pooling, or large-scale anomalies, and no region differs from the rest of the pattern. The speckling looks like the intended decorative texture, not a",
+    "latency_s": 2.3
+  },
+  {
+    "image": "tile/test/good/026.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_67e999b7",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001 (which needs two lights and an oblique_low view). PROC-CT-002 concerns crazing or cracks needing raking light, and no line is observed. The approved reference was fetched (obs_02). obs_01 shows a uniform grey-green speckled glaze with no localized region breaking the texture: no crack, gl",
+    "latency_s": 20.1
+  },
+  {
+    "image": "tile/test/good/027.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The surface shows a uniform speckled gray glaze with a consistent random dark-spot pattern across the whole field. I see no cracks, chips, scratches, glaze pooling, or localized anomalies that depart from the texture, so the speckling looks like the intended design.",
+    "latency_s": 2.3
+  },
+  {
+    "image": "tile/test/good/027.png",
+    "category": "tile",
+    "defect_type": "good",
+    "label": "good",
+    "mode": "inspectbot",
+    "task_id": "task_9290e75f",
+    "outcome": "no_defect_detected",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies. PROC-CT-001 needs multiple lights and an oblique view, and PROC-CT-002 covers crazing that needs raking light. Neither can be checked here, so both are inapplicable. obs_01 shows a uniform speckled texture with no localized line, stain, smear, rough patch or chip. The approved reference was fetched (obs_02) and the comparison gives matche",
+    "latency_s": 19.7
+  },
+  {
+    "image": "tile/test/gray_stroke/005.png",
+    "category": "tile",
+    "defect_type": "gray_stroke",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The speckled glaze pattern is mostly uniform, but there is a distinct dark, dense, soot-like streak running vertically on the right side (around x=530-680, y=100-470). It is much darker and has a different texture from the surrounding speckles, which suggests a glaze contamination or stain defect.",
+    "latency_s": 2.4
+  },
+  {
+    "image": "tile/test/gray_stroke/005.png",
+    "category": "tile",
+    "defect_type": "gray_stroke",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_be8018a9",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-002 concerns crazing and single-line cracks and does not fit, because no line or hairline network is present. obs_01 shows a localized, vertically elongated, darker and denser patch in the upper right that breaks the surrounding speckle texture. The approved reference was fetched",
+    "latency_s": 21.3
+  },
+  {
+    "image": "tile/test/gray_stroke/012.png",
+    "category": "tile",
+    "defect_type": "gray_stroke",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The tile has a mottled gray and dark speckle glaze pattern that is consistent across most of the surface. At the bottom edge, around x=250-550, there is a dense, dark, rough-textured patch that does not match the surrounding speckle. It looks like a glaze defect or contamination, such as a pinhole c",
+    "latency_s": 2.6
+  },
+  {
+    "image": "tile/test/gray_stroke/012.png",
+    "category": "tile",
+    "defect_type": "gray_stroke",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_fe7495f0",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The reference (obs_02) was fetched and compared. Both obs_01 and obs_02 report a dark, dense, rough-textured band along the bottom edge (about x 250-580) that is darker and grainier than the surrounding speckles, and the reference shows no comparable band (matches_reference=False). This is a localized region that breaks the uniform speckle texture without a reference counterpart, consistent with C",
+    "latency_s": 24.4
+  },
+  {
+    "image": "tile/test/oil/012.png",
+    "category": "tile",
+    "defect_type": "oil",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "A distinct, roughly circular yellowish-brown blob sits in the center of the speckled gray glaze. It has a raised, glossy, bubble-like appearance with scratch-like lines and a small dark chip or crack at its lower edge. This looks like a glaze blister, drop, or contamination, and it breaks the otherw",
+    "latency_s": 2.6
+  },
+  {
+    "image": "tile/test/oil/012.png",
+    "category": "tile",
+    "defect_type": "oil",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_63d44dbf",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "The image (obs_01) shows a localized, roughly circular, yellowish translucent glossy patch about 300 px across with a slightly raised rim. It breaks the uniform speckle texture. The approved reference (obs_02) shows only uniform grey glaze with speckles, and matches_reference=false. This matches the glue strip category in CT-4, which lists a glossy or translucent smear or band. PROC-CT-004 is writ",
+    "latency_s": 22.6
+  },
+  {
+    "image": "tile/test/oil/017.png",
+    "category": "tile",
+    "defect_type": "oil",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The speckled tile surface has a distinct yellowish-tan translucent patch in the upper left, roughly 400 px across. It has a defined edge and glossy streaks, and looks like a glaze blob, drip, or contamination. It breaks the otherwise uniform speckle pattern, so a surface defect is suspected.",
+    "latency_s": 2.5
+  },
+  {
+    "image": "tile/test/oil/017.png",
+    "category": "tile",
+    "defect_type": "oil",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_02110820",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "PROC-CT-004 is the static single-image procedure for ceramic tile and replaces the multi-view criteria of PROC-CT-001 and PROC-CT-003. obs_01 shows a localized yellowish-tan translucent, slightly glossy patch with a defined outline that disrupts the uniform speckle texture. The approved reference (obs_02, matches_reference=false) shows only uniform speckle and has no such patch. This matches the C",
+    "latency_s": 25.0
+  },
+  {
+    "image": "tile/test/rough/002.png",
+    "category": "tile",
+    "defect_type": "rough",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "suspected_defect",
+    "rationale": "The speckled glaze pattern is uniform across most of the tile. Near the center there is a diagonal streak running from about (350,420) to (560,610) with a scratch-like, abraded texture, a disrupted speckle pattern, and glittery highlights. It looks like a surface scratch or abrasion that does not ma",
+    "latency_s": 2.5
+  },
+  {
+    "image": "tile/test/rough/002.png",
+    "category": "tile",
+    "defect_type": "rough",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_006ed611",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. obs_01 shows a localized diagonal band near the center with dark bluish-gray streaks, a hazy smeared look, bright glints and a disrupted speckle pattern. The approved reference (obs_02) was fetched, shows only uniform speckle, and has matches_reference=False. It records the band as an ex",
+    "latency_s": 21.2
+  },
+  {
+    "image": "tile/test/rough/007.png",
+    "category": "tile",
+    "defect_type": "rough",
+    "label": "defect",
+    "mode": "baseline",
+    "outcome": "no_defect_detected",
+    "rationale": "The close-up shows a speckled glaze with dark spots spread evenly across the surface. This looks like the tile's intended decorative texture, not damage. I see no cracks, chips, glaze pooling, scratches or large foreign contamination. The brighter, blurry patch in the top-right corner looks like a l",
+    "latency_s": 2.9
+  },
+  {
+    "image": "tile/test/rough/007.png",
+    "category": "tile",
+    "defect_type": "rough",
+    "label": "defect",
+    "mode": "inspectbot",
+    "task_id": "task_fdfc1fee",
+    "outcome": "suspected_defect",
+    "stop_reason": "evidence requirements met",
+    "sources": [
+      "PROC-CT-004@1.0"
+    ],
+    "grounded": true,
+    "used_reference": true,
+    "aux_calls": 1,
+    "summary": "This is a static single-image task, so PROC-CT-004 applies and replaces the multi-view criteria of PROC-CT-001. PROC-CT-002 concerns crazing or cracks, and no linear feature was found. obs_01 shows a localized rough, grainy, bright-speckled patch in the upper-right corner that differs from the surrounding texture. The approved reference (obs_02) was fetched and has no such patch (matches_reference",
+    "latency_s": 23.9
+  }
+]

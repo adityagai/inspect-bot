@@ -1,0 +1,72 @@
+{
+  "stamp": "20261120-1222",
+  "set": "warmup",
+  "inspectbot": {
+    "images": 4,
+    "defective": 2,
+    "good": 2,
+    "precision": 1.0,
+    "recall": 1.0,
+    "decision_coverage": 1.0,
+    "accuracy": 1.0,
+    "tp": 2,
+    "fp": 0,
+    "fn_abstained": 0,
+    "fn_cleared": 0,
+    "good_cleared": 2,
+    "good_abstained": 0,
+    "recall_by_type": {
+      "bottle/broken_large": "1/1",
+      "tile/crack": "1/1"
+    },
+    "errors": 0,
+    "mean_latency_s": 33.0,
+    "grounding": "4/4",
+    "used_reference": "4/4",
+    "by_category_bottle": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "decision_coverage": 1.0,
+      "accuracy": 1.0
+    },
+    "by_category_tile": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "decision_coverage": 1.0,
+      "accuracy": 1.0
+    }
+  },
+  "baseline": {
+    "images": 4,
+    "defective": 2,
+    "good": 2,
+    "precision": 0.667,
+    "recall": 1.0,
+    "decision_coverage": 1.0,
+    "accuracy": 0.75,
+    "tp": 2,
+    "fp": 1,
+    "fn_abstained": 0,
+    "fn_cleared": 0,
+    "good_cleared": 1,
+    "good_abstained": 0,
+    "recall_by_type": {
+      "bottle/broken_large": "1/1",
+      "tile/crack": "1/1"
+    },
+    "errors": 0,
+    "mean_latency_s": 2.6,
+    "by_category_bottle": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "decision_coverage": 1.0,
+      "accuracy": 0.5
+    },
+    "by_category_tile": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "decision_coverage": 1.0,
+      "accuracy": 1.0
+    }
+  }
+}

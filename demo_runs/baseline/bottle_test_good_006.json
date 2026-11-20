@@ -1,0 +1,7 @@
+{
+  "scenario_id": "bottle_test_good_006",
+  "mode": "baseline",
+  "image": "bottle/test/good/006.png",
+  "outcome": "suspected_defect",
+  "rationale": "Top-down view of the bottle mouth. The finish rim shows irregular, discontinuous bright orange reflections, with a notch or break near the upper right (around 1-2 o'clock) and small chip-like bright artifacts at the lower left (around 8 o'clock). The sealing surface looks uneven and ragged, which is"
+}

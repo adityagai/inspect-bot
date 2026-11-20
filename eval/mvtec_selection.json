@@ -1,0 +1,24 @@
+{
+  "description": "MVTec AD static-image evaluation set: 40 held-out test images (bottle + tile; 20 defective spread evenly over defect types, 20 good), plus 4 disjoint warm-up images. Chosen with random.seed(42) before any run; paths are relative to the MVTec AD root.",
+  "seed": 42,
+  "category_map": {"bottle": "glass_bottle", "tile": "ceramic_tile"},
+  "reference": {"bottle": "bottle/train/good/000.png", "tile": "tile/train/good/000.png"},
+  "eval": [
+    "bottle/test/broken_large/003.png", "bottle/test/broken_small/017.png", "bottle/test/contamination/011.png",
+    "bottle/test/broken_large/000.png", "bottle/test/broken_small/006.png", "bottle/test/contamination/020.png",
+    "bottle/test/broken_large/008.png", "bottle/test/broken_small/021.png", "bottle/test/contamination/008.png",
+    "bottle/test/broken_large/007.png",
+    "bottle/test/good/016.png", "bottle/test/good/019.png", "bottle/test/good/011.png", "bottle/test/good/001.png",
+    "bottle/test/good/000.png", "bottle/test/good/006.png", "bottle/test/good/009.png", "bottle/test/good/004.png",
+    "bottle/test/good/018.png", "bottle/test/good/015.png",
+    "tile/test/crack/005.png", "tile/test/glue_strip/006.png", "tile/test/gray_stroke/012.png", "tile/test/oil/012.png",
+    "tile/test/rough/002.png", "tile/test/crack/014.png", "tile/test/glue_strip/010.png", "tile/test/gray_stroke/005.png",
+    "tile/test/oil/017.png", "tile/test/rough/007.png",
+    "tile/test/good/027.png", "tile/test/good/026.png", "tile/test/good/005.png", "tile/test/good/013.png",
+    "tile/test/good/012.png", "tile/test/good/024.png", "tile/test/good/022.png", "tile/test/good/006.png",
+    "tile/test/good/025.png", "tile/test/good/017.png"
+  ],
+  "warmup": [
+    "bottle/test/broken_large/016.png", "bottle/test/good/017.png", "tile/test/crack/006.png", "tile/test/good/014.png"
+  ]
+}

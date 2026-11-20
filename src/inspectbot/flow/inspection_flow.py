@@ -18,7 +18,7 @@ from typing import Any
 from crewai.flow.flow import Flow, listen, or_, router, start
 from pydantic import BaseModel, Field, PrivateAttr
 
-from inspectbot.agents.prompts import GENERAL_CRITERIA_ID, inspection_prompt, planning_prompt, verification_prompt
+from inspectbot.agents.prompts import GENERAL_CRITERIA_ID, inspection_prompt, static_inspection_prompt, planning_prompt, verification_prompt
 from inspectbot.reasoning.tot import candidates_payload, run_tot
 from inspectbot.agents.runner import AgentRunner
 from inspectbot.agents.schemas import InspectionOutput, PlanOutput, VerificationOutput
@@ -31,6 +31,7 @@ MAX_REJECTIONS = 2  # guard-rejected proposals per step before escalating; faile
 
 class InspectionState(BaseModel):
     scenario_id: str = ""
+    static: dict[str, Any] | None = None  # {"image_path", "category", "reference_path", "case_id"}
     task_id: str = ""
     task: dict[str, Any] = Field(default_factory=dict)
     pose: str = ""
@@ -94,7 +95,10 @@ class InspectionFlow(Flow[InspectionState]):
 
     @start()
     def begin(self) -> None:
-        out = self.gateway.call("start_inspection", scenario_id=self.state.scenario_id)
+        if self.state.static:
+            out = self.gateway.call("start_static_inspection", **self.state.static)
+        else:
+            out = self.gateway.call("start_inspection", scenario_id=self.state.scenario_id)
         s = self.state
         s.task_id, s.task = out["task_id"], out["task"]
         s.pose, s.light = s.task["initial_pose"], s.task["initial_light"]
@@ -109,7 +113,10 @@ class InspectionFlow(Flow[InspectionState]):
         for oid in s.pending_obs:
             meta = s.obs_meta[oid]
             earlier = [s.initial_obs] if oid != s.initial_obs else []
-            prompt = inspection_prompt(s.task, oid, meta.get("pose") or "", meta.get("light") or "", earlier)
+            if s.task.get("static_image"):
+                prompt = static_inspection_prompt(s.task, oid, earlier)
+            else:
+                prompt = inspection_prompt(s.task, oid, meta.get("pose") or "", meta.get("light") or "", earlier)
             if meta["kind"] == "reference":
                 prompt = ("This image is the APPROVED REFERENCE of a defect-free part of this category "
                           f"(source {meta.get('source_id')}). Features on it are expected.\n" + prompt)
@@ -304,7 +311,9 @@ class InspectionFlow(Flow[InspectionState]):
             "remaining_uncertainty": v.missing_evidence,
             "sources": self._sources(v.source_ids_applied),
             "needs_human_review": False,
-            "scope_note": (f"Covers only target region {s.task['target_region']} of this part, viewed as "
+            "scope_note": ((f"Covers only what is visible in this single fixed-camera image, compared with the approved "
+                            f"reference. Not a safety certification.") if s.task.get("static_image") else
+                           f"Covers only target region {s.task['target_region']} of this part, viewed as "
                            f"{views}. Not a safety certification.") if v.proposed_outcome == Outcome.NO_DEFECT_DETECTED else None,
         }
         self._say("coordinator", "human", "report", f"{v.proposed_outcome.value}: {v.rationale}",
@@ -329,6 +338,16 @@ class InspectionFlow(Flow[InspectionState]):
         self._say("coordinator", "human", "escalation",
                   f"Insufficient evidence ({s.stop_reason}). Human review requested.", obs_refs=all_obs)
         return self._submit(report)
+
+
+def run_static_inspection(image_path: str, category: str, gateway: Gateway, runner: AgentRunner,
+                          reference_path: str | None = None, case_id: str | None = None,
+                          max_steps: int = 4) -> InspectionState:
+    """One real photo: retrieval + verification as usual; no robot moves, no ToT (nothing to branch on)."""
+    flow = InspectionFlow(gateway=gateway, runner=runner, max_steps=max_steps, use_rag=True, use_tot=False)
+    flow.kickoff(inputs={"static": {"image_path": image_path, "category": category,
+                                    "reference_path": reference_path, "case_id": case_id}})
+    return flow.state
 
 
 def run_inspection(scenario_id: str, gateway: Gateway, runner: AgentRunner, max_steps: int = 6,
