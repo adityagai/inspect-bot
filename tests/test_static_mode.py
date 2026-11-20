@@ -51,3 +51,16 @@ def test_score_abstain_on_defect_is_a_miss():
     m = score(cases)
     assert m["precision"] == 0.5 and m["recall"] == 0.5
     assert m["decision_coverage"] == 0.75 and m["fn_abstained"] == 1 and m["fp"] == 1
+
+
+def test_saved_mvtec_runs_replay():
+    from inspectbot.ui.replay import view_at
+
+    root = Path(__file__).resolve().parents[1] / "demo_runs"
+    expected = {"M1": "no_defect_detected", "M2": "suspected_defect", "M3": "insufficient_evidence"}
+    for name, outcome in expected.items():
+        v = view_at(root / name)
+        assert v.task["static_image"] is True
+        assert v.report["outcome"] == outcome
+        kinds = [o["kind"] for o in v.observations]
+        assert kinds == ["camera", "reference"] and all(v.image_path(o).exists() for o in v.observations)

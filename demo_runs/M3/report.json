@@ -1,0 +1,32 @@
+{
+  "task_id": "task_65799ee0",
+  "scenario_id": "tile_test_good_006",
+  "outcome": "insufficient_evidence",
+  "summary": "Stopped: every reachable view has been captured. This is a single static image, so PROC-CT-004 applies and the multi-view criteria of PROC-CT-001 do not. PROC-CT-002 covers crazing and single dominant lines, and there is no linear feature here, so it does not apply. The reference was fetched (obs_02). The overall speckle texture matches it in density and scale, with no crack, glue strip, gray stroke, oil stain or rough patch. The only deviations are a few tiny isolated flecks and spots (orange, red, dark and bright) that the reference lacks. They are far smaller than the speckle pattern and are not any of the listed defect types. Both observations rate them medium to high uncertainty, with hypotheses of dust, fiber, pigment inclusion or imaging artifact. Because matches_reference=false, a no-defect verdict is not supported. Because no region clearly breaks the texture, a suspected-defect verdict is not supported either. The flecks are genuinely ambiguous after comparison with the reference, so CT-4 points to insufficient evidence.",
+  "evidence": [
+    {
+      "claim": "Observations reviewed before escalation",
+      "obs_ids": [
+        "obs_01",
+        "obs_02"
+      ],
+      "source_ids": [
+        "PROC-CT-004@1.0",
+        "PROC-CT-001@1.3",
+        "PROC-CT-002@1.0"
+      ]
+    }
+  ],
+  "remaining_uncertainty": [
+    "Human review or a higher-resolution crop of the orange fleck (~490,475) and red dot (~580,478) to decide whether they are surface contamination or a glaze defect, or just dust or lens debris",
+    "Confirmation of whether the isolated dark spot (~523,232) and the small bright marks (~735,550 and ~140,727) are defects or normal speckle variation"
+  ],
+  "failed_attempt_ids": [],
+  "sources": [
+    "PROC-CT-004@1.0",
+    "PROC-CT-001@1.3",
+    "PROC-CT-002@1.0"
+  ],
+  "needs_human_review": true,
+  "scope_note": null
+}

@@ -1,0 +1,7 @@
+{
+  "scenario_id": "tile_test_crack_005",
+  "mode": "baseline",
+  "image": "tile/test/crack/005.png",
+  "outcome": "suspected_defect",
+  "rationale": "The tile has a uniform speckled glaze pattern, but a distinct brownish curved line runs from the top edge into the upper-left area. It looks like a crack, hair, or foreign fiber and does not match the random speckle texture. This anomaly suggests a defect."
+}

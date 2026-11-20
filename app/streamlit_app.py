@@ -2,11 +2,12 @@
 
     streamlit run app/streamlit_app.py
 
-Replay: step through a saved run (demo_runs/ ships with S1-S5).
+Replay: step through a saved run (demo_runs/ ships with S1-S5 and MVTec AD runs M1-M3).
 Live:   run an inspection now (needs ANTHROPIC_API_KEY) and watch it update.
 
 URL parameters (handy for demos and recording), e.g. http://localhost:8501/?run=S1&step=11
     run=<run folder name>   step=<event number>   open=rag   sidebar=collapsed
+    eval=<results folder>   e.g. eval=mvtec-eval-20261120-1225 (with the Evaluation tab)
 """
 
 from __future__ import annotations
@@ -121,18 +122,26 @@ def render_run(run_dir: Path, step: int | None) -> None:
 
     left, right = st.columns([1.05, 1])
     with left:
-        st.markdown("#### Robot cell")
-        st.markdown(v.schematic_svg, unsafe_allow_html=True)
+        if t.get("static_image"):
+            st.markdown("#### Static image")
+            st.caption("MVTec AD photo from a fixed camera: the camera cannot move and the lighting cannot change. "
+                       "The only extra evidence is the approved reference image.")
+        else:
+            st.markdown("#### Robot cell")
+            st.markdown(v.schematic_svg, unsafe_allow_html=True)
         if v.current_obs:
             o = v.current_obs
             cap = f"{o['obs_id']} · {o['kind']}" + (f" · {o['pose']}/{o['light']}" if o.get("pose") else "")
-            st.image(str(v.image_path(o)), caption=cap, use_container_width=True)
+            if t.get("static_image"):
+                st.image(str(v.image_path(o)), caption=cap, width=460)
+            else:
+                st.image(str(v.image_path(o)), caption=cap, use_container_width=True)
         if v.observations:
             st.markdown("**All observations** (failed attempts never produce an image)")
             cols = st.columns(6)
             for i, o in enumerate(v.observations):
                 with cols[i % len(cols)]:
-                    st.image(str(v.image_path(o)), caption=f"{o['obs_id']} {o.get('pose') or o['kind']}/{o.get('light') or ''}",
+                    st.image(str(v.image_path(o)), caption=f"{o['obs_id']} " + (f"{o['pose']}/{o['light']}" if o.get("pose") else o["kind"]),
                              use_container_width=True)
     with right:
         st.markdown("#### Agent timeline")
@@ -173,14 +182,22 @@ def render_run(run_dir: Path, step: int | None) -> None:
         for ev in r.get("evidence", []):
             st.markdown(f"- **Evidence:** {', '.join(ev['obs_ids'])} · procedures: {', '.join(ev.get('source_ids', [])) or '—'}")
         if r.get("scope_note"):
-            st.caption(f"Scope: {r['scope_note']}")
+            scope = r["scope_note"]
+            if t.get("static_image") and "viewed as" in scope:  # runs saved before the static scope wording existed
+                scope = ("Covers only what is visible in this single fixed-camera image, compared with the approved "
+                         "reference. Not a safety certification.")
+            st.caption(f"Scope: {scope}")
         if r.get("remaining_uncertainty"):
             st.markdown("**Remaining uncertainty:** " + "; ".join(r["remaining_uncertainty"]))
         if r.get("failed_attempt_ids"):
             st.markdown(f"**Failed actions (not evidence):** {', '.join(r['failed_attempt_ids'])}")
         b = baseline_for(run_dir, t["scenario_id"])
         if b:
-            st.markdown(f"**Prompt-only baseline on the same first image:** {badge(b['outcome'])}", unsafe_allow_html=True)
+            truth = ""
+            if t.get("static_image") and b.get("image"):
+                truth = f" &nbsp; <span class='small'>dataset label: {b['image'].split('/')[2]}</span>"
+            st.markdown(f"**Prompt-only baseline on the same first image:** {badge(b['outcome'])}{truth}",
+                        unsafe_allow_html=True)
             st.caption(b["rationale"][:400])
         if r.get("needs_human_review"):
             human_review_panel(run_dir)
@@ -210,14 +227,27 @@ def evaluation_tab() -> None:
     if not results:
         st.info("No evaluation results yet. Run `python eval/run_eval.py`.")
         return
-    choice = st.selectbox("Evaluation run", results, format_func=lambda p: p.parent.name)
+    def label(p: Path) -> str:
+        n = p.parent.name
+        if n.startswith("mvtec-eval"):
+            return f"MVTec AD · 40 real images (bottle, tile) · {n}"
+        if n.startswith("mvtec-warmup"):
+            return f"MVTec AD · 4 warm-up images · {n}"
+        return f"Simulation · 20 scenarios · {n}"
+
+    rank = lambda p: (0 if not p.parent.name.startswith("mvtec") else 1 if "eval" in p.parent.name else 2)  # noqa: E731
+    results = sorted(results, key=rank)  # stable: keeps the newest-first order inside each group
+    wanted = QP.get("eval")
+    idx = next((i for i, p in enumerate(results) if p.parent.name == wanted), 0)
+    choice = st.selectbox("Evaluation run", results, index=idx, format_func=label)
     st.markdown(choice.read_text())
 
 
 # ---------------------------------------------------------------- layout
 
 st.title("🔎 InspectBot")
-st.caption("Multi-agent visual inspection in a simulated robot cell · CrewAI · LangChain RAG · MCP · Claude")
+st.caption("Multi-agent visual inspection in a simulated robot cell and on real MVTec AD images · "
+           "CrewAI · LangChain RAG · MCP · Claude")
 tab_run, tab_eval, tab_about = st.tabs(["Inspection", "Evaluation", "How it works"])
 
 with st.sidebar:

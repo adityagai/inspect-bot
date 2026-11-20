@@ -46,5 +46,5 @@ Run on 2026-11-16 with `python eval/run_eval.py` (3 parallel workers). Full tabl
 ## Limits of this evaluation
 - **Small and single-run:** 20 scenarios, one run each. Model outputs vary between runs, so treat these numbers as a pilot, not a general performance claim.
 - **Same author for scenarios and procedures.** Prompts were refined on S1–S5 during Days 3–4, while the 15 variants were written afterwards and not tuned on. Even so, the procedures fit the simulated physics by construction.
-- **Simulated images only:** the cell's images are synthetic, and the MVTec AD static-image experiment from the proposal was not run in this MVP.
+- **Simulated images only:** the cell's images are synthetic, and the MVTec AD static-image experiment from the proposal was run later, on Day 7 ([results](day7_mvtec_evaluation.md)).
 - **Repeat before reporting:** run `python eval/run_eval.py` again to check stability before quoting numbers.

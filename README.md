@@ -8,6 +8,8 @@ InspectBot is a multi-agent research assistant for **simulated robotic visual in
 
 The problem it tackles is that a single image often can't tell a crack from a shadow or an expected seam. A one-shot model guesses; InspectBot treats the line as a hypothesis, picks the observation that would tell the explanations apart, and stops when the evidence is either sufficient or unobtainable.
 
+It is also tested on real photos: in **static-image mode**, it inspects MVTec AD images from a fixed camera, where the only extra evidence is an approved reference image.
+
 | | |
 | --- | --- |
 | **Models** | Anthropic Claude: `claude-sonnet-5-5` (Inspection with vision, Verification), `claude-haiku-5-5` (Planning) |
@@ -15,10 +17,11 @@ The problem it tackles is that a single image often can't tell a crack from a sh
 | **Knowledge** | LangChain + Chroma retrieval over versioned procedures |
 | **Tools** | MCP server (FastMCP) exposing the robot cell, the shared task record, retrieval and reports |
 | **Robot** | CPU-only simulated inspection cell (numpy + Pillow); no GPU, no physical hardware |
+| **Real images** | MVTec AD (bottle, tile) in static-image mode: one fixed camera plus an approved reference |
 
 ## Demo
 
-**[Watch the 3-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, then the evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
+**[Watch the 4-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, the simulation evaluation, then real MVTec AD images and their evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
 
 ## Results
 
@@ -144,23 +147,24 @@ streamlit run app/streamlit_app.py
 
 ### The demo app
 
-`streamlit run app/streamlit_app.py` opens with the saved S1–S5 runs in `demo_runs/`.
+`streamlit run app/streamlit_app.py` opens with the saved S1–S5 runs and three MVTec AD runs (M1–M3) in `demo_runs/`.
 
 | Tab or mode | What it shows |
 | --- | --- |
 | **Replay** | Pick a saved run in the sidebar and drag the **Step** slider. You see the robot cell diagram, camera image and thumbnails, the agent timeline, retrieved and rejected procedures, the Tree-of-Thought tree, the report, and the baseline's answer on the same first image |
 | **Live** | Pick any of the 20 scenarios and press **▶ Start inspection**; the same panels update as the agents work (needs `ANTHROPIC_API_KEY` and the `agents` extra) |
 | **Human review** | Shown on every Insufficient-evidence report. The reviewer records a decision (clarify, supply guidance, authorize one more bounded inspection, close the case), which is saved to `review.json` and the event log |
-| **Evaluation** | The evaluation tables from `eval/results/` |
+| **Evaluation** | The evaluation tables from `eval/results/`: the 20-scenario simulation run (default) and the 40-image MVTec AD run |
 
 Any moment can be opened directly by URL, for example `http://localhost:8501/?run=S1&step=11`. The parameters are:
 
 | Parameter | Effect |
 | --- | --- |
-| `run` | Which saved run to open, e.g. `S1` |
+| `run` | Which saved run to open, e.g. `S1` or `M1` |
 | `step` | Which event to show, e.g. `11` |
 | `open=rag` | Expands the retrieved-procedures panel |
 | `sidebar=collapsed` | Hides the sidebar |
+| `eval` | Which evaluation results the Evaluation tab shows, e.g. `mvtec-eval-20261120-1225` |
 
 ### Other commands
 
@@ -301,7 +305,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 
 ## Tests
 
-`pytest -q` runs 68 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
+`pytest -q` runs 69 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
 
 | File | Covers |
 | --- | --- |
@@ -310,7 +314,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 | `test_mcp_server.py` | Every MCP tool, failures never becoming evidence, budget exhaustion, report validation |
 | `test_flow.py` | Coordinator routing, replanning after failures, rejection limits, conclusion guards, baseline |
 | `test_rag_tot.py` | Corpus versions, category filtering, decoy rejection, injection exclusion, missing guidance, ToT selection, pruning, beam and depth limits, server-side ToT cap |
-| `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss |
+| `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss, replay of the saved M1–M3 runs |
 | `test_ui_eval.py` | Replay reconstruction at any step, ToT tree rendering, run ordering, evaluation metrics and targets, the balanced scenario set, mark-versus-crack rendering |
 
 ## Repository layout
@@ -329,7 +333,7 @@ src/inspectbot/
   ui/          replay.py (rebuilds the app view at any step from events.jsonl)
 app/           streamlit_app.py (replay, live, human review, evaluation)
 eval/          run_eval.py, metrics.py, results/<stamp>/ (cases.json, summary.json, summary.md)
-demo_runs/     saved S1–S5 runs + baseline answers, replayed by the app
+demo_runs/     saved S1–S5 and MVTec M1–M3 runs + baseline answers, replayed by the app (MVTEC_NOTICE.md: image license)
 corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
 scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
@@ -348,7 +352,7 @@ tests/
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
 | 6 | Captioned demo video, narration script, app URL parameters for demos | merged (#6) |
-| 7 | MVTec AD static-image mode and 40-image evaluation (bottle, tile) | in review |
+| 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | in review (#10) |
 
 ## Scope and limitations
 

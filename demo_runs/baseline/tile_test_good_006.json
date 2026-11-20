@@ -1,0 +1,7 @@
+{
+  "scenario_id": "tile_test_good_006",
+  "mode": "baseline",
+  "image": "tile/test/good/006.png",
+  "outcome": "no_defect_detected",
+  "rationale": "The tile has a uniform speckled glaze, gray-green with dark mottling, and the pattern is consistent across the whole surface. I see no cracks, chips, glaze pits, scratches or large discolored patches that depart from the speckle texture. There are a few tiny specks, for example a small dark dot near"
+}

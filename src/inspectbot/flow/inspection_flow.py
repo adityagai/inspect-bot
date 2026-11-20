@@ -311,7 +311,9 @@ class InspectionFlow(Flow[InspectionState]):
             "remaining_uncertainty": v.missing_evidence,
             "sources": self._sources(v.source_ids_applied),
             "needs_human_review": False,
-            "scope_note": (f"Covers only target region {s.task['target_region']} of this part, viewed as "
+            "scope_note": ((f"Covers only what is visible in this single fixed-camera image, compared with the approved "
+                            f"reference. Not a safety certification.") if s.task.get("static_image") else
+                           f"Covers only target region {s.task['target_region']} of this part, viewed as "
                            f"{views}. Not a safety certification.") if v.proposed_outcome == Outcome.NO_DEFECT_DETECTED else None,
         }
         self._say("coordinator", "human", "report", f"{v.proposed_outcome.value}: {v.rationale}",
