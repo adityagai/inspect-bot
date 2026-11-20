@@ -21,9 +21,10 @@ All Checkpoint 2.1 and 6.1 targets are met.
 ### New in this update
 - **Static-image mode for real photos:** MVTec AD images from a fixed camera. The approved reference image is the only extra evidence, checked under new procedures PROC-GB-004 and PROC-CT-004.
 - **40-image MVTec evaluation** with a selection fixed by seed before any run ([details](day7_mvtec_evaluation.md)).
-- **Three replayable MVTec demo runs (M1–M3)** in the app, and an Evaluation tab selector.
-- **Demo video extended to 3:51** with the MVTec scenes.
-- **69 tests**, all passing with no API calls.
+- **Five replayable MVTec demo runs (M1–M5)** in the app, including a contaminated bottle and a rough tile that InspectBot caught and the baseline cleared, and an Evaluation tab selector.
+- **Demo video extended to 4:29** with the MVTec scenes.
+- **Live mode checks its setup** and says what is missing instead of failing.
+- **73 tests**, all passing with no API calls.
 
 ### Assets
 - `inspectbot_demo.mp4`: captioned demo video (1920×1080, no audio); narration script in `docs/demo_script.md`.
