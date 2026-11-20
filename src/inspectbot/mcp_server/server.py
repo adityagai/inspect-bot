@@ -26,7 +26,7 @@ from inspectbot.mcp_server.session import SessionError, SessionManager
 ROBOT_TOOLS = ["move_camera", "set_lighting"]
 IMAGE_TOOLS = ["zoom_region", "get_reference", "get_observation_image"]
 RECORD_TOOLS = ["get_task_record", "append_finding", "post_message", "submit_report"]
-LIFECYCLE_TOOLS = ["start_inspection"]
+LIFECYCLE_TOOLS = ["start_inspection", "start_static_inspection"]
 KNOWLEDGE_TOOLS = ["retrieve_procedures", "record_tot"]
 
 Pose = Literal["front", "left_45", "right_45", "top", "oblique_low"]
@@ -63,6 +63,13 @@ def build_server(manager: SessionManager | None = None, host: str = "127.0.0.1",
         """Start an inspection of one object. Returns task_id, the task definition (category, goal,
         target region, available poses and lights), the initial observation and the budget."""
         return _call(sessions.start, scenario_id, goal)
+
+    @mcp.tool()
+    def start_static_inspection(image_path: str, category: str, reference_path: str | None = None,
+                                case_id: str | None = None) -> dict[str, Any]:
+        """Start an inspection of one real static image (e.g. MVTec AD). Camera and light cannot change;
+        zoom_region and get_reference (the approved defect-free sample) are available."""
+        return _call(sessions.start_static, image_path, category, reference_path, case_id)
 
     # ---------------------------------------------------------------- robot actions (budgeted)
 

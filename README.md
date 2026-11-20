@@ -37,6 +37,17 @@ The problem it tackles is that a single image often can't tell a crack from a sh
 
 Every baseline error was a non-defect called a crack: shadows, seams, a surface mark, glare, and parts with no procedure. These are single pilot runs on synthetic scenarios, not general performance claims; see the limits in the evaluation doc.
 
+**Real images: MVTec AD static-image evaluation** (Checkpoint 2.1). 40 held-out test images from the bottle and tile categories (20 defective, 20 good), fixed by seed before any run. Each image gets one approved reference and no other views ([details](docs/day7_mvtec_evaluation.md), [raw results](eval/results/mvtec-eval-20261120-1225/summary.md)).
+
+| Metric | InspectBot | Baseline | Target |
+| --- | --- | --- | --- |
+| Precision (defect) | **86%** | 75% | ≥ 85% ✓ |
+| Recall (abstaining on a defect counts as a miss) | **95%** | 90% | ≥ 85% ✓ |
+| Decision coverage | **92%** | 100% | ≥ 80% ✓ |
+| Good images flagged as defects | **3** | 6 | — |
+| Grounded definitive reports | **37/37** | — | 100% ✓ |
+| Mean latency | 25 s | 2.5 s | — |
+
 ## Architecture
 
 ```mermaid
@@ -162,6 +173,7 @@ Any moment can be opened directly by URL, for example `http://localhost:8501/?ru
 | `python scripts/vision_check.py S1 S2` | Show Claude the first image of each scenario and print what it sees |
 | `python scripts/smoke_crewai_mcp.py` | A CrewAI agent drives the robot through the MCP server (end-to-end check) |
 | `python eval/run_eval.py --set demo` / `--only V03 V13` | Evaluate a subset |
+| `python eval/run_mvtec.py --root <MVTec AD folder>` / `--set warmup` | MVTec AD static-image evaluation (bottle, tile) for InspectBot and the baseline |
 
 Each run writes `runs/<task_id>/` containing:
 - `task_record.json`: all attempts, observations, findings, ToT candidates and messages
@@ -289,7 +301,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 
 ## Tests
 
-`pytest -q` runs 65 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
+`pytest -q` runs 68 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
 
 | File | Covers |
 | --- | --- |
@@ -298,6 +310,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 | `test_mcp_server.py` | Every MCP tool, failures never becoming evidence, budget exhaustion, report validation |
 | `test_flow.py` | Coordinator routing, replanning after failures, rejection limits, conclusion guards, baseline |
 | `test_rag_tot.py` | Corpus versions, category filtering, decoy rejection, injection exclusion, missing guidance, ToT selection, pruning, beam and depth limits, server-side ToT cap |
+| `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss |
 | `test_ui_eval.py` | Replay reconstruction at any step, ToT tree rendering, run ordering, evaluation metrics and targets, the balanced scenario set, mark-versus-crack rendering |
 
 ## Repository layout
@@ -335,10 +348,11 @@ tests/
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
 | 6 | Captioned demo video, narration script, app URL parameters for demos | merged (#6) |
+| 7 | MVTec AD static-image mode and 40-image evaluation (bottle, tile) | in review |
 
 ## Scope and limitations
 
 - **Simulated only:** one object per inspection, in simulation or advisory mode. No physical equipment is controlled.
 - **Synthetic procedures:** they were written for these experiments and are not industry standards. Public references are paraphrased summaries.
 - **Pilot results:** the results above come from single pilot runs. Model outputs can vary between runs.
-- **No MVTec experiment:** the MVTec AD static-image experiment from the proposal is not part of this MVP.
+- **MVTec scope:** the real-image experiment covers two of the 15 MVTec AD categories (bottle and tile), 40 images, single runs. The dataset is not in the repo; download it from MVTec and run `python eval/run_mvtec.py --root <path>`.

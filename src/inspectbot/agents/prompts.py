@@ -47,6 +47,25 @@ ROLES = {
 }
 
 
+def static_inspection_prompt(task: dict, obs_id: str, earlier: list[str]) -> str:
+    """Single real photo (e.g. MVTec AD): the material's texture IS what is inspected."""
+    comp = (f"Two images are attached: FIRST = observation {obs_id}; SECOND = the image under inspection "
+            f"({earlier[0]}). " if earlier else f"One image is attached: observation {obs_id}, the image under inspection. ")
+    if earlier:
+        comp += ("If the FIRST image is the approved defect-free reference, set matches_reference=true only if the "
+                 "SECOND image shows nothing that the reference lacks (no extra line, stain, smear, chip, gap or "
+                 "foreign object), and false if the SECOND image has any such deviation. ")
+    return (
+        f"Inspection goal: {task['goal']}\nObject category: {task['object_category']}\n{comp}"
+        "This is a single static photo from a fixed camera: no other viewpoints or lighting exist. Examine the "
+        "whole object, including its surface texture: describe any localized region that differs from the normal "
+        "appearance (line, crack, chip, missing piece, stain, smear, streak, rough patch, foreign object). "
+        "target_visible is true unless the object is cut off, blurred or too dark to judge. Set "
+        "surface_discontinuity=true for a visible break, chip, crack or missing material. Give neutral findings "
+        "with plausible hypotheses (e.g. defect type vs normal variation). Do not give a final verdict."
+    )
+
+
 def inspection_prompt(task: dict, obs_id: str, pose: str, light: str, earlier: list[str]) -> str:
     comp = (f"Two images are attached in this order: FIRST = current observation {obs_id}; "
             f"SECOND = earlier observation {earlier[0]} (front view, initial light), for comparison only. "
@@ -104,6 +123,20 @@ def planning_prompt(task: dict, state: dict, inspections: list[dict], verificati
     )
 
 
+STATIC_RULES = (
+    "STATIC IMAGE TASK: there is one photo from a fixed camera; lighting and viewpoint cannot change. Procedures "
+    "that require lighting changes or other viewpoints cannot be checked here and do NOT apply. Apply the "
+    "procedure written for static images of this category (cite it in source_ids_applied) and decide:\n"
+    "- suspected_defect, evidence_sufficient=true: a localized deviation that the static procedure lists as a "
+    "defect and that the approved reference does not show (cite the image and the reference).\n"
+    "- no_defect_detected, evidence_sufficient=true: the object matches the reference with no such deviation "
+    "(matches_reference=true or no anomaly found after comparison with the reference).\n"
+    "- insufficient_evidence: the image is unusable, or it is genuinely unclear whether a deviation is a defect "
+    "after comparing with the reference.\n"
+    "If the reference has not been fetched yet, set evidence_sufficient=false and ask for it.\n"
+)
+
+
 def same_pose_table(inspections: list[dict]) -> str:
     """Deterministic summary: for each camera pose, which lights show the anomaly."""
     by_pose: dict[str, list[str]] = {}
@@ -119,6 +152,7 @@ def verification_prompt(task: dict, inspections: list[dict], attempts: list[dict
                         procedures: list[dict] | None = None) -> str:
     return (
         f"{format_procedures(procedures)}\n\nTask: {task['goal']} (category {task['object_category']}).\n"
+        + (STATIC_RULES if task.get("static_image") else "") +
         "FACTS FROM THE ROBOT (authoritative): each observation's pose and light are recorded by the cell. "
         "Two observations with the same pose were taken from exactly the same camera position; the part is "
         "clamped and never moves. Ignore any speculation in inspection notes about camera or part movement.\n"

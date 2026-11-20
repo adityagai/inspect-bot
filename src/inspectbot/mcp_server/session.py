@@ -51,8 +51,9 @@ class SessionManager:
 
     # ------------------------------------------------------------------ lifecycle
 
-    def start(self, scenario_id: str, goal: str | None = None, max_actions: int = 5) -> dict[str, Any]:
-        scenario = load_scenario(scenario_id)
+    def start(self, scenario_id: str, goal: str | None = None, max_actions: int = 5,
+              scenario: Scenario | None = None) -> dict[str, Any]:
+        scenario = scenario or load_scenario(scenario_id)
         record = TaskRecord(scenario_id=scenario.id, object_category=scenario.category,
                             goal=goal or scenario.goal)
         record.budget.max_actions = max_actions
@@ -71,6 +72,25 @@ class SessionManager:
             "initial_observation": initial.to_dict()["observation"],
             "budget": self.budget(record.task_id),
         }
+
+    def start_static(self, image_path: str, category: str, reference_path: str | None = None,
+                     case_id: str | None = None, goal: str | None = None) -> dict[str, Any]:
+        """Inspect one real photo (e.g. MVTec AD). No robot moves exist; zoom and the reference do."""
+        img = Path(image_path)
+        if not img.is_file() or img.suffix.lower() not in (".png", ".jpg", ".jpeg"):
+            raise SessionError(f"image not found or not a PNG/JPEG: {image_path}")
+        if reference_path and not Path(reference_path).is_file():
+            raise SessionError(f"reference image not found: {reference_path}")
+        label = category.replace("_", " ")
+        scenario = Scenario(
+            id=case_id or img.stem, name=f"static {label}", category=category,
+            goal=goal or (f"Inspect this {label} for defects. Single static image from a fixed camera: "
+                          "no other viewpoints or lighting exist."),
+            target_region=(0.0, 0.0, 1.0, 1.0), reference_available=reference_path is not None,
+            # Ground truth is unknown to the session; scoring happens outside, from the dataset labels.
+            ground_truth={"outcome": "insufficient_evidence", "resolvable": True, "notes": "scored externally"},
+            static_image=str(img), reference_image=reference_path)
+        return self.start(scenario.id, scenario=scenario)
 
     def get(self, task_id: str) -> Session:
         try:

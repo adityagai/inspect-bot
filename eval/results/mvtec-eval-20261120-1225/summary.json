@@ -1,0 +1,84 @@
+{
+  "stamp": "20261120-1225",
+  "set": "eval",
+  "inspectbot": {
+    "images": 40,
+    "defective": 20,
+    "good": 20,
+    "precision": 0.864,
+    "recall": 0.95,
+    "decision_coverage": 0.925,
+    "accuracy": 0.825,
+    "tp": 19,
+    "fp": 3,
+    "fn_abstained": 0,
+    "fn_cleared": 1,
+    "good_cleared": 14,
+    "good_abstained": 3,
+    "recall_by_type": {
+      "bottle/broken_large": "4/4",
+      "bottle/broken_small": "3/3",
+      "bottle/contamination": "2/3",
+      "tile/crack": "2/2",
+      "tile/glue_strip": "2/2",
+      "tile/gray_stroke": "2/2",
+      "tile/oil": "2/2",
+      "tile/rough": "2/2"
+    },
+    "errors": 0,
+    "mean_latency_s": 25.3,
+    "grounding": "37/37",
+    "used_reference": "40/40",
+    "by_category_bottle": {
+      "precision": 0.75,
+      "recall": 0.9,
+      "decision_coverage": 0.9,
+      "accuracy": 0.7
+    },
+    "by_category_tile": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "decision_coverage": 0.95,
+      "accuracy": 0.95
+    }
+  },
+  "baseline": {
+    "images": 40,
+    "defective": 20,
+    "good": 20,
+    "precision": 0.75,
+    "recall": 0.9,
+    "decision_coverage": 1.0,
+    "accuracy": 0.8,
+    "tp": 18,
+    "fp": 6,
+    "fn_abstained": 0,
+    "fn_cleared": 2,
+    "good_cleared": 14,
+    "good_abstained": 0,
+    "recall_by_type": {
+      "bottle/broken_large": "4/4",
+      "bottle/broken_small": "3/3",
+      "bottle/contamination": "2/3",
+      "tile/crack": "2/2",
+      "tile/glue_strip": "2/2",
+      "tile/gray_stroke": "2/2",
+      "tile/oil": "2/2",
+      "tile/rough": "1/2"
+    },
+    "errors": 0,
+    "mean_latency_s": 2.5,
+    "by_category_bottle": {
+      "precision": 0.6,
+      "recall": 0.9,
+      "decision_coverage": 1.0,
+      "accuracy": 0.65
+    },
+    "by_category_tile": {
+      "precision": 1.0,
+      "recall": 0.9,
+      "decision_coverage": 1.0,
+      "accuracy": 0.95
+    }
+  }
+}
