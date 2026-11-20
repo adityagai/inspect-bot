@@ -119,7 +119,7 @@ pytest -q
 streamlit run app/streamlit_app.py
 ```
 
-`pytest` runs 65 tests in about 13 s with no API calls. Streamlit opens the demo app at http://localhost:8501. From the command line:
+`pytest` runs 73 tests in about 13 s with no API calls. Streamlit opens the demo app at http://localhost:8501. From the command line:
 
 ```bash
 python -m inspectbot.flow.run S1
@@ -143,6 +143,7 @@ streamlit run app/streamlit_app.py
 | `fatal: Too many arguments` when pasting commands | zsh doesn't strip `# comments` pasted after a command. Paste the commands without trailing comments |
 | `streamlit: command not found` | Activate the environment (`source .venv/bin/activate`; on Windows `.venv\Scripts\activate`), and make sure the install finished without errors |
 | Port 8501 already in use | `streamlit run app/streamlit_app.py --server.port 8502` |
+| Live mode says it isn't set up (or `No module named 'crewai'`) | Install the agent packages with `pip install -e ".[dev,agents,ui]"` on Python 3.11–3.13, add `ANTHROPIC_API_KEY` to `.env`, and restart the app |
 | Live mode shows an authentication or credit error | Check `ANTHROPIC_API_KEY` in `.env` and the credit balance at console.anthropic.com |
 
 ### The demo app
@@ -305,7 +306,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 
 ## Tests
 
-`pytest -q` runs 69 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
+`pytest -q` runs 73 tests in about 13 seconds with no API calls. Agents are replaced by scripted outputs, and MCP tests go through a real in-memory MCP client.
 
 | File | Covers |
 | --- | --- |
@@ -315,6 +316,7 @@ Ground truth lives in the scenario files and is used only for scoring.
 | `test_flow.py` | Coordinator routing, replanning after failures, rejection limits, conclusion guards, baseline |
 | `test_rag_tot.py` | Corpus versions, category filtering, decoy rejection, injection exclusion, missing guidance, ToT selection, pruning, beam and depth limits, server-side ToT cap |
 | `test_static_mode.py` | Static-image sessions (MVTec), reference loading, bad-file rejection, abstention scored as a miss, replay of the saved M1–M3 runs |
+| `test_live_check.py` | The Live-mode setup check: missing agent packages, missing or empty API key |
 | `test_ui_eval.py` | Replay reconstruction at any step, ToT tree rendering, run ordering, evaluation metrics and targets, the balanced scenario set, mark-versus-crack rendering |
 
 ## Repository layout
@@ -352,7 +354,8 @@ tests/
 | 4 | Retrieval over versioned procedures, bounded Tree-of-Thought, guardrails | merged (#4) |
 | 5 | Streamlit app (replay, live, ToT tree, human review), 20-scenario evaluation, saved demo runs | merged (#5) |
 | 6 | Captioned demo video, narration script, app URL parameters for demos | merged (#6) |
-| 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | in review (#10) |
+| 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | merged (#10) |
+| 8 | Live mode checks its setup and says what's missing instead of failing | in review |
 
 ## Scope and limitations
 
