@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from inspectbot.core.events import EventLog  # noqa: E402
 from inspectbot.sim.scenario import list_scenarios, load_scenario  # noqa: E402
+from inspectbot.ui.live_check import live_problems  # noqa: E402
 from inspectbot.ui.replay import AGENT_COLORS, list_runs, run_label, tot_dot, view_at  # noqa: E402
 
 DEMO_DIR, RUNS_DIR, EVAL_DIR = ROOT / "demo_runs", ROOT / "runs", ROOT / "eval" / "results"
@@ -275,7 +276,12 @@ with st.sidebar:
         with_baseline = st.checkbox("Also run the prompt-only baseline", value=True)
         live = st.session_state.get("live")
         running = bool(live and not live["done"])
-        if st.button("▶ Start inspection", disabled=running, type="primary"):
+        problems = live_problems(ROOT)
+        if problems:
+            st.warning("**Live mode isn't set up yet.** Replay mode works without any of this.\n\n"
+                       + "\n".join(f"- {p}" for p in problems)
+                       + "\n\nThen stop the app (Ctrl+C) and run `streamlit run app/streamlit_app.py` again.")
+        if st.button("▶ Start inspection", disabled=running or bool(problems), type="primary"):
             start_live(sid, with_baseline)
             st.rerun()
         if live:
@@ -289,7 +295,8 @@ with tab_run:
     if run_dir:
         render_run(run_dir, step)
     elif mode == "Live":
-        st.info("Pick a scenario and press Start. Each step appears here as the agents work.")
+        st.info("Pick a scenario and press Start. Each step appears here as the agents work. "
+                "Live runs call Claude and use your Anthropic credits.")
 
 with tab_eval:
     evaluation_tab()
