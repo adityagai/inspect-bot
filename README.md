@@ -21,9 +21,11 @@ It is also tested on real photos: in **static-image mode**, it inspects MVTec AD
 
 ## Demo
 
-**[Watch the 4½-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, the simulation evaluation, then real MVTec AD images (a good bottle cleared, a contaminated bottle and a rough tile caught where the baseline missed them, an ambiguous tile escalated) and their evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
+<a href="https://youtu.be/F8JMqltduU8"><img src="docs/presentation/youtube_icon.png" alt="YouTube" height="16"></a> **[Watch the 9½-minute narrated presentation on YouTube](https://youtu.be/F8JMqltduU8)** (also in the repo as [`docs/presentation/inspectbot_presentation.mp4`](docs/presentation/inspectbot_presentation.mp4))
 
-**[Watch the 9½-minute narrated presentation](docs/presentation/inspectbot_presentation.mp4)**: the final capstone presentation covering the problem, architecture, reasoning and retrieval, the working system, evaluation results, safety and next steps. The 10 slides are in [`docs/presentation/InspectBot_Final_Presentation.pptx`](docs/presentation/InspectBot_Final_Presentation.pptx).
+InspectBot is a multi-agent research assistant for robotic visual inspection. It gathers evidence by changing the lighting, moving the camera or comparing against an approved reference, then reports a cited outcome or escalates to a human. Built with a CrewAI Flow coordinator, Claude agents, MCP tools, LangChain + Chroma retrieval and bounded Tree-of-Thought, it scored 20/20 correct outcomes in simulation against 8/20 for a prompt-only baseline. On 40 real MVTec AD images it reached 86% precision and 95% recall, with one missed contamination. The 9:30 narrated video walks through the problem, architecture, a live demo, evaluation results, safety safeguards and next steps.
+
+**Slides:** [PDF](docs/presentation/InspectBot_Final_Presentation.pdf) · [PowerPoint](docs/presentation/InspectBot_Final_Presentation.pptx)
 
 ## Results
 
@@ -343,7 +345,7 @@ scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, groun
 scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
 docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md,
                demo_script.md, demo/inspectbot_demo.mp4,
-               presentation/ (InspectBot_Final_Presentation.pptx, inspectbot_presentation.mp4)
+               presentation/ (InspectBot_Final_Presentation.pptx and .pdf, inspectbot_presentation.mp4)
 tests/
 ```
 
@@ -361,6 +363,7 @@ tests/
 | 8 | Live mode checks its setup and says what's missing instead of failing | merged (#11) |
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
 | 10 | Final presentation slides and narrated presentation video | merged (#14) |
+| 11 | Demo section collated into one narrated presentation (YouTube link, summary, slides as PDF) | in review |
 
 ## Scope and limitations
 

@@ -30,8 +30,9 @@ All Checkpoint 2.1 and 6.1 targets are met.
 - `inspectbot_demo.mp4`: captioned demo video (1920×1080, no audio); narration script in `docs/demo_script.md`.
 
 ### In the repository
+- Presentation video on YouTube: https://youtu.be/F8JMqltduU8
 - `docs/presentation/inspectbot_presentation.mp4`: narrated final presentation (9:30, 1920×1080, with audio).
-- `docs/presentation/InspectBot_Final_Presentation.pptx`: the 10 presentation slides with speaker notes.
+- `docs/presentation/InspectBot_Final_Presentation.pptx` and `.pdf`: the 10 presentation slides (speaker notes in the .pptx).
 
 ### Limits
 - Results are single runs, on 20 synthetic scenarios and on 2 of the 15 MVTec AD categories.
