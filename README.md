@@ -21,7 +21,7 @@ It is also tested on real photos: in **static-image mode**, it inspects MVTec AD
 
 ## Demo
 
-<a href="https://youtu.be/F8JMqltduU8"><img src="docs/presentation/youtube_icon.png" alt="YouTube" height="16"></a> **[Watch the 9½-minute narrated presentation on YouTube](https://youtu.be/F8JMqltduU8)** (also in the repo as [`docs/presentation/inspectbot_presentation.mp4`](docs/presentation/inspectbot_presentation.mp4))
+<a href="https://youtu.be/F8JMqltduU8"><img src="docs/presentation/youtube_icon.png" alt="YouTube" height="16"></a> **[Watch the presentation on YouTube](https://youtu.be/F8JMqltduU8)** (9:30)
 
 InspectBot is a multi-agent research assistant for robotic visual inspection. It gathers evidence by changing the lighting, moving the camera or comparing against an approved reference, then reports a cited outcome or escalates to a human. Built with a CrewAI Flow coordinator, Claude agents, MCP tools, LangChain + Chroma retrieval and bounded Tree-of-Thought, it scored 20/20 correct outcomes in simulation against 8/20 for a prompt-only baseline. On 40 real MVTec AD images it reached 86% precision and 95% recall, with one missed contamination. The 9:30 narrated video walks through the problem, architecture, a live demo, evaluation results, safety safeguards and next steps.
 
@@ -344,8 +344,7 @@ corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
 scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
 docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md,
-               demo_script.md, demo/inspectbot_demo.mp4,
-               presentation/ (InspectBot_Final_Presentation.pptx and .pdf, inspectbot_presentation.mp4)
+               demo_script.md, presentation/ (InspectBot_Final_Presentation.pptx and .pdf)
 tests/
 ```
 
@@ -364,6 +363,7 @@ tests/
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
 | 10 | Final presentation slides and narrated presentation video | merged (#14) |
 | 11 | Demo section collated into one narrated presentation (YouTube link, summary, slides as PDF) | merged (#15) |
+| 12 | Videos removed from the repo; the presentation is on YouTube | in review |
 
 ## Scope and limitations
 

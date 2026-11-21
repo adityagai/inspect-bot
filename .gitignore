@@ -14,3 +14,7 @@ build/
 runs/*
 !runs/.gitkeep
 chroma_db/
+
+# Generated videos (the presentation is on YouTube)
+docs/demo/*.mp4
+docs/presentation/*.mp4
