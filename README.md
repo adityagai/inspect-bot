@@ -363,7 +363,7 @@ tests/
 | 8 | Live mode checks its setup and says what's missing instead of failing | merged (#11) |
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
 | 10 | Final presentation slides and narrated presentation video | merged (#14) |
-| 11 | Demo section collated into one narrated presentation (YouTube link, summary, slides as PDF) | in review |
+| 11 | Demo section collated into one narrated presentation (YouTube link, summary, slides as PDF) | merged (#15) |
 
 ## Scope and limitations
 
