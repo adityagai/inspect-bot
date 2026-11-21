@@ -23,6 +23,8 @@ It is also tested on real photos: in **static-image mode**, it inspects MVTec AD
 
 **[Watch the 4½-minute demo video](docs/demo/inspectbot_demo.mp4)**: the five demo scenarios in the app, the simulation evaluation, then real MVTec AD images (a good bottle cleared, a contaminated bottle and a rough tile caught where the baseline missed them, an ambiguous tile escalated) and their evaluation. It is captioned and silent; a timed narration script is in [`docs/demo_script.md`](docs/demo_script.md).
 
+**[Watch the 9½-minute narrated presentation](docs/presentation/inspectbot_presentation.mp4)**: the final capstone presentation covering the problem, architecture, reasoning and retrieval, the working system, evaluation results, safety and next steps. The 10 slides are in [`docs/presentation/InspectBot_Final_Presentation.pptx`](docs/presentation/InspectBot_Final_Presentation.pptx).
+
 ## Results
 
 **Evaluation over 20 scenarios** (10 resolvable, 10 unresolvable): InspectBot against a prompt-only baseline using the same model and the same first image ([details](docs/day5_evaluation.md), [raw results](eval/results/20261116-1539/summary.md)).
@@ -340,7 +342,8 @@ corpus/        14 procedure / guideline / reference documents with front matter
 scenarios/     S1–S5 YAML; eval/ V01–V15 (features, scripted failures, ground truth)
 scripts/       vision_check.py, smoke_crewai_mcp.py, make_demo_video.py
 docs/          day1_vision_check.md, day3_live_results.md, day4_live_results.md, day5_evaluation.md,
-               demo_script.md, demo/inspectbot_demo.mp4
+               demo_script.md, demo/inspectbot_demo.mp4,
+               presentation/ (InspectBot_Final_Presentation.pptx, inspectbot_presentation.mp4)
 tests/
 ```
 
@@ -357,6 +360,7 @@ tests/
 | 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | merged (#10) |
 | 8 | Live mode checks its setup and says what's missing instead of failing | merged (#11) |
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
+| 10 | Final presentation slides and narrated presentation video | merged (#14) |
 
 ## Scope and limitations
 

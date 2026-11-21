@@ -29,6 +29,10 @@ All Checkpoint 2.1 and 6.1 targets are met.
 ### Assets
 - `inspectbot_demo.mp4`: captioned demo video (1920×1080, no audio); narration script in `docs/demo_script.md`.
 
+### In the repository
+- `docs/presentation/inspectbot_presentation.mp4`: narrated final presentation (9:30, 1920×1080, with audio).
+- `docs/presentation/InspectBot_Final_Presentation.pptx`: the 10 presentation slides with speaker notes.
+
 ### Limits
 - Results are single runs, on 20 synthetic scenarios and on 2 of the 15 MVTec AD categories.
 - The procedures are synthetic.
