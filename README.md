@@ -363,7 +363,7 @@ tests/
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
 | 10 | Final presentation slides and narrated presentation video | merged (#14) |
 | 11 | Demo section collated into one narrated presentation (YouTube link, summary, slides as PDF) | merged (#15) |
-| 12 | Videos removed from the repo; the presentation is on YouTube | in review |
+| 12 | Videos removed from the repo; the presentation is on YouTube | merged (#16) |
 
 ## Scope and limitations
 
