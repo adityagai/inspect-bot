@@ -1,6 +1,6 @@
 # Demo video: script and narration
 
-**Video:** [`docs/demo/inspectbot_demo.mp4`](demo/inspectbot_demo.mp4). It is 4:29 long, 1920×1080 at 30 fps, with burned-in captions and no audio. Rebuild it with `scripts/make_demo_video.py` (see the bottom of this file).
+**Video:** not stored in the repo. Rebuild it with `scripts/make_demo_video.py` (see the bottom of this file); it is 4:29 long, 1920×1080 at 30 fps, with burned-in captions and no audio. The narrated presentation is on YouTube: https://youtu.be/F8JMqltduU8
 
 The narration below is timed to each scene at a relaxed pace of about 2.3 words per second. Record it in one take over the video, or read it live while screen-sharing the app. Every scene can also be opened directly in the app through its URL, for example `http://localhost:8501/?run=S1&step=11`.
 
