@@ -360,7 +360,7 @@ tests/
 | 7 | MVTec AD static-image mode, 40-image evaluation (bottle, tile), MVTec demo runs, video and app updates | merged (#10) |
 | 8 | Live mode checks its setup and says what's missing instead of failing | merged (#11) |
 | 9 | Two more MVTec demo runs (M4 contaminated bottle, M5 rough tile) in the app and demo video | merged (#12) |
-| 10 | Final presentation slides and narrated presentation video | in review |
+| 10 | Final presentation slides and narrated presentation video | merged (#14) |
 
 ## Scope and limitations
 
